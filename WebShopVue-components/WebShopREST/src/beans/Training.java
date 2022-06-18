@@ -9,7 +9,7 @@ public class Training {
 	private double duration;
 	private User trainer;
 	private String description;
-	//slika nedostaje
+	//slika nedostaje nisam je jos uvijek dodala
 	public String getName() {
 		return name;
 	}
