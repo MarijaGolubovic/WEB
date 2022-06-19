@@ -1,0 +1,6 @@
+Flex;Teretana;Personalni_trening,Grupni_trening;Radi;Sutjeska,2,Novi Sad,Srbija,21000,120,120;9.2;07:00:00;23:00:00;slike/logoFlex.png
+X SPORT GYM;Teretana;Personalni_trening,Grupni_trening;Radi;Ćirpanova,8,Novi Sad,Srbija,21000,120,120;8.7;08:00:00;22:30:00;slike/logoXSport.png
+Otvoreni bazen Sajmište;Bazen;Personalni_trening,Grupni_trening;Radi;Hajduk Veljkova,11/A,Novi Sad,Srbija,21000,120,120;9.2;09:00:00;17:00:00;slike/logoSajmiste.png 
+Plesni klub Fiesta;Plesni_studio;Personalni_trening,Grupni_trening;Radi;Geri Karolja,5,Novi Sad,Srbija,21000,120,120;9.5;09:00:00;17:00:00;slike/logoFiesta.png
+Sportski centar HATTRICK;Sportski_centar;Personalni_trening,Grupni_trening;Radi;Bulevar Cara Lazara,BB,Novi Sad,Srbija,21000,120,120;9.4;09:00:00;17:00:00;slike/logoHattrick.png 
+Fitness Zone;Teretana;Personalni_trening,Grupni_trening;Radi;Sutjeska,2,Novi Sad,Srbija,21000,120,120;9.0;08:00:00;22:00:00;slike/logoFitnessZone.png
