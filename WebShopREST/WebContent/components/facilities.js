@@ -36,7 +36,7 @@ Vue.component("facilities", {
 	    		</tr>
 	    			
 	    		<tr v-for="p in filtriraniObjekti">
-	    			<td><img src="p.imageName" width="50" height="50"></td>
+	    			<td><img  width="70" height="70"/></td>
 	    			<td>{{p.name}}</td>
 	    			<td>{{p.typeSportsFacility}}</td>
 	    			<td>{{p.contentsS}}</td>

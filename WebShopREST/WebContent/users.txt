@@ -1,3 +1,4 @@
-Pera;Peric;pera@email.com;pera;pera
-Jovana;Jovanovic;jj@email.com;jovana;jj123
-Stojanka;Novakovic;st.nov@email.com;st.nov;100ja
+markomarkovic;123;Marko;Markovic;MALE;null;null;MENAGER;null;null;null;12;null
+nenadnenadovic;123;Nenad;Nenadovic;MALE;null;null;CUSTOMER;null;null;null;102;null
+milicamilic;123;Milica;Milic;FIMAIL;null;null;ADMIN;null;null;null;12;null
+anaanic;123;Ana;Anic;FIMAIL;null;null;TRAINER;null;null;null;12;null
