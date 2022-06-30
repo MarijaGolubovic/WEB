@@ -1,4 +1,4 @@
-markomarkovic;123;Marko;Markovic;MALE;null;null;MENAGER;null;null;null;12;null
-nenadnenadovic;123;Nenad;Nenadovic;MALE;null;null;CUSTOMER;null;null;null;102;null
-milicamilic;123;Milica;Milic;FIMAIL;null;null;ADMIN;null;null;null;12;null
-anaanic;123;Ana;Anic;FIMAIL;null;null;TRAINER;null;null;null;12;null
+markomarkovic;123;Marko;Markovic;MALE;07.06.2000.;MENAGER;12;BRONZE
+nenadnenadovic;123;Nenad;Nenadovic;MALE;07.06.2000.;CUSTUMER;102;BRONZE
+milicamilic;123;Milica;Milic;FEMALE;07.06.2000.;ADMIN;12;BRONZE
+anaanic;123;Ana;Anic;FEMALE;07.06.2000.;TRAINER;12;BRONZE

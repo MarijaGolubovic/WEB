@@ -1,7 +1,8 @@
 package beans;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.sql.Date;
+
 
 public class User implements Serializable {
 	
@@ -15,7 +16,7 @@ public class User implements Serializable {
 	private String firstName;
 	private String lastName;
 	private Gender gender;
-	private LocalDateTime birthDate;
+	private Date birthDate;
 	private TrainingHistory trainingHistory;
 	private Role role;
 	private Dues dues;//clanarina
@@ -53,10 +54,10 @@ public class User implements Serializable {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-	public LocalDateTime getBirthDate() {
+	public Date getBirthDate() {
 		return birthDate;
 	}
-	public void setBirthDate(LocalDateTime birthDate) {
+	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
 	public TrainingHistory getTrainingHistory() {
@@ -102,7 +103,7 @@ public class User implements Serializable {
 		this.customerType = customerType;
 	}
 	public User(String username, String password, String firstName, String lastName, Gender gender,
-			LocalDateTime birthDate, TrainingHistory trainingHistory, Role role, Dues dues,
+			Date birthDate, TrainingHistory trainingHistory, Role role, Dues dues,
 			SportsFacility sportsFacility, SportsFacility visistedFacolity, double collectedPoints,
 			CustumerType customerType) {
 		super();

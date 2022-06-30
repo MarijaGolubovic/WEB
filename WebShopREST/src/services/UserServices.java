@@ -25,6 +25,7 @@ import beans.User.Role;
 import dao.ProductDAO;
 import dao.SportsFacilityDAO;
 import dao.UserDAO;
+import dto.UserDTO;
 
 @Path("/login")
 public class UserServices {
@@ -132,8 +133,8 @@ public class UserServices {
 		} else if (korisnikZaLogovanje.getRole() == Role.MENAGER) {
 			return Response.status(Response.Status.ACCEPTED).entity("/WebShopREST/menager.html").build();
 
-		} else if (korisnikZaLogovanje.getRole() == Role.MENAGER) {
-			return Response.status(Response.Status.ACCEPTED).entity("/WebShopREST/menager.html").build();
+		} else if (korisnikZaLogovanje.getRole() == Role.TRAINER) {
+			return Response.status(Response.Status.ACCEPTED).entity("/WebShopREST/trener.html").build();
 
 		} 
 
@@ -157,13 +158,15 @@ public class UserServices {
 	@Path("/registracija")
 	@Produces(MediaType.TEXT_HTML)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response registracija(User user) throws ParseException {
+	public Response registracija(UserDTO user) throws ParseException {
 		UserDAO korisnikDAO = (UserDAO) ctx.getAttribute("UserDAO");
-		if(!korisnikDAO.findByUsername(user.getUsername()).getUsername().equals(user.getUsername())) {
+		if(!korisnikDAO.postojiKorisnickoIme(user.username)) {
 			korisnikDAO.save(user);	
 			return Response.status(200).build();
 		}
-		return Response.status(400).entity("Korisnicko ime vec postoji!").build();
+	return Response.status(400).entity("Korisnicko ime vec postoji!").build();
+	
+		
 	}
 
 }

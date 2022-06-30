@@ -3,7 +3,11 @@ package dao;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,12 +20,13 @@ import beans.User;
 import beans.User.CustumerType;
 import beans.User.Gender;
 import beans.User.Role;
+import dto.UserDTO;
 
 /***
- * <p>Klasa namenjena da uèita korisnike iz fajla i pruža operacije nad njima (poput pretrage).
+ * <p>Klasa namenjena da uï¿½ita korisnike iz fajla i pruï¿½a operacije nad njima (poput pretrage).
  * Korisnici se nalaze u fajlu WebContent/users.txt u obliku: <br>
  * firstName;lastName;email;username;password</p>
- * <p><b>NAPOMENA:</b> Lozinke se u praksi <b>nikada</b> ne snimaju u èistu tekstualnom obliku.</p>
+ * <p><b>NAPOMENA:</b> Lozinke se u praksi <b>nikada</b> ne snimaju u ï¿½istu tekstualnom obliku.</p>
  * @author Lazar
  *
  */
@@ -34,14 +39,14 @@ public class UserDAO {
 	}
 	
 	/***
-	 * @param contextPath Putanja do aplikacije u Tomcatu. Može se pristupiti samo iz servleta.
+	 * @param contextPath Putanja do aplikacije u Tomcatu. Moï¿½e se pristupiti samo iz servleta.
 	 */
 	public UserDAO(String contextPath) {
 		loadUsers(contextPath);
 	}
 	
 	/**
-	 * Vraæa korisnika za prosleðeno korisnièko ime i šifru. Vraæa null ako korisnik ne postoji
+	 * Vraï¿½a korisnika za prosleï¿½eno korisniï¿½ko ime i ï¿½ifru. Vraï¿½a null ako korisnik ne postoji
 	 * @param username
 	 * @param password
 	 * @return
@@ -70,9 +75,17 @@ public class UserDAO {
 		return users.values();
 	}
 	
+	public boolean postojiKorisnickoIme(String korisnickoIme) {
+		return users.containsKey(korisnickoIme);
+	}
 	
 	public User save(User user) {
 		users.put(user.getUsername(), user);
+		return user;
+	}
+	
+	public UserDTO save(UserDTO user) {
+		users.put(user.username, new User(user.username, user.password, user.firstName, user.lastName, user.gender, user.birthDate, null, Role.CUSTUMER, null, null, null, 0, CustumerType.BRONZE));
 		return user;
 	}
 	
@@ -102,8 +115,8 @@ public class UserDAO {
 	private SportsFacility visistedFacolity;
 	private double collectedPoints;
 	private CustumerType customerType;
-	 * Uèitava korisnike iz WebContent/users.txt fajla i dodaje ih u mapu {@link #users}.
-	 * Kljuè je korisnièko ime korisnika.
+	 * Uï¿½itava korisnike iz WebContent/users.txt fajla i dodaje ih u mapu {@link #users}.
+	 * Kljuï¿½ je korisniï¿½ko ime korisnika.
 	 * @param contextPath Putanja do aplikacije u Tomcatu
 	 */
 	private void loadUsers(String contextPath) {
@@ -113,7 +126,7 @@ public class UserDAO {
 			in = new BufferedReader(new FileReader(file));
 			String line, username="",password="", firstName="", lastName="";
 			Gender gender;
-			LocalDateTime birthDate;
+			Date birthDate;
 			//TrainingHistory trainingHistory;
 			Role role;
 			//Dues dues;
@@ -127,16 +140,21 @@ public class UserDAO {
 				if (line.equals("") || line.indexOf('#') == 0)
 					continue;
 				st = new StringTokenizer(line, ";");
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
 				while (st.hasMoreTokens()) {
 					 username = st.nextToken().trim();
 					 password = st.nextToken().trim();
 					 firstName = st.nextToken().trim();
 					 lastName = st.nextToken().trim();
-					 gender = Enum.valueOf(Gender.class,st.nextToken().trim());
-					 birthDate = LocalDateTime.parse(st.nextToken().trim());
-					 role = Enum.valueOf(Role.class,st.nextToken().trim());
+					 gender=Gender.valueOf(st.nextToken().trim());
+					// gender = Enum.valueOf(Gender.class,st.nextToken().trim());
+					 birthDate = new java.sql.Date(
+		                     ((java.util.Date) new SimpleDateFormat("dd.MM.yyyy.").parse(st.nextToken().trim())).getTime());
+					 //role = Enum.valueOf(Role.class,st.nextToken().trim());
+					 role=Role.valueOf(st.nextToken().trim());
 					 collectedPoints = Double.parseDouble(st.nextToken().trim());
-					 customerType = Enum.valueOf(CustumerType.class,st.nextToken().trim());
+					 //customerType = Enum.valueOf(CustumerType.class,st.nextToken().trim());
+					 customerType=CustumerType.valueOf(st.nextToken().trim());
 					users.put(username, new User(username, password, firstName, lastName, gender, birthDate, null, role, null, null, null, collectedPoints, customerType));
 				}
 				

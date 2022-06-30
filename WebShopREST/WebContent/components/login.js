@@ -13,7 +13,7 @@ Vue.component("app-login",{
 			<table style="position:relative; left:0.8cm; top:1cm">
 				<tr>
 					<th style="text-align: left; color:#F55F0A;font-size:18px"><label><b>Korisnicko ime:</b></label></th>
-					<td><input type="text" v-model="korisnik.username" placeholder="Unesite korisnicko ime" name="username" required 
+					<td><input type="text" v-model="korisnik.username" placeholder="Unesite korisnicko ime" name="uname" required 
 					style="height:1cm;border-radius: 5px"></td>
 				</tr>
 				<br>
