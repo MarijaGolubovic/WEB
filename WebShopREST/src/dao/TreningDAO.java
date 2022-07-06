@@ -53,10 +53,18 @@ public class TreningDAO {
 				izmenjenTrening = sviTreninzi.get(i);
 	}
 	
-	public ArrayList<Training> getTrainingsFromFacilities(String name) {
+	public ArrayList<Training> getGroupTrainingsFromFacilities(String name) {
 		ArrayList<Training> trainingsFromFacility = new ArrayList<Training>();
 		for(int i = 0; i < sviTreninzi.size(); i++)
-			if(sviTreninzi.get(i).getSportsFacility().getName().equals(name))
+			if(sviTreninzi.get(i).getSportsFacility().getName().equals(name) && sviTreninzi.get(i).getTrainingType().equals(TrainingType.GROUP))
+				trainingsFromFacility.add(sviTreninzi.get(i));
+		return trainingsFromFacility;
+	}
+	
+	public ArrayList<Training> getPersonalTrainingsFromFacilities(String name) {
+		ArrayList<Training> trainingsFromFacility = new ArrayList<Training>();
+		for(int i = 0; i < sviTreninzi.size(); i++)
+			if(sviTreninzi.get(i).getSportsFacility().getName().equals(name) && sviTreninzi.get(i).getTrainingType().equals(TrainingType.PERSONAL))
 				trainingsFromFacility.add(sviTreninzi.get(i));
 		return trainingsFromFacility;
 	}
