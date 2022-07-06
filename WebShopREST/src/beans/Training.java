@@ -1,7 +1,7 @@
 package beans;
 
 public class Training {
-	enum TrainingType{GROUP, PERSONAL, GYM};
+	public enum TrainingType{GROUP, PERSONAL, OTHER};
 	
 	private String name;
 	private TrainingType trainingType;
@@ -9,7 +9,7 @@ public class Training {
 	private double duration;
 	private User trainer;
 	private String description;
-	//slika nedostaje nisam je jos uvijek dodala
+	private String image;
 	public String getName() {
 		return name;
 	}
@@ -46,8 +46,19 @@ public class Training {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public Training() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
 	public Training(String name, TrainingType trainingType, SportsFacility sportsFacility, double duration,
-			User trainer, String description) {
+			User trainer, String description, String image) {
 		super();
 		this.name = name;
 		this.trainingType = trainingType;
@@ -55,10 +66,7 @@ public class Training {
 		this.duration = duration;
 		this.trainer = trainer;
 		this.description = description;
-	}
-	public Training() {
-		super();
-		// TODO Auto-generated constructor stub
+		this.image = image;
 	}
 	
 	

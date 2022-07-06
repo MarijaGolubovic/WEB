@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,10 +14,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-import beans.Product;
 import beans.SportsFacility;
-import dao.ProductDAO;
+import beans.User;
 import dao.SportsFacilityDAO;
 
 @Path("/facilities")
@@ -24,6 +25,8 @@ public class SportsFacilityService {
 	
 	@Context
 	ServletContext ctx;
+	@Context
+	HttpServletRequest request;
 	
 	public SportsFacilityService() {
 	}
@@ -46,6 +49,8 @@ public class SportsFacilityService {
 		SportsFacilityDAO dao = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
 		return dao.findAll();
 	}
+	
+
 	
 	@GET
 	@Path("/{name}")

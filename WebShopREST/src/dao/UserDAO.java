@@ -5,18 +5,17 @@ import java.io.File;
 import java.io.FileReader;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import beans.Dues;
 import beans.SportsFacility;
-import beans.TrainingHistory;
 import beans.User;
+import beans.SportsFacility.Content;
 import beans.User.CustumerType;
 import beans.User.Gender;
 import beans.User.Role;
@@ -74,6 +73,16 @@ public class UserDAO {
 	public Collection<User> findAll() {
 		return users.values();
 	}
+	public List<User> getTrainers(){
+		List<User> trainers = new ArrayList<>();
+		List<User> usersAll = new ArrayList<User>(users.values());
+		for (int i=0; i<usersAll.size();i++) {
+			if (usersAll.get(i).getRole().equals(Role.TRAINER)) {
+				trainers.add(usersAll.get(i));
+			}
+		}
+		return trainers;	
+	}
 	
 	public boolean postojiKorisnickoIme(String korisnickoIme) {
 		return users.containsKey(korisnickoIme);
@@ -101,30 +110,13 @@ public class UserDAO {
 		this.users.remove(username);
 	}
 	
-	/**
-	 * private String username;
-	private String password;
-	private String firstName;
-	private String lastName;
-	private Gender gender;
-	private LocalDateTime birthDate;
-	private TrainingHistory trainingHistory;
-	private Role role;
-	private Dues dues;//clanarina
-	private SportsFacility sportsFacility;
-	private SportsFacility visistedFacolity;
-	private double collectedPoints;
-	private CustumerType customerType;
-	 * U�itava korisnike iz WebContent/users.txt fajla i dodaje ih u mapu {@link #users}.
-	 * Klju� je korisni�ko ime korisnika.
-	 * @param contextPath Putanja do aplikacije u Tomcatu
-	 */
 	private void loadUsers(String contextPath) {
 		BufferedReader in = null;
+		SportsFacilityDAO sportsFacilityDAO = new SportsFacilityDAO(contextPath);
 		try {
 			File file = new File(contextPath + "/users.txt");
 			in = new BufferedReader(new FileReader(file));
-			String line, username="",password="", firstName="", lastName="";
+			String line, username="",password="", firstName="", lastName="", facilityMenager="";
 			Gender gender;
 			Date birthDate;
 			//TrainingHistory trainingHistory;
@@ -140,22 +132,25 @@ public class UserDAO {
 				if (line.equals("") || line.indexOf('#') == 0)
 					continue;
 				st = new StringTokenizer(line, ";");
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
 				while (st.hasMoreTokens()) {
 					 username = st.nextToken().trim();
 					 password = st.nextToken().trim();
 					 firstName = st.nextToken().trim();
 					 lastName = st.nextToken().trim();
 					 gender=Gender.valueOf(st.nextToken().trim());
-					// gender = Enum.valueOf(Gender.class,st.nextToken().trim());
 					 birthDate = new java.sql.Date(
 		                     ((java.util.Date) new SimpleDateFormat("dd.MM.yyyy.").parse(st.nextToken().trim())).getTime());
-					 //role = Enum.valueOf(Role.class,st.nextToken().trim());
 					 role=Role.valueOf(st.nextToken().trim());
 					 collectedPoints = Double.parseDouble(st.nextToken().trim());
-					 //customerType = Enum.valueOf(CustumerType.class,st.nextToken().trim());
 					 customerType=CustumerType.valueOf(st.nextToken().trim());
-					users.put(username, new User(username, password, firstName, lastName, gender, birthDate, null, role, null, null, null, collectedPoints, customerType));
+					 facilityMenager=st.nextToken().trim();
+					 if (role.equals(Role.MENAGER)) {
+						 SportsFacility sf= sportsFacilityDAO.findFacilitiy(facilityMenager);
+						 users.put(username, new User(username, password, firstName, lastName, gender, birthDate, null, role, null, sf, null, collectedPoints, customerType));
+					 } else {
+						 users.put(username, new User(username, password, firstName, lastName, gender, birthDate, null, role, null, null, null, collectedPoints, customerType));
+					 }
+					
 				}
 				
 			}

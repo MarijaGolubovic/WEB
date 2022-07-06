@@ -22,7 +22,6 @@ import javax.ws.rs.core.Response;
 import beans.SportsFacility;
 import beans.User;
 import beans.User.Role;
-import dao.ProductDAO;
 import dao.SportsFacilityDAO;
 import dao.UserDAO;
 import dto.UserDTO;
@@ -49,6 +48,7 @@ public class UserServices {
 		if (ctx.getAttribute("UserDAO") == null) {
 	    	String contextPath = ctx.getRealPath("");
 			ctx.setAttribute("UserDAO", new UserDAO(contextPath));
+			
 		}
 	}
 /*	
@@ -164,9 +164,15 @@ public class UserServices {
 			korisnikDAO.save(user);	
 			return Response.status(200).build();
 		}
-	return Response.status(400).entity("Korisnicko ime vec postoji!").build();
+	return Response.status(400).entity("Korisnicko ime vec postoji!").build();	
+	}
 	
-		
+	@GET
+	@Path("/treneri")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<User> getTrainers() {
+		UserDAO korisnikDAO = (UserDAO) ctx.getAttribute("UserDAO");
+		return korisnikDAO.getTrainers();
 	}
 
 }
