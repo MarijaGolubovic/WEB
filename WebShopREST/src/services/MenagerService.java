@@ -128,6 +128,57 @@ public class MenagerService {
 	}
 	
 	@POST
+	@Path("/izmeniGrupniTrening")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response izmeniGrupniTrening(TrainingDTO trening) throws ParseException, IOException {
+		TreningDAO treningDAO = (TreningDAO) ctx.getAttribute("TreningDAO");
+		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		SportsFacilityDAO sportsFacilityDAO = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
+		SportsFacility sportsFacility = sportsFacilityDAO.findFacilitiy(menadzer.getSportsFacility().getName());
+		Training treningZaIzmenu = new Training(trening.name, TrainingType.GROUP,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image);
+		treningDAO.saveTrainingChanges(treningZaIzmenu);
+
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGE")
+					.build();
+	}
+	
+	@POST
+	@Path("/izmeniPersonalniTrening")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response izmeniPersonalniTrening(TrainingDTO trening) throws ParseException, IOException {
+		TreningDAO treningDAO = (TreningDAO) ctx.getAttribute("TreningDAO");
+		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		SportsFacilityDAO sportsFacilityDAO = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
+		SportsFacility sportsFacility = sportsFacilityDAO.findFacilitiy(menadzer.getSportsFacility().getName());
+		Training treningZaIzmenu = new Training(trening.name, TrainingType.PERSONAL,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image);
+		treningDAO.saveTrainingChanges(treningZaIzmenu);
+
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGE")
+					.build();
+	}
+	
+	@POST
+	@Path("/izmeniOstaloTrening")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response izmeniOstaloTrening(TrainingDTO trening) throws ParseException, IOException {
+		TreningDAO treningDAO = (TreningDAO) ctx.getAttribute("TreningDAO");
+		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		SportsFacilityDAO sportsFacilityDAO = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
+		SportsFacility sportsFacility = sportsFacilityDAO.findFacilitiy(menadzer.getSportsFacility().getName());
+		Training treningZaIzmenu = new Training(trening.name, TrainingType.OTHER,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image);
+		treningDAO.saveTrainingChanges(treningZaIzmenu);
+
+			return Response
+					.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGE")
+					.build();
+	}
+	
+	@POST
 	@Path("/dodajTreningPer")
 	@Produces(MediaType.TEXT_HTML)
 	@Consumes(MediaType.APPLICATION_JSON)
