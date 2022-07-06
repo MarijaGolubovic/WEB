@@ -9,10 +9,13 @@
 	      grupniDodavanje: false,
 	      grupniTrening:{},
 	      personalniTrening:{},
+	      OstaloTrening:{},
 	      treneri: [],
 	      slikaVis: false,
 	      personalniDodavanje: false,
 	      slikaVisPer: false,
+	      ostaloDodavanje: false,
+	      slikaVisOst: false,
 
         }
  	
@@ -152,6 +155,64 @@
 	    		</tr>
 	    	</table>
 	    	
+	    	<p> Ostalo </p>
+	    	<button v-on:click="dodajOstalo" v-show="!ostaloDodavanje">Dodaj sadržaj</button>
+	    	<button v-on:click="zatvoriDetaljnijiPrikazOstalo" v-show="ostaloDodavanje">x</button>
+	    <div v-show="ostaloDodavanje">
+	    	 <img id="slikaIDOst" src="" alt="Slika treninga" width="200" height="100" v-show="this.slikaVisOst">
+	    	<form @submit="dodajOstaloTrening" method="post">
+	    		 <table>
+                  <tr>
+                      <th><label>Naziv:</label></th>
+                      <td><input   v-model="OstaloTrening.name" type="text" required></td>
+                  </tr>
+                  <tr>
+                      <th><label>Trajanje:</label></th>
+                      <td><input  v-model="OstaloTrening.duration" type="number" min="1" step="any" ></td>
+                  </tr>
+                  <tr>
+                      <th><label>Trener:</label></th>
+	 						<td>
+	 							<select name="trener" v-model="OstaloTrening.trainer" required>
+	 								 <option v-for="m in treneri" :value=m>
+	 								 	{{m.firstName}} {{m.lastName}}
+	 								 </option>
+	 							</select>
+	 						</td>
+                </tr>
+                  <tr>
+                      <th><label>Opis:</label></th>
+                      <td><input  v-model="OstaloTrening.description" type="text" /></td>
+                  </tr>
+                  <tr>
+	 				<th>Slika:</th>
+	 				<td>
+	 				<input type="file" onchange="encodeImageFileAsURLOst(this)" v-on:click="dodajSlikuOst" required>
+	 				</td>
+	 			</tr>
+                  </table>
+                   <button type="submit">Potvrdi</button>
+                </form>
+	    	</div>
+	    	
+	        <table width="100%" border="0">
+	    		<tr bgcolor="lightgrey">
+	    			<th>Slika</th>
+	    			<th>Naziv</th>
+	    			<th>Trajanje</th>
+	    			<th>Trener</th>
+	    			<th>Opis</th>
+	    		</tr>
+	    			
+	    		<tr v-for="p in ostaloTreninzi">
+	    			<td><img :src="p.image" width="70" height="70"/></td>
+	    			<td>{{p.name}}</td>
+	    			<td>{{p.duration}}</td>
+	    			<td>{{p.trainer.firstName}} {{p.trainer.lastName}}</td>
+	    			<td>{{p.description}}</td>
+	    		</tr>
+	    	</table>
+	    	
     	</div>		  
     	`,
     methods:{
@@ -170,6 +231,27 @@
                 .then(response => {
                     alert("Trening je dodat!");
                     this.grupniDodavanje=false;
+                    this.$router.go(0);
+                })
+                .catch(err => {
+                    alert("Trening postoji!");
+                })
+        },
+        dodajOstaloTrening: function (event) {
+	 	 	event.preventDefault();
+	 	 	this.OstaloTrening.image = document.getElementById("slikaIDOst").src;
+            axios
+                .post('rest/menager/dodajTreningOst', {
+                    "name": this.OstaloTrening.name,
+                    "duration": this.OstaloTrening.duration,
+                    "trainer": this.OstaloTrening.trainer,
+                    "description": this.OstaloTrening.description,
+                    "image": this.OstaloTrening.image
+                    
+                })
+                .then(response => {
+                    alert("Trening je dodat!");
+                    this.ostaloDodavanje=false;
                     this.$router.go(0);
                 })
                 .catch(err => {
@@ -203,18 +285,27 @@
 	 	dodajSlikuPer: function(){
 	 		this.slikaVisPer = true;
 	 	},
+	 	dodajSlikuOst: function(){
+	 		this.slikaVisOst = true;
+	 	},
 	 	dodajGrupni: function () {
 		this.grupniDodavanje=true;
 		},
 		dodajPersonalni: function () {
 		this.personalniDodavanje=true;
-		},			
+		},	
+		dodajOstalo: function () {
+		this.ostaloDodavanje=true;
+		},		
 		
 		zatvoriDetaljnijiPrikaz: function(){
 			this.grupniDodavanje = false;
 		},
 		zatvoriDetaljnijiPrikazPersonalni: function(){
 			this.personalniDodavanje = false;
+		},
+		zatvoriDetaljnijiPrikazOstalo: function(){
+			this.ostaloDodavanje = false;
 		},
 	
 		}
@@ -232,7 +323,10 @@
           .then(response => (this.grupniTreninzi = response.data)),
          axios
           .get('rest/menager/personalniTreninziMenadzera')
-          .then(response => (this.personalniTreninzi = response.data))
+          .then(response => (this.personalniTreninzi = response.data)),
+           axios
+          .get('rest/menager/ostaliTreninziMenadzera')
+          .then(response => (this.ostaloTreninzi = response.data))
     },
 });
 function encodeImageFileAsURL(element) {
@@ -252,6 +346,18 @@ function encodeImageFileAsURLPer(element) {
     var reader = new FileReader();
     reader.onloadend = function () {
         document.getElementById('slikaIDPer')
+            .setAttribute(
+                'src', reader.result
+            );
+    }
+    reader.readAsDataURL(file);
+}
+
+function encodeImageFileAsURLOst(element) {
+    var file = element.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function () {
+        document.getElementById('slikaIDOst')
             .setAttribute(
                 'src', reader.result
             );

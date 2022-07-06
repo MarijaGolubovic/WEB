@@ -95,6 +95,18 @@ public class MenagerService {
 		return treningDAO.getPersonalTrainingsFromFacilities(objekat.getName());
 	}
 	
+	@GET
+	@Path("/ostaliTreninziMenadzera")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Training> getOtherTrainingMenager() {
+		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		SportsFacilityDAO dao = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
+		TreningDAO treningDAO = (TreningDAO) ctx.getAttribute("TreningDAO");
+		SportsFacility objekat = dao.findFacilitiy(menadzer.getSportsFacility().getName());
+		
+		return treningDAO.getOtherTrainingsFromFacilities(objekat.getName());
+	}
+	
 	
 	@POST
 	@Path("/dodajTrening")
@@ -128,6 +140,25 @@ public class MenagerService {
 		if(treningDAO.checkTrainingName(treningZaDodavanje.getName())) {
 			treningZaDodavanje.setSportsFacility(sportsFacility);
 			treningZaDodavanje.setTrainingType(TrainingType.PERSONAL);
+			treningDAO.saveTraining(treningZaDodavanje);
+			return Response.status(200).build();
+		}
+		return Response.status(400).entity("Naziv treninga vec postoji!").build();
+	}
+	
+	@POST
+	@Path("/dodajTreningOst")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response dodajTreningOst(TrainingDTO trening) throws ParseException, IOException {
+		TreningDAO treningDAO = (TreningDAO) ctx.getAttribute("TreningDAO");
+		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		SportsFacilityDAO sportsFacilityDAO = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
+		SportsFacility sportsFacility = sportsFacilityDAO.findFacilitiy(menadzer.getSportsFacility().getName());
+		Training treningZaDodavanje = new Training(trening.name, TrainingType.OTHER,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image);
+		if(treningDAO.checkTrainingName(treningZaDodavanje.getName())) {
+			treningZaDodavanje.setSportsFacility(sportsFacility);
+			treningZaDodavanje.setTrainingType(TrainingType.OTHER);
 			treningDAO.saveTraining(treningZaDodavanje);
 			return Response.status(200).build();
 		}

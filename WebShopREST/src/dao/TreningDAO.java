@@ -68,6 +68,14 @@ public class TreningDAO {
 				trainingsFromFacility.add(sviTreninzi.get(i));
 		return trainingsFromFacility;
 	}
+	
+	public ArrayList<Training> getOtherTrainingsFromFacilities(String name) {
+		ArrayList<Training> trainingsFromFacility = new ArrayList<Training>();
+		for(int i = 0; i < sviTreninzi.size(); i++)
+			if(sviTreninzi.get(i).getSportsFacility().getName().equals(name) && sviTreninzi.get(i).getTrainingType().equals(TrainingType.OTHER))
+				trainingsFromFacility.add(sviTreninzi.get(i));
+		return trainingsFromFacility;
+	}
 
 	public void loadTrainings(SportsFacilityDAO sportsFacilityDAO, UserDAO userDAO) {
 		JSONParser jsonParser = new JSONParser();
