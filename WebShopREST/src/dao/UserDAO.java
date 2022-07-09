@@ -2,11 +2,14 @@ package dao;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.ObjectOutputStream;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +34,7 @@ import dto.UserDTO;
  */
 public class UserDAO {
 	private Map<String, User> users = new HashMap<>();
+	public HashMap<String, SportsFacility> facilities = new HashMap<String, SportsFacility>();
 	
 	
 	public UserDAO() {
@@ -73,6 +77,9 @@ public class UserDAO {
 	public Collection<User> findAll() {
 		return users.values();
 	}
+	
+	
+	
 	public List<User> getTrainers(){
 		List<User> trainers = new ArrayList<>();
 		List<User> usersAll = new ArrayList<User>(users.values());
@@ -94,9 +101,16 @@ public class UserDAO {
 	}
 	
 	public UserDTO save(UserDTO user) {
-		users.put(user.username, new User(user.username, user.password, user.firstName, user.lastName, user.gender, user.birthDate, null, Role.CUSTUMER, null, null, null, 0, CustumerType.BRONZE));
+		users.put(user.username, new User(user.username, user.password, user.firstName, user.lastName, user.gender, user.birthDate, null, Role.CUSTUMER, null, null, null, 0, CustumerType.BRONZE, false));
 		return user;
 	}
+	
+	public UserDTO saveMenager(UserDTO user) {
+		SportsFacility sportFacylity= new SportsFacility();
+		users.put(user.username, new User(user.username, user.password, user.firstName, user.lastName, user.gender, user.birthDate, null, Role.MENAGER, null,null, null, -1, CustumerType.GOLD, false));
+		return user;
+	}
+	
 	
 	public User update(String username, User user) {
 		User userToUpdate = this.findByUsername(username);
@@ -109,6 +123,21 @@ public class UserDAO {
 	public void delete(String username) {
 		this.users.remove(username);
 	}
+	
+	public List<User> nadjiSlobodneMenadzere() {
+		List<User> ret = new ArrayList<User>();
+		for(User korisnik : users.values()) {
+			String username = korisnik.getUsername();
+			
+			if(korisnik.getRole().equals(Role.MENAGER) && korisnik.getSportsFacility() == null) {
+				ret.add(korisnik);
+			}
+		}
+		System.out.println(ret.size());
+		return ret;
+	}
+	
+	
 	
 	private void loadUsers(String contextPath) {
 		BufferedReader in = null;
@@ -127,6 +156,7 @@ public class UserDAO {
 			//SportsFacility visistedFacolity;
 			double collectedPoints=0;
 			CustumerType customerType;
+			boolean logickiObrisan = false;
 			while ((line = in.readLine()) != null) {
 				line = line.trim();
 				if (line.equals("") || line.indexOf('#') == 0)
@@ -144,11 +174,13 @@ public class UserDAO {
 					 collectedPoints = Double.parseDouble(st.nextToken().trim());
 					 customerType=CustumerType.valueOf(st.nextToken().trim());
 					 facilityMenager=st.nextToken().trim();
+					 logickiObrisan = Boolean.parseBoolean(st.nextToken().trim());
+					 
 					 if (role.equals(Role.MENAGER)) {
 						 SportsFacility sf= sportsFacilityDAO.findFacilitiy(facilityMenager);
-						 users.put(username, new User(username, password, firstName, lastName, gender, birthDate, null, role, null, sf, null, collectedPoints, customerType));
+						 users.put(username, new User(username, password, firstName, lastName, gender, birthDate, null, role, null, sf, null, collectedPoints, customerType,logickiObrisan));
 					 } else {
-						 users.put(username, new User(username, password, firstName, lastName, gender, birthDate, null, role, null, null, null, collectedPoints, customerType));
+						 users.put(username, new User(username, password, firstName, lastName, gender, birthDate, null, role, null, null, null, collectedPoints, customerType,logickiObrisan));
 					 }
 					
 				}

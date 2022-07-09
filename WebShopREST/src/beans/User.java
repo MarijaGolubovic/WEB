@@ -11,19 +11,29 @@ public class User implements Serializable {
 	public enum CustumerType{GOLD, SILVER, BRONZE};
 	
 	
-	private String username;
-	private String password;
-	private String firstName;
-	private String lastName;
-	private Gender gender;
-	private Date birthDate;
-	private TrainingHistory trainingHistory;
-	private Role role;
-	private Dues dues;//clanarina
-	private SportsFacility sportsFacility;
-	private SportsFacility visistedFacolity;
-	private double collectedPoints;
-	private CustumerType customerType;
+	public String username;
+	public String password;
+	public String firstName;
+	public String lastName;
+	public Gender gender;
+	public Date birthDate;
+	public TrainingHistory trainingHistory;
+	public Role role;
+	public Dues dues;//clanarina
+	public SportsFacility sportsFacility;
+	public SportsFacility visistedFacolity;
+	public double collectedPoints;
+	public CustumerType customerType;
+	public boolean logickiObrisan;
+	
+	
+	
+	public boolean isLogickiObrisan() {
+		return logickiObrisan;
+	}
+	public void setLogickiObrisan(boolean logickiObrisan) {
+		this.logickiObrisan = logickiObrisan;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -105,7 +115,7 @@ public class User implements Serializable {
 	public User(String username, String password, String firstName, String lastName, Gender gender,
 			Date birthDate, TrainingHistory trainingHistory, Role role, Dues dues,
 			SportsFacility sportsFacility, SportsFacility visistedFacolity, double collectedPoints,
-			CustumerType customerType) {
+			CustumerType customerType, boolean logickiObrisan) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -120,6 +130,7 @@ public class User implements Serializable {
 		this.visistedFacolity = visistedFacolity;
 		this.collectedPoints = collectedPoints;
 		this.customerType = customerType;
+		this.logickiObrisan = logickiObrisan;
 	}
 	public User() {
 		super();

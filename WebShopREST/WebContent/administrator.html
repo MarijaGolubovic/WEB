@@ -2,10 +2,32 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+ <script src="https://unpkg.com/elm-pep@1.0.6/dist/elm-pep.js"></script>
+ 
+ 
+ <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css">
+ 
+<title>Administrator</title>
 </head>
 <body>
-<h1>Administrator</h1>
-<a href="/WebShopREST/StartPage.html">Odjavi se</a>
+<div id="administrator">
+	 <ul>
+	 	<li><a href="/WebShopREST/StartPage.html">Odjavi se</a></li>
+	 </ul>
+	 <administrator-zaglavlje></administrator-zaglavlje>
+	 <router-view></router-view>
+ </div>
+ 
+ <script src="js/vue.js"></script>
+ <script src="js/vue-router.js"></script>
+ <script src="js/axios.js"></script>
+ <script src="js/jquery.min.js"></script>
+ <script src="js/v6.5.0-dist/ol.js"></script>
+ 
+ <script src="components\administrator\administratorZaglavlje.js"></script>
+ <script src="components\administrator\administratorKorisnici.js"></script>
+ <script src="components\administrator\administratorDodajObjekat.js"></script>
+ <script src="components\administrator\appAdministrator.js"></script>
 </body>
 </html>
