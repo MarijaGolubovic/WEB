@@ -2,40 +2,61 @@ package beans;
 
 public class Comment {
 	
-	private User customer;
-	private SportsFacility sportsFacility;
-	private Comment comment;
+	private String id;
+	private String username;
+	private String sportsFacility;
+	private String comment;
 	private int grade;
-	public User getCustomer() {
-		return customer;
-	}
-	public void setCustomer(User customer) {
-		this.customer = customer;
-	}
-	public SportsFacility getSportsFacility() {
-		return sportsFacility;
-	}
-	public void setSportsFacility(SportsFacility sportsFacility) {
-		this.sportsFacility = sportsFacility;
-	}
-	public Comment getComment() {
-		return comment;
-	}
-	public void setComment(Comment comment) {
-		this.comment = comment;
-	}
+	private boolean logickiObrisan;
+	
+	
 	public int getGrade() {
 		return grade;
 	}
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
-	public Comment(User customer, SportsFacility sportsFacility, Comment comment, int grade) {
+	
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getSportsFacility() {
+		return sportsFacility;
+	}
+	public void setSportsFacility(String sportsFacility) {
+		this.sportsFacility = sportsFacility;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	public boolean isLogickiObrisan() {
+		return logickiObrisan;
+	}
+	public void setLogickiObrisan(boolean logickiObrisan) {
+		this.logickiObrisan = logickiObrisan;
+	}
+	public Comment(String id, String username, String sportsFacility, String comment, int grade,
+			boolean logickiObrisan) {
 		super();
-		this.customer = customer;
+		this.id = id;
+		this.username = username;
 		this.sportsFacility = sportsFacility;
 		this.comment = comment;
 		this.grade = grade;
+		this.logickiObrisan = logickiObrisan;
 	}
 	public Comment() {
 		super();

@@ -22,6 +22,7 @@ import beans.SportsFacility.Content;
 import beans.User.CustumerType;
 import beans.User.Gender;
 import beans.User.Role;
+import dto.NewUserDTO;
 import dto.UserDTO;
 
 /***
@@ -104,6 +105,17 @@ public class UserDAO {
 		users.put(user.username, new User(user.username, user.password, user.firstName, user.lastName, user.gender, user.birthDate, null, Role.CUSTUMER, null, null, null, 0, CustumerType.BRONZE, false));
 		return user;
 	}
+	
+	
+	public NewUserDTO saveNewUser(NewUserDTO user) {
+		if(user.role==Role.CUSTUMER) {
+		users.put(user.username, new User(user.username, user.password, user.firstName, user.lastName, user.gender, user.birthDate, null, user.role, null, null, null, 0, CustumerType.BRONZE, false));
+		}else {
+			users.put(user.username, new User(user.username, user.password, user.firstName, user.lastName, user.gender, user.birthDate, null, user.role, null, null, null, -1, CustumerType.GOLD, false));
+		}
+		return user;
+	}
+	
 	
 	public UserDTO saveMenager(UserDTO user) {
 		SportsFacility sportFacylity= new SportsFacility();

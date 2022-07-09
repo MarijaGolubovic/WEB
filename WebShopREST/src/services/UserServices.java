@@ -1,6 +1,8 @@
 package services;
 
+
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -19,11 +21,14 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import beans.Comment;
 import beans.SportsFacility;
 import beans.User;
 import beans.User.Role;
+import dao.CommentDAO;
 import dao.SportsFacilityDAO;
 import dao.UserDAO;
+import dto.NewUserDTO;
 import dto.UserDTO;
 
 @Path("/login")
@@ -48,6 +53,11 @@ public class UserServices {
 		if (ctx.getAttribute("UserDAO") == null) {
 	    	String contextPath = ctx.getRealPath("");
 			ctx.setAttribute("UserDAO", new UserDAO(contextPath));
+			
+		}
+		if (ctx.getAttribute("CommentDAO") == null) {
+	    	String contextPath = ctx.getRealPath("");
+			ctx.setAttribute("CommentDAO", new CommentDAO(contextPath));
 			
 		}
 	}
@@ -167,6 +177,19 @@ public class UserServices {
 	return Response.status(400).entity("Korisnicko ime vec postoji!").build();	
 	}
 	
+	@POST
+	@Path("/dodajNovogKorisnika")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response dodajNovogKorisnika(NewUserDTO user) throws ParseException {
+		UserDAO korisnikDAO = (UserDAO) ctx.getAttribute("UserDAO");
+		if(!korisnikDAO.postojiKorisnickoIme(user.username)) {
+			korisnikDAO.saveNewUser(user);	
+			return Response.status(200).build();
+		}
+	return Response.status(400).entity("Korisnicko ime vec postoji!").build();	
+	}
+	
 	@GET
 	@Path("/treneri")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -201,4 +224,26 @@ public class UserServices {
 		return Response.status(400).entity("Korisnicko ime je zauzeto!").build();
 	}
 
+
+	@GET
+	@Path("/prikaziKomentare")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Comment> getUser() {
+		CommentDAO dao = (CommentDAO) ctx.getAttribute("CommentDAO");
+		return dao.findAll();
+	}
+	
+	@DELETE
+	@Path("/izbrisiKomentar/{korisnickoIme}")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response izbrisiKomentar(@PathParam("korisnickoIme") String korisnickoIme) throws ParseException {
+		CommentDAO korisnikDAO = (CommentDAO) ctx.getAttribute("CommentDAO");
+		if(korisnickoIme != null) {
+			korisnikDAO.delete(korisnickoIme);
+			return Response.status(200).build();
+		}
+		return Response.status(400).build();
+	}
+	
 }
