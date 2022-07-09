@@ -1,19 +1,29 @@
 package beans;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 public class Dues {
-	enum DuesType{DAILY, MONTHLY, ANNUAL};
+	public enum DuesType{Godisnja, Mesecna, Nedeljna};
 	
 	private String id;
 	private DuesType duesType;
-	private LocalDate paymentDate;
-	private LocalDateTime dateValid;
+	private Date paymentDate;
+	private Date dateValid;
 	private double price;
 	private User custumer;
 	private boolean status;
-	private int numberOfSesions;
+	private double numberOfSesions;
+	private double numberOfAvaliableSesions;
+	
+	public double getNumberOfAvaliableSesions() {
+		return numberOfAvaliableSesions;
+	}
+	public void posetiObjekat() {
+		numberOfAvaliableSesions--;
+	}
+	public void setNumberOfAvaliableSesions(double numberOfAvaliableSesions) {
+		this.numberOfAvaliableSesions = numberOfAvaliableSesions;
+	}
 	public String getId() {
 		return id;
 	}
@@ -26,16 +36,16 @@ public class Dues {
 	public void setDuesType(DuesType duesType) {
 		this.duesType = duesType;
 	}
-	public LocalDate getPaymentDate() {
+	public Date getPaymentDate() {
 		return paymentDate;
 	}
-	public void setPaymentDate(LocalDate paymentDate) {
+	public void setPaymentDate(Date paymentDate) {
 		this.paymentDate = paymentDate;
 	}
-	public LocalDateTime getDateValid() {
+	public Date getDateValid() {
 		return dateValid;
 	}
-	public void setDateValid(LocalDateTime dateValid) {
+	public void setDateValid(Date dateValid) {
 		this.dateValid = dateValid;
 	}
 	public double getPrice() {
@@ -56,14 +66,15 @@ public class Dues {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	public int getNumberOfSesions() {
+	public double getNumberOfSesions() {
 		return numberOfSesions;
 	}
-	public void setNumberOfSesions(int numberOfSesions) {
+	public void setNumberOfSesions(double numberOfSesions) {
 		this.numberOfSesions = numberOfSesions;
 	}
-	public Dues(String id, DuesType duesType, LocalDate paymentDate, LocalDateTime dateValid, double price,
-			User custumer, boolean status, int numberOfSesions) {
+
+	public Dues(String id, DuesType duesType, Date paymentDate, Date dateValid, double price,
+			User custumer, boolean status, double numberOfSesions, double numberOfAvaliableSesions) {
 		super();
 		this.id = id;
 		this.duesType = duesType;
@@ -72,6 +83,14 @@ public class Dues {
 		this.price = price;
 		this.custumer = custumer;
 		this.status = status;
+		this.numberOfSesions = numberOfSesions;
+		this.numberOfAvaliableSesions = numberOfAvaliableSesions;
+	}
+	
+	public Dues(DuesType duesType, double price, double numberOfSesions) {
+		super();
+		this.duesType = duesType;
+		this.price = price;
 		this.numberOfSesions = numberOfSesions;
 	}
 	public Dues() {

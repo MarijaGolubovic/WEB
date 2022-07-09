@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>Kupac</title>
 </head>
 <body>
-<h1>Kupac</h1>
-<a href="/WebShopREST/StartPage.html">Odjavi se</a>
+    
+    <div id="kupac">
+        <kupac-zaglavlje></kupac-zaglavlje>
+        <router-view></router-view>
+    </div>
+
+
+	<script src="js/vue.js"></script>
+	<script src="js/vue-router.js"></script>
+	<script src="js/axios.js"></script>	
+	<script src="components/Kupac/kupacZakazivanjeTreninga.js"></script>
+	<script src="components/Kupac/kupacPrikazZakazanihTreninga.js"></script>
+	<script src="components/Kupac/kupacClanarine.js"></script>
+	<script src="components/Kupac/kupacZaglavlje.js"></script>
+		<script src="components/Kupac/appKupac.js"></script>
 </body>
 </html>

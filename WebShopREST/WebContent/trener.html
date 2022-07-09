@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>Trener</title>
 </head>
 <body>
-<h1>Trener</h1>
-<a href="/WebShopREST/StartPage.html">Odjavi se</a>
+    
+    <div id="trener">
+        <trener-zaglavlje></trener-zaglavlje>
+        <router-view></router-view>
+    </div>
+
+
+	<script src="js/vue.js"></script>
+	<script src="js/vue-router.js"></script>
+	<script src="js/axios.js"></script>	
+	<script src="components/Trener/trenerPocetna.js"></script>
+	<script src="components/Trener/trenerZaglavlje.js"></script>
+	<script src="components/Trener/trenerZakazaniTreninzi.js"></script>
+	<script src="components/Trener/appTrener.js"></script>
 </body>
 </html>

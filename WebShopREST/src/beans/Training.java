@@ -10,6 +10,14 @@ public class Training {
 	private User trainer;
 	private String description;
 	private String image;
+	private double price;
+	
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
 	public String getName() {
 		return name;
 	}
@@ -58,7 +66,7 @@ public class Training {
 		this.image = image;
 	}
 	public Training(String name, TrainingType trainingType, SportsFacility sportsFacility, double duration,
-			User trainer, String description, String image) {
+			User trainer, String description, String image, double price) {
 		super();
 		this.name = name;
 		this.trainingType = trainingType;
@@ -67,7 +75,9 @@ public class Training {
 		this.trainer = trainer;
 		this.description = description;
 		this.image = image;
+		this.price = price;
 	}
+
 	
 	
 	

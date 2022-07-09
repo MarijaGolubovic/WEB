@@ -117,7 +117,7 @@ public class MenagerService {
 		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
 		SportsFacilityDAO sportsFacilityDAO = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
 		SportsFacility sportsFacility = sportsFacilityDAO.findFacilitiy(menadzer.getSportsFacility().getName());
-		Training treningZaDodavanje = new Training(trening.name, TrainingType.GROUP,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image);
+		Training treningZaDodavanje = new Training(trening.name, TrainingType.GROUP,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image, trening.price);
 		if(treningDAO.checkTrainingName(treningZaDodavanje.getName())) {
 			treningZaDodavanje.setSportsFacility(sportsFacility);
 			treningZaDodavanje.setTrainingType(TrainingType.GROUP);
@@ -136,7 +136,7 @@ public class MenagerService {
 		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
 		SportsFacilityDAO sportsFacilityDAO = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
 		SportsFacility sportsFacility = sportsFacilityDAO.findFacilitiy(menadzer.getSportsFacility().getName());
-		Training treningZaIzmenu = new Training(trening.name, TrainingType.GROUP,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image);
+		Training treningZaIzmenu = new Training(trening.name, TrainingType.GROUP,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image, trening.price);
 		treningDAO.saveTrainingChanges(treningZaIzmenu);
 
 			return Response
@@ -153,7 +153,7 @@ public class MenagerService {
 		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
 		SportsFacilityDAO sportsFacilityDAO = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
 		SportsFacility sportsFacility = sportsFacilityDAO.findFacilitiy(menadzer.getSportsFacility().getName());
-		Training treningZaIzmenu = new Training(trening.name, TrainingType.PERSONAL,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image);
+		Training treningZaIzmenu = new Training(trening.name, TrainingType.PERSONAL,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image, trening.price);
 		treningDAO.saveTrainingChanges(treningZaIzmenu);
 
 			return Response
@@ -170,7 +170,7 @@ public class MenagerService {
 		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
 		SportsFacilityDAO sportsFacilityDAO = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
 		SportsFacility sportsFacility = sportsFacilityDAO.findFacilitiy(menadzer.getSportsFacility().getName());
-		Training treningZaIzmenu = new Training(trening.name, TrainingType.OTHER,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image);
+		Training treningZaIzmenu = new Training(trening.name, TrainingType.OTHER,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image, trening.price);
 		treningDAO.saveTrainingChanges(treningZaIzmenu);
 
 			return Response
@@ -187,7 +187,7 @@ public class MenagerService {
 		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
 		SportsFacilityDAO sportsFacilityDAO = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
 		SportsFacility sportsFacility = sportsFacilityDAO.findFacilitiy(menadzer.getSportsFacility().getName());
-		Training treningZaDodavanje = new Training(trening.name, TrainingType.PERSONAL,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image);
+		Training treningZaDodavanje = new Training(trening.name, TrainingType.PERSONAL,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image, trening.price);
 		if(treningDAO.checkTrainingName(treningZaDodavanje.getName())) {
 			treningZaDodavanje.setSportsFacility(sportsFacility);
 			treningZaDodavanje.setTrainingType(TrainingType.PERSONAL);
@@ -206,7 +206,7 @@ public class MenagerService {
 		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
 		SportsFacilityDAO sportsFacilityDAO = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
 		SportsFacility sportsFacility = sportsFacilityDAO.findFacilitiy(menadzer.getSportsFacility().getName());
-		Training treningZaDodavanje = new Training(trening.name, TrainingType.OTHER,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image);
+		Training treningZaDodavanje = new Training(trening.name, TrainingType.OTHER,sportsFacility, trening.duration,trening.trainer, trening.description, trening.image, trening.price);
 		if(treningDAO.checkTrainingName(treningZaDodavanje.getName())) {
 			treningZaDodavanje.setSportsFacility(sportsFacility);
 			treningZaDodavanje.setTrainingType(TrainingType.OTHER);

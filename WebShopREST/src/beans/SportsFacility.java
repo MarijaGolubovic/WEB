@@ -85,14 +85,12 @@ public class SportsFacility {
 	}
 	public void setStartingTime(LocalTime startingTime) {
 		this.startingTime = startingTime;
-		startingTimeS=startingTime.toString();
 	}
 	public LocalTime getEndingTime() {
 		return endingTime;
 	}
 	public void setEndingTime(LocalTime endingTime) {
 		this.endingTime = endingTime;
-		endingTimeS=endingTime.toString();
 	}
 
 
@@ -135,8 +133,6 @@ public class SportsFacility {
 		}
 	}
 	public SportsFacility() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 	public String getLocationS() {
 		return locationS;

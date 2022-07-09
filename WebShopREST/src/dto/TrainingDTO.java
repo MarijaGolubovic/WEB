@@ -10,5 +10,6 @@ public class TrainingDTO {
 	public User trainer;
 	public String description;
 	public String image;
+	public double price;
 
 }
