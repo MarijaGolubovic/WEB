@@ -6,20 +6,21 @@ import java.util.List;
 public class SportsFacility {
 
 	public enum TypeSportsFacility{Teretana, Bazen, Plesni_studio, Sportski_centar};
-	public enum Content {Personalni_trening, Grupni_trening, Sauna};
+	public enum Content {Personalni_trening, Grupni_trening, Sauna, All_Inclusive};
 	public enum Status {Radi, Ne_radi};
 	
-	private String name;
-	private TypeSportsFacility typeSportsFacility;
-	private List<Content> contents;
-	private String contentsS;
-	private Status working;
-	private Location location;
-	private String locationS;
-	private double averageGrade;
-	private LocalTime startingTime;
-	private String startingTimeS;
-	private LocalTime endingTime;
+	public String name;
+	public TypeSportsFacility typeSportsFacility;
+	public List<Content> contents;
+	public String contentsS;
+	public Status working;
+	public Location location;
+	public String locationS;
+	public double averageGrade;
+	public LocalTime startingTime;
+	public String startingTimeS;
+	public LocalTime endingTime;
+	public String imageName;
 	public String getContentsS() {
 		return contentsS;
 	}
@@ -39,7 +40,7 @@ public class SportsFacility {
 		this.endingTimeS = endingTimeS;
 	}
 	private String endingTimeS;
-	private String imageName;
+	
 	
 
 	public String getImageName() {
@@ -104,6 +105,7 @@ public class SportsFacility {
 		this.typeSportsFacility = typeSportsFacility;
 		this.contents = contents;
 		contentsS="";
+		if(contents!=null) {
 		for (int i=0;i<contents.size();i++) {
 			if (i==0)
 				contentsS=contents.get(i).toString();
@@ -111,7 +113,8 @@ public class SportsFacility {
 				contentsS=contentsS+contents.get(i).toString();
 			if(i!=(contents.size()-1))
 				contentsS=contentsS+", ";
-		}
+		}}
+	
 		this.working = working;
 		this.location = location;
 		setLocationS(location.getAddress().getStreet()+" "+location.getAddress().getNumber()+", " +location.getAddress().getCity());

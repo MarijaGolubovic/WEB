@@ -2,9 +2,9 @@ package beans;
 
 public class Product {
 	
-	private String id;
-	private String name;
-	private double price;
+	public String id;
+	public String name;
+	public double price;
 	
 	public Product() {
 		

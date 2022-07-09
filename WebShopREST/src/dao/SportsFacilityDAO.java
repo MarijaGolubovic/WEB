@@ -21,10 +21,11 @@ import beans.SportsFacility.TypeSportsFacility;
 
 
 public class SportsFacilityDAO {
-	private HashMap<String, SportsFacility> facilities = new HashMap<String, SportsFacility>();
+	public HashMap<String, SportsFacility> facilities = new HashMap<String, SportsFacility>();
 
 	public SportsFacilityDAO() {
 	}
+	
 	
 	public SportsFacilityDAO(String contextPath) {
 		loadProducts(contextPath);

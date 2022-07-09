@@ -174,5 +174,31 @@ public class UserServices {
 		UserDAO korisnikDAO = (UserDAO) ctx.getAttribute("UserDAO");
 		return korisnikDAO.getTrainers();
 	}
+	
+	@DELETE
+	@Path("/izbrisiKorisnika/{korisnickoIme}")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response izbrisiKorisnika(@PathParam("korisnickoIme") String korisnickoIme) throws ParseException {
+		UserDAO korisnikDAO = (UserDAO) ctx.getAttribute("UserDAO");
+		if(korisnickoIme != null) {
+			korisnikDAO.delete(korisnickoIme);
+			return Response.status(200).build();
+		}
+		return Response.status(400).build();
+	}
+	
+	@POST
+	@Path("/dodajMenadzera")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response dodajMenadzera(UserDTO korisnik) throws ParseException {
+		UserDAO korisnikDAO = (UserDAO) ctx.getAttribute("UserDAO");
+		if(!korisnikDAO.postojiKorisnickoIme(korisnik.username)) {
+			korisnikDAO.saveMenager(korisnik);	
+			return Response.status(200).build();
+		}
+		return Response.status(400).entity("Korisnicko ime je zauzeto!").build();
+	}
 
 }
