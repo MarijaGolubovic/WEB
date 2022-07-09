@@ -60,6 +60,10 @@
                       <td><input  v-model="grupniTrening.duration" type="number" min="1" step="any" ></td>
                   </tr>
                   <tr>
+                      <th><label>Cena:</label></th>
+                      <td><input  v-model="grupniTrening.price" type="number" min="0" step="any" ></td>
+                  </tr>
+                  <tr>
                       <th><label>Trener:</label></th>
 	 						<td>
 	 							<select name="trener" v-model="grupniTrening.trainer" required>
@@ -96,6 +100,10 @@
                       <th><label>Trajanje:</label></th>
                       <td><input  v-model="izabraniGrupni.duration" type="number" min="1" step="any" ></td>
                   </tr>
+                   <tr>
+                      <th><label>Cena:</label></th>
+                      <td><input  v-model="izabraniGrupni.price" type="number" min="0" step="any" ></td>
+                  </tr>
                   <tr>
                       <th><label>Trener:</label></th>
 	 						<td>
@@ -126,6 +134,7 @@
 	    			<th>Slika</th>
 	    			<th>Naziv</th>
 	    			<th>Trajanje</th>
+	    			<th>Cena</th>
 	    			<th>Trener</th>
 	    			<th>Opis</th>
 	    		</tr>
@@ -134,6 +143,7 @@
 	    			<td><img :src="p.image" width="70" height="70"/></td>
 	    			<td>{{p.name}}</td>
 	    			<td>{{p.duration}}</td>
+	    			<td>{{p.price}}</td>
 	    			<td>{{p.trainer.firstName}} {{p.trainer.lastName}}</td>
 	    			<td>{{p.description}}</td>
 	    			<td><button v-on:click="detaljnijiPrikazGrupno">Izmeni trening</button></td>
@@ -154,6 +164,10 @@
                   <tr>
                       <th><label>Trajanje:</label></th>
                       <td><input  v-model="personalniTrening.duration" type="number" min="1" step="any" ></td>
+                  </tr>
+                   <tr>
+                      <th><label>Cena:</label></th>
+                      <td><input  v-model="personalniTrening.price" type="number" min="0" step="any" ></td>
                   </tr>
                   <tr>
                       <th><label>Trener:</label></th>
@@ -192,6 +206,10 @@
                       <th><label>Trajanje:</label></th>
                       <td><input  v-model="izabraniPersonalni.duration" type="number" min="1" step="any" ></td>
                   </tr>
+                    <tr>
+                      <th><label>Cena:</label></th>
+                      <td><input  v-model="izabraniPersonalni.price" type="number" min="0" step="any" ></td>
+                  </tr>
                   <tr>
                       <th><label>Trener:</label></th>
 	 						<td>
@@ -222,6 +240,7 @@
 	    			<th>Slika</th>
 	    			<th>Naziv</th>
 	    			<th>Trajanje</th>
+	    			<th>Cena</th>
 	    			<th>Trener</th>
 	    			<th>Opis</th>
 	    		</tr>
@@ -230,6 +249,7 @@
 	    			<td><img :src="p.image" width="70" height="70"/></td>
 	    			<td>{{p.name}}</td>
 	    			<td>{{p.duration}}</td>
+	    			<td>{{p.price}}</td>
 	    			<td>{{p.trainer.firstName}} {{p.trainer.lastName}}</td>
 	    			<td>{{p.description}}</td>
 	    			<td><button v-on:click="detaljnijiPrikazPersonalno">Izmeni trening</button></td>
@@ -250,6 +270,10 @@
                   <tr>
                       <th><label>Trajanje:</label></th>
                       <td><input  v-model="OstaloTrening.duration" type="number" min="1" step="any" ></td>
+                  </tr>
+                   <tr>
+                      <th><label>Cena:</label></th>
+                      <td><input  v-model="OstaloTrening.price" type="number" min="0" step="any" ></td>
                   </tr>
                   <tr>
                       <th><label>Trener:</label></th>
@@ -288,6 +312,10 @@
                       <th><label>Trajanje:</label></th>
                       <td><input  v-model="izabraniOstalo.duration" type="number" min="1" step="any" ></td>
                   </tr>
+                 <tr>
+                      <th><label>Cena:</label></th>
+                      <td><input  v-model="izabraniOstalo.price" type="number" min="0" step="any" ></td>
+                  </tr>
                   <tr>
                       <th><label>Trener:</label></th>
 	 						<td>
@@ -318,6 +346,7 @@
 	    			<th>Slika</th>
 	    			<th>Naziv</th>
 	    			<th>Trajanje</th>
+	    			<th>Cena</th>
 	    			<th>Trener</th>
 	    			<th>Opis</th>
 	    		</tr>
@@ -326,6 +355,7 @@
 	    			<td><img :src="p.image" width="70" height="70"/></td>
 	    			<td>{{p.name}}</td>
 	    			<td>{{p.duration}}</td>
+	    			<td>{{p.price}}</td>
 	    			<td>{{p.trainer.firstName}} {{p.trainer.lastName}}</td>
 	    			<td>{{p.description}}</td>
 	    			<td><button v-on:click="detaljnijiPrikazOstalo">Izmeni trening</button></td>
@@ -344,7 +374,8 @@
                     "duration": this.grupniTrening.duration,
                     "trainer": this.grupniTrening.trainer,
                     "description": this.grupniTrening.description,
-                    "image": this.grupniTrening.image
+                    "image": this.grupniTrening.image,
+                    "price": this.grupniTrening.price
                     
                 })
                 .then(response => {
@@ -365,7 +396,8 @@
                     "duration": this.OstaloTrening.duration,
                     "trainer": this.OstaloTrening.trainer,
                     "description": this.OstaloTrening.description,
-                    "image": this.OstaloTrening.image
+                    "image": this.OstaloTrening.image,
+                    "price": this.OstaloTrening.price
                     
                 })
                 .then(response => {
@@ -386,7 +418,8 @@
                     "duration": this.personalniTrening.duration,
                     "trainer": this.personalniTrening.trainer,
                     "description": this.personalniTrening.description,
-                    "image": this.personalniTrening.image
+                    "image": this.personalniTrening.image,
+                    "price": this.personalniTrening.price
                     
                 })
                 .then(response => {
@@ -406,7 +439,8 @@
                     "duration": this.izabraniGrupni.duration,
                     "trainer": this.izabraniGrupni.trainer,
                     "description": this.izabraniGrupni.description,
-                    "image": this.izabraniGrupni.image
+                    "image": this.izabraniGrupni.image,
+                    "price": this.izabraniGrupni.price
                     
                 })
                 .then(response => {
@@ -426,7 +460,8 @@
                     "duration": this.izabraniPersonalni.duration,
                     "trainer": this.izabraniPersonalni.trainer,
                     "description": this.izabraniPersonalni.description,
-                    "image": this.izabraniPersonalni.image
+                    "image": this.izabraniPersonalni.image,
+                    "price": this.izabraniPersonalni.price
                     
                 })
                 .then(response => {
@@ -446,7 +481,8 @@
                     "duration": this.izabraniOstalo.duration,
                     "trainer": this.izabraniOstalo.trainer,
                     "description": this.izabraniOstalo.description,
-                    "image": this.izabraniOstalo.image
+                    "image": this.izabraniOstalo.image,
+                    "price": this.izabraniOstalo.price
                     
                 })
                 .then(response => {

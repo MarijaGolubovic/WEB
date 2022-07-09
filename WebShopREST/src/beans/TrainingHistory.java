@@ -1,19 +1,25 @@
 package beans;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 public class TrainingHistory {
 	
+	public enum Status {Prosli, Buduci, Otkazan}
+	
 	private LocalDateTime dataTimeApplication;
+	private String dataTimeApplicationS;
+	private LocalDateTime dataTraining;
+	private String dataTrainingS;
+	private String dataTrainingSS;
 	private Training training;
 	private User customer;
-	private User trainer;
-	public LocalDateTime getDataTimeApplication() {
-		return dataTimeApplication;
-	}
-	public void setDataTimeApplication(LocalDateTime dataTimeApplication) {
-		this.dataTimeApplication = dataTimeApplication;
-	}
+	private Status status;
+	
+
 	public Training getTraining() {
 		return training;
 	}
@@ -26,24 +32,64 @@ public class TrainingHistory {
 	public void setCustomer(User customer) {
 		this.customer = customer;
 	}
-	public User getTrainer() {
-		return trainer;
-	}
-	public void setTrainer(User trainer) {
-		this.trainer = trainer;
-	}
-	public TrainingHistory(LocalDateTime dataTimeApplication, Training training, User customer, User trainer) {
-		super();
-		this.dataTimeApplication = dataTimeApplication;
-		this.training = training;
-		this.customer = customer;
-		this.trainer = trainer;
-	}
+
 	public TrainingHistory() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+	public LocalDateTime getDataTimeApplication() {
+		return dataTimeApplication;
+	}
+	public void setDataTimeApplication(LocalDateTime dataTimeApplication) {
+		this.dataTimeApplication = dataTimeApplication;
+		this.dataTimeApplicationS=dataTimeApplication.format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
+	}
+	public LocalDateTime getDataTraining() {
+		return dataTraining;
+	}
+	public void setDataTraining(LocalDateTime dataTraining) {
+		this.dataTraining = dataTraining;
+		this.dataTrainingS=dataTraining.format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
+		this.dataTrainingSS=dataTraining.toString();
+	}
+	public TrainingHistory(LocalDateTime dataTimeApplication, LocalDateTime dataTraining, Training training,
+			User customer) {
+		super();
+		this.dataTimeApplication = dataTimeApplication;
+		this.dataTraining = dataTraining;
+		this.training = training;
+		this.customer = customer;
+		status=Status.Buduci;
+		this.dataTrainingS=dataTraining.format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
+		this.dataTimeApplicationS=dataTimeApplication.format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm"));
+		this.dataTrainingSS=dataTraining.toString();
+	}
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+	public String getDataTimeApplicationS() {
+		return dataTimeApplicationS;
+	}
+	public void setDataTimeApplicationS(String dataTimeApplicationS) {
+		this.dataTimeApplicationS = dataTimeApplicationS;
+	}
+	public String getDataTrainingS() {
+		return dataTrainingS;
+	}
+	public void setDataTrainingS(String dataTrainingS) {
+		this.dataTrainingS = dataTrainingS;
+	}
+	public String getDataTrainingSS() {
+		return dataTrainingSS;
+	}
+	public void setDataTrainingSS(String dataTrainingSS) {
+		this.dataTrainingSS = dataTrainingSS;
+	}
+
+
 	
 	
 

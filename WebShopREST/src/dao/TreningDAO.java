@@ -16,6 +16,7 @@ import org.json.simple.parser.ParseException;
 
 import beans.SportsFacility;
 import beans.Training;
+import beans.TrainingHistory;
 import beans.Training.TrainingType;
 
 
@@ -27,8 +28,16 @@ public class TreningDAO {
 	public TreningDAO(SportsFacilityDAO sportsFacilityDAO, UserDAO userDAO) {
 		sviTreninzi = new ArrayList<Training>();
 		izmenjenTrening = new Training();
-		pathToRepository = "C:\\Users\\TOSHIBA\\Desktop\\WEB-Projekat\\WEB\\WebShopREST\\WebContent\\podaci\\";
+		pathToRepository = "C:\\Users\\HP\\Desktop\\6.semestar\\WEB\\Projekat - FINAL\\WEB\\WebShopREST\\WebContent\\podaci\\";
 		loadTrainings(sportsFacilityDAO, userDAO);
+	}
+	
+	public ArrayList<Training> getPersonalTrainings() {
+		ArrayList<Training> trainings = new ArrayList<Training>();
+		for(int i = 0; i < sviTreninzi.size(); i++)
+			if(sviTreninzi.get(i).getTrainingType().equals(TrainingType.PERSONAL))
+				trainings.add(sviTreninzi.get(i));
+		return trainings;
 	}
 	
 	public ArrayList<Training> getAllTraining() {
@@ -59,6 +68,29 @@ public class TreningDAO {
 			if(sviTreninzi.get(i).getSportsFacility().getName().equals(name) && sviTreninzi.get(i).getTrainingType().equals(TrainingType.GROUP))
 				trainingsFromFacility.add(sviTreninzi.get(i));
 		return trainingsFromFacility;
+	}
+	
+	public ArrayList<Training> getGroupTrainingsTrainer(String username) {
+		ArrayList<Training> trainingsTrainer = new ArrayList<Training>();
+		for(int i = 0; i < sviTreninzi.size(); i++)
+			if(sviTreninzi.get(i).getTrainer().getUsername().equals(username) && sviTreninzi.get(i).getTrainingType().equals(TrainingType.GROUP))
+				trainingsTrainer.add(sviTreninzi.get(i));
+		return trainingsTrainer;
+	}
+	
+	public ArrayList<Training> getPersonalTrainingsTrainer(String username) {
+		ArrayList<Training> trainingsTrainer = new ArrayList<Training>();
+		for(int i = 0; i < sviTreninzi.size(); i++)
+			if(sviTreninzi.get(i).getTrainer().getUsername().equals(username) && sviTreninzi.get(i).getTrainingType().equals(TrainingType.PERSONAL))
+				trainingsTrainer.add(sviTreninzi.get(i));
+		return trainingsTrainer;
+	}
+	
+	public Training getTraining(String name) {
+		for(int i = 0; i < sviTreninzi.size(); i++)
+			if(sviTreninzi.get(i).getName().equals(name))
+				return sviTreninzi.get(i);
+		return null;
 	}
 	
 	public ArrayList<Training> getPersonalTrainingsFromFacilities(String name) {
@@ -108,9 +140,10 @@ public class TreningDAO {
         String trainer = (String) trainingObject.get("trainer");
         String description = (String) trainingObject.get("description");
         String image = (String) trainingObject.get("image");
+        double price = (double) trainingObject.get("price");
       
         
-        Training newTraining = new Training(name, TrainingType.valueOf(trainingType),null, duration, null, description, image);
+        Training newTraining = new Training(name, TrainingType.valueOf(trainingType),null, duration, null, description, image, price);
         if (!(sportsFacilityDAO.findFacilitiy(sportsFacility)).equals(null)) {
         	newTraining.setSportsFacility(sportsFacilityDAO.findFacilitiy(sportsFacility));
         }
@@ -136,6 +169,7 @@ public class TreningDAO {
 			trainingObject.put("description", a.getDescription());
 			trainingObject.put("trainer", a.getTrainer().getUsername());
 			trainingObject.put("image", a.getImage());
+			trainingObject.put("price", a.getPrice());
 			
 			JSONObject trainingObject2 = new JSONObject(); 
 			trainingObject2.put("training", trainingObject);
@@ -159,6 +193,7 @@ public class TreningDAO {
 				a.setDuration(training.getDuration());
 				a.setTrainer(training.getTrainer());
 				a.setDescription(training.getDescription());
+				a.setPrice(training.getPrice());
 			}
 		}
 		
@@ -173,6 +208,7 @@ public class TreningDAO {
 			trainingObject.put("description", a.getDescription());
 			trainingObject.put("trainer", a.getTrainer().getUsername());
 			trainingObject.put("image", a.getImage());
+			trainingObject.put("price", a.getPrice());
 			
 			JSONObject trainingObject2 = new JSONObject(); 
 			trainingObject2.put("training", trainingObject);

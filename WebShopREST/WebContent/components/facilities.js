@@ -60,8 +60,9 @@ Vue.component("facilities", {
 				}
 			}
 		},
+
 	}
-	
+
     ,
     mounted () {
         axios
