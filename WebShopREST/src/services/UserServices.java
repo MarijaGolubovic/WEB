@@ -175,6 +175,16 @@ public class UserServices {
 		return korisnikDAO.getTrainers();
 	}
 	
+	@GET
+	@Path("/profil")
+	@Produces(MediaType.APPLICATION_JSON)
+	public User getUser() {
+		User korisnik = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		return korisnik;
+	}
+	
+
+	
 	@DELETE
 	@Path("/izbrisiKorisnika/{korisnickoIme}")
 	@Produces(MediaType.TEXT_HTML)
@@ -199,6 +209,30 @@ public class UserServices {
 			return Response.status(200).build();
 		}
 		return Response.status(400).entity("Korisnicko ime je zauzeto!").build();
+	}
+	
+	@PUT
+	@Path("/izmeniProfil")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response izmeniProfil(UserDTO korisnik) throws ParseException {
+		UserDAO korisnikDAO = (UserDAO) ctx.getAttribute("UserDAO");
+		User korisnikU = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		String username= korisnikU.getUsername();
+		korisnikU.setFirstName(korisnik.firstName);
+		korisnikU.setLastName(korisnik.lastName);
+		korisnikU.setUsername(korisnik.username);
+		korisnikU.setPassword(korisnik.password);
+		korisnikU.setGender(korisnik.gender);
+		if(username.equals(korisnik.username)) {
+			korisnikDAO.update(username, korisnikU);	
+			return Response.status(200).build();
+		} else
+		if(!korisnikDAO.postojiKorisnickoIme(korisnik.username)) {
+			korisnikDAO.update(username, korisnikU);	
+			return Response.status(200).build();
+		}else 
+			return Response.status(400).entity("Korisnicko ime je zauzeto!").build();
 	}
 
 }

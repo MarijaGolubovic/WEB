@@ -106,9 +106,14 @@ public class TrenerService {
 		TrainingHistoryDAO treningHDAO = (TrainingHistoryDAO) ctx.getAttribute("TrainingHistoryDAO");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
 		TrainingHistory tH = treningHDAO.getTraining(trainer, LocalDateTime.parse(training.dataTraining, formatter));
-		tH.setStatus(Status.Otkazan);
-		treningHDAO.saveTrainingChanges(tH);
-		return Response.status(200).build();
+		if (LocalDateTime.parse(training.dataTraining, formatter).isAfter(LocalDateTime.now().plusDays(2))) {		
+			tH.setStatus(Status.Otkazan);
+			treningHDAO.saveTrainingChanges(tH);
+			return Response.status(200).build();
+		} else {
+			return Response.status(400).entity("Trening ne moze da se otkaze!").build();
+		}
+
 		
 	}
 	
