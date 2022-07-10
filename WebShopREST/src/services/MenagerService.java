@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response;
 
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
+import beans.Comment;
 import beans.SportsFacility;
 import beans.Training;
 import beans.TrainingHistory;
@@ -29,6 +30,7 @@ import beans.TrainingHistory.Status;
 import beans.Training.TrainingType;
 import beans.User;
 import beans.SportsFacility.TypeSportsFacility;
+import dao.CommentDAO;
 import dao.SportsFacilityDAO;
 import dao.TrainingHistoryDAO;
 import dao.TreningDAO;
@@ -171,6 +173,25 @@ public class MenagerService {
 			}
 		}				
 		return kupci;
+	}
+
+	@GET
+	@Path("/prikaziKomentareMenadzer")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Comment> getCommentM() {
+		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		SportsFacilityDAO dao = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
+		UserDAO userDAO = (UserDAO) ctx.getAttribute("UserDAO");
+		SportsFacility objekat = dao.findFacilitiy(menadzer.getSportsFacility().getName());
+		CommentDAO commentDao = (CommentDAO) ctx.getAttribute("CommentDAO");
+		
+		Collection<Comment> komentari = new ArrayList<>();
+		for (Comment c:commentDao.findAll()) {
+			if (c.getSportsFacility().equals(objekat.getName())) {
+				komentari.add(c);
+			}
+		}		
+		return komentari;
 	}
 	
 	

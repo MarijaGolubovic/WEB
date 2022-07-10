@@ -26,7 +26,7 @@ public class PromoKodDAO {
 	
 	public PromoKodDAO(String contextPath) {
 		promoKodovi =  new ArrayList<PromoKod>();
-		pathToRepository = "C:\\Users\\TOSHIBA\\Desktop\\WEB-Projekat\\WEB\\WebShopREST\\WebContent\\podaci\\";
+		pathToRepository = "C:\\Users\\HP\\Desktop\\6.semestar\\WEB\\Projekat - FINAL\\WEB\\WebShopREST\\WebContent\\podaci\\";
 		loadPromoKod();
 	}
 	

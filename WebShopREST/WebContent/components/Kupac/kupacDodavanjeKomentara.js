@@ -84,7 +84,7 @@
 	 },
      mounted() {
         axios
-             .get('rest/facilities/')
+             .get('rest/kupac/objekti')
              .then(response => (this.facilities = response.data)),
         axios
              .get('rest/login/prikaziKomentare')

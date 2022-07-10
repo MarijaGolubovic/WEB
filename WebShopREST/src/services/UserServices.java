@@ -230,6 +230,7 @@ public class UserServices {
 		return dao.findAll();
 	}
 	
+
 	@DELETE
 	@Path("/izbrisiKomentar/{id}")
 	@Produces(MediaType.TEXT_HTML)

@@ -6,5 +6,6 @@ public class DuesDTO {
 	public DuesType duesType;	
 	public double price;
 	public int numberOfSesions;
+	public String promoKod;
 
 }
