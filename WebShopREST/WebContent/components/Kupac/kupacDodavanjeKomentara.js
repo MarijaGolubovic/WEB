@@ -13,7 +13,9 @@
       <table>
           <tr>
               <th>Tekst komentara:</th>
-              <td><input type="text" v-model="noviKomentar.tekstKomentara" required style="height:3cm;"></td>
+              <td>
+              <textarea  rows="4" cols="50" v-model="noviKomentar.tekstKomentara" required></textarea>
+              </td>
           </tr>	
           <tr>
               <th>Komentarisani objekat:</th>

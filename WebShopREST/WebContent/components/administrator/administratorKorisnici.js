@@ -71,15 +71,15 @@
  				<button v-on:click="iskljuciFilter">x</button>
  			</div>
  			<div>
- 			<button class="dugmeObrisiKorisnika" v-on:click="obrisiKorisnika">Obrisi korisnika</button>
-        		<table>
-					<tr>
+        		<table width="100%" border="0">
+					<tr bgcolor="lightgrey">
 						<th>Ime</th>
 						<th>Prezime</th>
 						<th>Korisnicko ime</th>
 						<th>Uloga</th>
 						<th>Tip korisnika</th>
 						<th>Bodovi</th>
+						<th></th>
 					</tr>
 					<tr v-for="k in filtriraniKorisnici"  v-on:click="izaberiKorisnika(k)"  v-if="!k.logickiObrisan"
 					 :class="{selected : izabraniKorisnik.username == k.username}">
@@ -88,7 +88,10 @@
 						<td>{{k.username }}</td>
 						<td>{{k.role}}</td>
 						<td v-if="k.role == 'CUSTUMER'">{{k.customerType}}</td>
+						<td v-else>{{&nbsp}}</td>
 						<td v-if="k.role == 'CUSTUMER'">{{k.collectedPoints}}</td>
+						<td v-else>{{&nbsp}}</td>
+						<td><button class="dugmeObrisiKorisnika" v-on:click="izaberiKorisnika(k);obrisiKorisnika();">Obrisi korisnika</button></td>
 					</tr>
 				</table>
     		</div>

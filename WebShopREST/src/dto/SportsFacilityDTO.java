@@ -22,6 +22,6 @@ public class SportsFacilityDTO {
 	public String longlat;
 	public String logo;
 	public double averageGrade;
-	public LocalTime startingTime;
-	public LocalTime endingTime;
+	public String startingTime;
+	public String endingTime;
 }

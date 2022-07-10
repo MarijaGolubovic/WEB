@@ -52,8 +52,7 @@ Vue.component("administrator-promoKod", {
                     <td>{{p.pocetakVazenja|formatVremena}}</td>
                     <td>{{p.krajVazenja|formatVremena}}</td>
                     <td>{{p.brojKoristenja}}</td>
-                    <td>{{p.procenatUmanjenja}}</td>
-					
+                    <td>{{p.procenatUmanjenja|formatProcenta}}</td>
 	    		</tr>
 	    </table>
     </div>		    
@@ -96,10 +95,8 @@ Vue.component("administrator-promoKod", {
 			const date = new Date(value);
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 		},
-        formatOznake: function(value) {
-		    tokens=[];
-            tokens= value.split("#");
-        return tokens[0];
+        formatProcenta: function(value) {
+        return value+"%";
 		},
 	  },
  });

@@ -55,6 +55,13 @@
 							</select>
 							</td>
  						</tr>
+						<tr>
+							<th>Radno vrijeme:</th>
+							 <td>
+							 	&nbsp od &nbsp <input type="time" v-model="noviObjekat.startingTime" id="startingTime"  required>&nbsp
+							 	do &nbsp <input type="time" v-model="noviObjekat.endingTime" id="endingTime"  required>
+						 	</td>
+ 						</tr>
 
 
  						<tr>
@@ -143,7 +150,7 @@
 	 				</table>	
 				</form>
  			</div>
-			<div id="map"  v-if="mapaVis" style="width:32cm;height:10cm;">  </div>
+			<div id="map"  v-if="mapaVis" style="width:100%;height:10cm;">  </div>
 
 			<div>
 			  <table width="100%" border="0">
@@ -165,6 +172,7 @@
 	    			<td>{{p.working}}</td>
 	    			<td>{{p.locationS}}</td>
 	    			<td>{{p.averageGrade}}</td>
+					
 	    		</tr>
 	    	  </table>
 			</div>
@@ -210,6 +218,7 @@
 							.get('rest/facilities/')
 							.then(response => (this.facilities = response.data))
 					   this.mapaVis=false;
+					   window.location.reload();
 					  
                     })
                     .catch(err =>{ 

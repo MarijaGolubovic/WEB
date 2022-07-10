@@ -32,6 +32,7 @@ public class TreningDAO {
 		loadTrainings(sportsFacilityDAO, userDAO);
 	}
 	
+	
 	public ArrayList<Training> getPersonalTrainings() {
 		ArrayList<Training> trainings = new ArrayList<Training>();
 		for(int i = 0; i < sviTreninzi.size(); i++)

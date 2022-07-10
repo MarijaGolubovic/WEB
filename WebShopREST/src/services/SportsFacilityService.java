@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -14,11 +15,18 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 import beans.SportsFacility;
+import beans.SportsFacility.Status;
+import beans.TrainingHistory;
 import beans.User;
 import dao.SportsFacilityDAO;
+import dao.TrainingHistoryDAO;
+import dao.TreningDAO;
+import dao.UserDAO;
+import dto.NewUserDTO;
 
 @Path("/facilities")
 public class SportsFacilityService {
@@ -39,7 +47,8 @@ public class SportsFacilityService {
 		if (ctx.getAttribute("SportsFacilityDAO") == null) {
 	    	String contextPath = ctx.getRealPath("");
 			ctx.setAttribute("SportsFacilityDAO", new SportsFacilityDAO(contextPath));
-		}
+		}	
+		
 	}
 	
 	@GET
@@ -83,4 +92,9 @@ public class SportsFacilityService {
 		SportsFacilityDAO dao = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
 		dao.delete(name);
 	}
+	
+	
+	
+	
+	
 }
