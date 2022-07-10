@@ -72,55 +72,7 @@ public class UserServices {
 			
 		}
 	}
-/*	
-	@GET
-	@Path("/")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<User> getUser() {
-		UserDAO dao = (UserDAO) ctx.getAttribute("UserDAO");
-		return dao.findAll();
-	}
-	
-	@GET
-	@Path("/{username}/{password}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public User getUser(@PathParam("username") String username, @PathParam("password") String password) {
-		UserDAO dao = (UserDAO) ctx.getAttribute("UserDAO");
-		return dao.find(username, password);
-	}
-	
-	@GET
-	@Path("/{username}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public User getUserByUsername(@PathParam("username") String username) {
-		UserDAO dao = (UserDAO) ctx.getAttribute("UserDAO");
-		return dao.findByUsername(username);
-	}
-	
-	@POST
-	@Path("/")
-	@Produces(MediaType.APPLICATION_JSON)
-	public User User(User user) {
-		UserDAO dao = (UserDAO) ctx.getAttribute("UserDAO");
-		return dao.save(user);
-	}
-	
-	@PUT
-	@Path("/{username}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public User getUser(@PathParam("username") String username, User user) {
-		UserDAO dao = (UserDAO) ctx.getAttribute("UserDAO");
-		return dao.update(username, user);
-	}
-	
-	@DELETE
-	@Path("/{username}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public void getFacilities(@PathParam("username") String username) {
-		UserDAO dao = (UserDAO) ctx.getAttribute("UserDAO");
-		dao.delete(username);
-	}
-	*/
+
 
 	@POST
 	@Path("/login")
@@ -209,6 +161,16 @@ public class UserServices {
 		return korisnikDAO.getTrainers();
 	}
 	
+	@GET
+	@Path("/profil")
+	@Produces(MediaType.APPLICATION_JSON)
+	public User getUser() {
+		User korisnik = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		return korisnik;
+	}
+	
+
+	
 	@DELETE
 	@Path("/izbrisiKorisnika/{korisnickoIme}")
 	@Produces(MediaType.TEXT_HTML)
@@ -234,12 +196,36 @@ public class UserServices {
 		}
 		return Response.status(400).entity("Korisnicko ime je zauzeto!").build();
 	}
+	
+	@PUT
+	@Path("/izmeniProfil")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response izmeniProfil(UserDTO korisnik) throws ParseException {
+		UserDAO korisnikDAO = (UserDAO) ctx.getAttribute("UserDAO");
+		User korisnikU = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		String username= korisnikU.getUsername();
+		korisnikU.setFirstName(korisnik.firstName);
+		korisnikU.setLastName(korisnik.lastName);
+		korisnikU.setUsername(korisnik.username);
+		korisnikU.setPassword(korisnik.password);
+		korisnikU.setGender(korisnik.gender);
+		if(username.equals(korisnik.username)) {
+			korisnikDAO.update(username, korisnikU);	
+			return Response.status(200).build();
+		} else
+		if(!korisnikDAO.postojiKorisnickoIme(korisnik.username)) {
+			korisnikDAO.update(username, korisnikU);	
+			return Response.status(200).build();
+		}else 
+			return Response.status(400).entity("Korisnicko ime je zauzeto!").build();
+	}
 
 
 	@GET
 	@Path("/prikaziKomentare")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Comment> getUser() {
+	public Collection<Comment> getComment() {
 		CommentDAO dao = (CommentDAO) ctx.getAttribute("CommentDAO");
 		return dao.findAll();
 	}

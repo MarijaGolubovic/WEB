@@ -40,6 +40,22 @@ public class TreningDAO {
 		return trainings;
 	}
 	
+	public ArrayList<Training> getGroupTrainings() {
+		ArrayList<Training> trainings = new ArrayList<Training>();
+		for(int i = 0; i < sviTreninzi.size(); i++)
+			if(sviTreninzi.get(i).getTrainingType().equals(TrainingType.GROUP))
+				trainings.add(sviTreninzi.get(i));
+		return trainings;
+	}
+	
+	public ArrayList<Training> getOtherTrainings() {
+		ArrayList<Training> trainings = new ArrayList<Training>();
+		for(int i = 0; i < sviTreninzi.size(); i++)
+			if(sviTreninzi.get(i).getTrainingType().equals(TrainingType.OTHER))
+				trainings.add(sviTreninzi.get(i));
+		return trainings;
+	}
+	
 	public ArrayList<Training> getAllTraining() {
 		return sviTreninzi;
 	}

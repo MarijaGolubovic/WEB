@@ -2,6 +2,7 @@ const KupacZakazivanje = { template: '<app-zakazivanjeKupac></app-zakazivanjeKup
 const KupacZakazani = { template: '<app-ZakazaniTreninzi></app-ZakazaniTreninzi>'}
 const KupacClanarine = { template: '<app-clanarineKupac></app-clanarineKupac>'}
 const KupacKomentari = { template: '<app-komentariKupac></app-komentariKupac>'}
+const KupacProfil = { template: '<app-profil></app-profil>'}
 
 const router = new VueRouter ({
 	mode: 'hash',
@@ -9,7 +10,8 @@ const router = new VueRouter ({
 		{path: '/zakazivanje', component: KupacZakazivanje },
 		{path: '/zakazani', component: KupacZakazani },
 		{path: '/clanarine', component: KupacClanarine },
-		{path: '/komentari', component: KupacKomentari}
+		{path: '/komentari', component: KupacKomentari},
+		{path: '/profil', component: KupacProfil }
 	]
 })
 

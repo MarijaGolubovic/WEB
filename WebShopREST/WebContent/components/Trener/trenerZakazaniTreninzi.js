@@ -77,6 +77,7 @@
                 })
                 .then(response => {
                     alert("Trening je otkazan!");
+                    this.$router.go(0);
                 })
                 .catch(err => {
                     alert("Trening se ne moze otkazati!");

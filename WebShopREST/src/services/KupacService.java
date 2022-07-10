@@ -73,10 +73,20 @@ public class KupacService {
 	@GET
 	@Path("/grupniTreninzi")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<TrainingHistory> getGroupTraining() {
-		TrainingHistoryDAO treningDAO = (TrainingHistoryDAO) ctx.getAttribute("TrainingHistoryDAO");	
+	public Collection<Training> getGroupTraining() {
+		TreningDAO treningDAO = (TreningDAO) ctx.getAttribute("TreningDAO");	
 		return treningDAO.getGroupTrainings();
 	}
+	
+	@GET
+	@Path("/ostaloTreninzi")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Training> getOtherTraining() {
+		TreningDAO treningDAO = (TreningDAO) ctx.getAttribute("TreningDAO");	
+		return treningDAO.getOtherTrainings();
+	}
+	
+
 	
 	@GET
 	@Path("/personalniTreninziKupac")
@@ -142,18 +152,24 @@ public class KupacService {
 	@Produces(MediaType.TEXT_HTML)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response zakaziGrupni(TrainingHistoryDTO trening) throws ParseException, IOException {
+		TreningDAO treningDAO = (TreningDAO) ctx.getAttribute("TreningDAO");
 		TrainingHistoryDAO treningHDAO = (TrainingHistoryDAO) ctx.getAttribute("TrainingHistoryDAO");
 		DuesDAO dueDAO = (DuesDAO) ctx.getAttribute("DuesDAO");		
-		TreningDAO treningDAO = (TreningDAO) ctx.getAttribute("TreningDAO");	
-		User kupac = (User) request.getSession().getAttribute("ulogovanKorisnik");	
+		User kupac = (User) request.getSession().getAttribute("ulogovanKorisnik");		
 		Dues duo = dueDAO.getDue(kupac.getUsername());
-		TrainingHistory treningZaDodavanje = new TrainingHistory(LocalDateTime.now(),LocalDateTime.parse(trening.dataTraining),treningDAO.getTraining(trening.training), kupac);
-		if(duo.getNumberOfAvaliableSesions()>0 && duo.getDateValid().toLocalDate().isAfter(LocalDateTime.parse(trening.dataTraining).toLocalDate()) ) {
+		Training tr=treningDAO.getTraining(trening.training);
+		LocalDate ld= LocalDate.parse(trening.dataTraining);
+		TrainingHistory treningZaDodavanje = new TrainingHistory(LocalDateTime.now(),ld.atTime(18,0), tr, kupac);
+		if (ld.atTime(18,0).isBefore(LocalDateTime.now())) {
+			return Response.status(400).entity("Ne mozete zakazati trening u proslosti!").build();
+		}
+		else if(duo.getNumberOfAvaliableSesions()>0 && duo.getDateValid().toLocalDate().isAfter(LocalDate.parse(trening.dataTraining))) {
 			duo.posetiObjekat();
+			dueDAO.saveNumberSesion(duo);
 			treningHDAO.saveTraining(treningZaDodavanje);			
 			return Response.status(200).build();
-		}
-		return Response.status(400).entity("Nemate odgovarajucu clanarinu!").build();
+		} else {
+		return Response.status(400).entity("Nemate odgovarajucu clanarinu!").build();}
 	}
 	
 	@POST
@@ -161,6 +177,30 @@ public class KupacService {
 	@Produces(MediaType.TEXT_HTML)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response zakaziPersonalni(TrainingHistoryDTO trening) throws ParseException, IOException {
+		TreningDAO treningDAO = (TreningDAO) ctx.getAttribute("TreningDAO");
+		TrainingHistoryDAO treningHDAO = (TrainingHistoryDAO) ctx.getAttribute("TrainingHistoryDAO");
+		DuesDAO dueDAO = (DuesDAO) ctx.getAttribute("DuesDAO");		
+		User kupac = (User) request.getSession().getAttribute("ulogovanKorisnik");		
+		Dues duo = dueDAO.getDue(kupac.getUsername());
+		Training tr=treningDAO.getTraining(trening.training);
+		TrainingHistory treningZaDodavanje = new TrainingHistory(LocalDateTime.now(),LocalDateTime.parse(trening.dataTraining), tr, kupac);
+		if (LocalDateTime.parse(trening.dataTraining).isBefore(LocalDateTime.now())) {
+			return Response.status(400).entity("Ne mozete zakazati trening u proslosti!").build();
+		}
+		else if(duo.getNumberOfAvaliableSesions()>0 && duo.getDateValid().toLocalDate().isAfter(LocalDateTime.parse(trening.dataTraining).toLocalDate())) {
+			duo.posetiObjekat();
+			dueDAO.saveNumberSesion(duo);
+			treningHDAO.saveTraining(treningZaDodavanje);			
+			return Response.status(200).build();
+		} else {
+		return Response.status(400).entity("Nemate odgovarajucu clanarinu!").build();}
+	}
+	
+	@POST
+	@Path("/zakaziOstalo")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response zakaziOstalo(TrainingHistoryDTO trening) throws ParseException, IOException {
 		TreningDAO treningDAO = (TreningDAO) ctx.getAttribute("TreningDAO");
 		TrainingHistoryDAO treningHDAO = (TrainingHistoryDAO) ctx.getAttribute("TrainingHistoryDAO");
 		DuesDAO dueDAO = (DuesDAO) ctx.getAttribute("DuesDAO");		

@@ -3,39 +3,51 @@
  	 return {
 	      grupniTreninzi: [],
 	      personalniTreninzi: [],
+	      ostaloTreninzi: [],
 	      izabraniGrupni:{},
 	      izabraniPersonalni:{},
-	      personalniZakazivanje: false
+	      izabraniOstalo:{},
+	      personalniZakazivanje: false,
+	      grupniZakazivanje: false,
+	      ostaloZakazivanje: false
 
         }
  	
  	},
 	    template: ` 
     	<div>
+    	
+    	  <div v-show="grupniZakazivanje">
+	    	 	<form @submit="PotvrdiZakazivanjeGrupni">
+	    		 <table>
+                  <tr>
+                      <th><label>Datum:</label></th>
+                      <td><input  v-model="izabraniGrupni.dataTraining" type="date" required></td>
+                      <td>{{izabraniGrupni.name}}</td>
+                  </tr>                    
+                  </table>
+                   <button type="submit">Zakaži</button>
+                </form>
+	    	</div>
 	    	<p> Grupni treninzi </p>	    	
 	        <table width="100%" border="0">
 	    		<tr bgcolor="lightgrey">
 	    			<th>Slika</th>
-	    			<th>Naziv</th>   			
-	    			<th>Cena</th>
-	    			<th>Objekat</th>
-	    			<th>Opis</th>
-	    			<th>Trener</th>
-	    			<th>Termin</th>
+	    			<th>Naziv</th>
 	    			<th>Trajanje</th>
-	    			<th>Zakaži</th>
+	    			<th>Cena</th>
+	    			<th>Trener</th>
+	    			<th>Opis</th>
 	    		</tr>
 	    			
 	    		<tr v-for="p in grupniTreninzi" v-on:click="izaberiGrupni(p)" :class="{selected : izabraniGrupni.name == p.name}">
-	    			<td><img :src="p.training.image" width="70" height="70"/></td>
-	    			<td>{{p.training.name}}</td>
-	    			<td>{{p.training.price}}</td>
-	    			<td>{{p.training.sportsFacility.name}}</td>
-	    			<td>{{p.training.description}}</td>
-	    			<td>{{p.training.trainer.firstName}} {{p.training.trainer.lastName}} </td>
-	    			<td>{{p.dataTraining}}</td>
-					<td>{{p.training.duration}}</td>
-	    			<td><button v-on:click="zakaziGrupni">Zakaži</button></td>
+	    			<td><img :src="p.image" width="70" height="70"/></td>
+	    			<td>{{p.name}}</td>
+	    			<td>{{p.duration}}</td>
+	    			<td>{{p.price}}</td>
+	    			<td>{{p.trainer.firstName}} {{p.trainer.lastName}}</td>
+	    			<td>{{p.description}}</td>
+	    			<td><button v-on:click="zakaziGrupni">Zakazi trening</button></td>
 	    		</tr>
 	    	</table>
 
@@ -73,6 +85,41 @@
 	    			<td><button v-on:click="zakaziPersonalni">Zakazi trening</button></td>
 	    		</tr>
 	    	</table> 	
+	    	
+	    	 <div v-show="ostaloZakazivanje">
+	    	 	<form @submit="PotvrdiZakazivanjeOstalo">
+	    		 <table>
+                  <tr>
+                      <th><label>Datum:</label></th>
+                      <td><input  v-model="izabraniOstalo.dataTraining" type="datetime-local" required step="1800"></td>
+                      <td>{{izabraniOstalo.name}}</td>
+                  </tr>                    
+                  </table>
+                   <button type="submit">Zakaži</button>
+                </form>
+	    	</div>
+	    	
+	    	<p> Individualne posete </p>
+	       <table width="100%" border="0">
+	    		<tr bgcolor="lightgrey">
+	    			<th>Slika</th>
+	    			<th>Naziv</th>
+	    			<th>Trajanje</th>
+	    			<th>Cena</th>
+	    			<th>Trener</th>
+	    			<th>Opis</th>
+	    		</tr>
+	    			
+	    		<tr v-for="p in ostaloTreninzi" v-on:click="izaberiOstalo(p)" :class="{selected : izabraniOstalo.name == p.name}">
+	    			<td><img :src="p.image" width="70" height="70"/></td>
+	    			<td>{{p.name}}</td>
+	    			<td>{{p.duration}}</td>
+	    			<td>{{p.price}}</td>
+	    			<td>{{p.trainer.firstName}} {{p.trainer.lastName}}</td>
+	    			<td>{{p.description}}</td>
+	    			<td><button v-on:click="zakaziOstalo">Zakazi trening</button></td>
+	    		</tr>
+	    	</table> 	
     	</div>		  
     	`,
     methods:{
@@ -85,21 +132,40 @@
                 })
                 .then(response => {
                     alert("Trening je zakazan!");
+                    this.personalniZakazivanje=false;
                 })
                 .catch(err => {
                     alert("Trening se ne moze zakazati!");
                 })
 		
 	},
-	zakaziGrupni:function(event) {
+	PotvrdiZakazivanjeGrupni:function(event) {
 		event.preventDefault();
             axios
                 .post('rest/kupac/zakaziGrupni', {
                     "dataTraining": this.izabraniGrupni.dataTraining,
-                    "training": this.izabraniGrupni.training                
+                    "training": this.izabraniGrupni.name                
                 })
                 .then(response => {
                     alert("Trening je zakazan!");
+                    this.grupniZakazivanje = false;
+                })
+                .catch(err => {
+                    alert("Trening se ne moze zakazati!");
+                })
+    		
+    	},
+    	
+    	PotvrdiZakazivanjeOstalo :function(event) {
+		event.preventDefault();
+            axios
+                .post('rest/kupac/zakaziOstalo', {
+                    "dataTraining": this.izabraniOstalo.dataTraining,
+                    "training": this.izabraniOstalo.name                
+                })
+                .then(response => {
+                    alert("Trening je zakazan!");
+                    this.ostaloZakazivanje=false;
                 })
                 .catch(err => {
                     alert("Trening se ne moze zakazati!");
@@ -109,12 +175,23 @@
     zakaziPersonalni: function(){
 	this.personalniZakazivanje=true;
 	},
-	izaberiGrupni: function(grupni) {
-    		this.izabraniGrupni = grupni;
+	zakaziGrupni: function() {
+    		this.grupniZakazivanje = true;
+    	},
+    zakaziOstalo: function() {
+    		this.ostaloZakazivanje = true;
     	},
    izaberiPersonalni: function(personalni) {
     		this.izabraniPersonalni = personalni;
     		this.personalniZakazivanje=true;
+    	},
+   izaberiGrupni: function(grupni) {
+    		this.izabraniGrupni = grupni;
+    		this.grupniZakazivanje=true;
+    	},
+   izaberiOstalo: function(ostalo) {
+    		this.izabraniOstalo = ostalo;
+    		this.ostaloZakazivanje=true;
     	},
 	 }
 	,
@@ -124,7 +201,10 @@
           .then(response => (this.grupniTreninzi = response.data)),
          axios
           .get('rest/kupac/personalniTreninzi')
-          .then(response => (this.personalniTreninzi = response.data))
+          .then(response => (this.personalniTreninzi = response.data)),
+         axios
+          .get('rest/kupac/ostaloTreninzi')
+          .then(response => (this.ostaloTreninzi = response.data))
 
     },
 });

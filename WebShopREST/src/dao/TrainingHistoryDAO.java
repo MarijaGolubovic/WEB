@@ -82,7 +82,7 @@ public class TrainingHistoryDAO {
 	public ArrayList<TrainingHistory> getGroupTrainingsCustemer(String username) {
 		ArrayList<TrainingHistory> trainingsTrainer = new ArrayList<TrainingHistory>();
 		for(int i = 0; i < sviTreninzi.size(); i++)
-			if(sviTreninzi.get(i).getTraining().getTrainer().getUsername().equals(username) && sviTreninzi.get(i).getTraining().getTrainingType().equals(TrainingType.GROUP) && sviTreninzi.get(i).getDataTraining().isAfter(LocalDateTime.now().minusDays(30)))
+			if(sviTreninzi.get(i).getCustomer().getUsername().equals(username) && sviTreninzi.get(i).getTraining().getTrainingType().equals(TrainingType.GROUP) && sviTreninzi.get(i).getDataTraining().isAfter(LocalDateTime.now().minusDays(30)))
 				trainingsTrainer.add(sviTreninzi.get(i));
 		return trainingsTrainer;
 	}
@@ -115,6 +115,14 @@ public class TrainingHistoryDAO {
 		ArrayList<TrainingHistory> trainingsFromFacility = new ArrayList<TrainingHistory>();
 		for(int i = 0; i < sviTreninzi.size(); i++)
 			if(sviTreninzi.get(i).getTraining().getSportsFacility().getName().equals(name) && sviTreninzi.get(i).getTraining().getTrainingType().equals(TrainingType.PERSONAL))
+				trainingsFromFacility.add(sviTreninzi.get(i));
+		return trainingsFromFacility;
+	}
+	
+	public ArrayList<TrainingHistory> getOtherTrainingsFromFacilities(String name) {
+		ArrayList<TrainingHistory> trainingsFromFacility = new ArrayList<TrainingHistory>();
+		for(int i = 0; i < sviTreninzi.size(); i++)
+			if(sviTreninzi.get(i).getTraining().getSportsFacility().getName().equals(name) && sviTreninzi.get(i).getTraining().getTrainingType().equals(TrainingType.OTHER))
 				trainingsFromFacility.add(sviTreninzi.get(i));
 		return trainingsFromFacility;
 	}
