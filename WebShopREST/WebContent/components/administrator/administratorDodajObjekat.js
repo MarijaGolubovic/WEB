@@ -9,7 +9,8 @@
             mapaVis: false,
             slikaVis: false,
 			prikazDodatogObjekta:false,
-			facilities: null
+			facilities: null,
+			izabraniObjekat: {}
         }
  	
  	},
@@ -162,6 +163,7 @@
 	    			<th>Status</th>
 	    			<th>Adresa</th>
 	    			<th>Prosečna ocena</th>
+					<th></th>
 	    		</tr>
 	    			
 	    		<tr v-for="p in facilities">
@@ -172,6 +174,7 @@
 	    			<td>{{p.working}}</td>
 	    			<td>{{p.locationS}}</td>
 	    			<td>{{p.averageGrade}}</td>
+					<td><button v-on:click="izaberiobjekat(p);obrisiObjekat();">Obrisi objekat</button></td>
 					
 	    		</tr>
 	    	  </table>
@@ -247,6 +250,23 @@
                     	alert("Korisnicko ime vec postoji!");
                 })
 	 	},
+		 izaberiobjekat: function(objekat){
+			this.izabraniObjekat = objekat;
+		},
+		obrisiObjekat: function(){
+			if(this.izabraniObjekat.name){
+				axios
+                    .delete('rest/facilities/izbrisiObjekat/' + this.izabraniObjekat.name)
+                    .then(response => {
+                        window.location.reload();
+                    })
+                    .catch(err =>{ 
+                    	alert("Doslo je do greske prilikom brisanja!");
+                })
+            }else{
+            	alert("Doslo je do greske prilikom brisanja!");
+            }
+		},
 	 	dodajNovogMenadzera: function(){
 	 		this.objekatVis = false;
 	 		this.menadzeriVis = true;

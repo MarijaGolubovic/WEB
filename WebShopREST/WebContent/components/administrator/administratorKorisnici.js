@@ -91,7 +91,7 @@
 						<td v-else>{{&nbsp}}</td>
 						<td v-if="k.role == 'CUSTUMER'">{{k.collectedPoints}}</td>
 						<td v-else>{{&nbsp}}</td>
-						<td><button class="dugmeObrisiKorisnika" v-on:click="izaberiKorisnika(k);obrisiKorisnika();">Obrisi korisnika</button></td>
+						<td><button v-on:click="izaberiKorisnika(k);obrisiKorisnika();">Obrisi korisnika</button></td>
 					</tr>
 				</table>
     		</div>
