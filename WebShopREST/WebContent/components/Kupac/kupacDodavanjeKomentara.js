@@ -46,7 +46,7 @@
 	    			<th>Ocjena</th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in komentari" v-if="p.logickiObrisan == false">
+	    		<tr v-for="p in komentari" v-if="p.logickiObrisan ===true">
 	    			<td>{{p.username}}</td>
 					<td>{{p.sportsFacility}}</td>
 					<td>{{p.comment}}</td>

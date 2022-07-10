@@ -38,10 +38,10 @@ Vue.component("app-menadzerKomentari", {
           .then(response => (this.komentari = response.data))
     },filters: {
 		statusKomentara: function(value) {
-			if(value){
-				return "DA";
-			}else {
+			if(value==false){
 				return "NE";
+			}else {
+				return "DA";
 			}
 		}
 	  },

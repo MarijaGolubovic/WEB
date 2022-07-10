@@ -23,7 +23,7 @@ Vue.component("administrator-komentari", {
 					<td>{{p.sportsFacility}}</td>
 					<td>{{p.comment}}</td>
 					<td>{{p.grade}}</td>
-					<td v-if="!p.logickiObrisan"><button   v-on:click="izaberiKomentar(p)" :class="{selected : izabraniKomentar.id == p.id}" v-on:click="obrisiKomentar">Odbij komentar</button></td>
+					<td v-if="p.logickiObrisan==false"><button   v-on:click="izaberiKomentar(p);obrisiKomentar();" :class="{selected : izabraniKomentar.id == p.id}">Odobri komentar</button></td>
 	    		</tr>
 	    	</table>
     	</div>		  
