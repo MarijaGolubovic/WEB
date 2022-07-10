@@ -1,6 +1,6 @@
 Vue.component("facilities", { 
-	data () {
-	    return {
+	data(){
+ 	 return {
 	      facilities: null,
 	      pretraga: {
             	"naziv": '',
@@ -8,11 +8,16 @@ Vue.component("facilities", {
             	"lokacija": '',
             	"ocena": ''
             },
-            filtriraniObjekti:[]
-	    }
-	},
+            filtriraniObjekti:[],
+            detaljno:false,
+            globalno:true,
+            izabraniObjekat:{}
+        }
+ 	
+ 	},
 	    template: ` 
     	<div>
+    		<div v-show="globalno">
     	 	<table>	 				
  				<tr>
  					<th>Naziv: </th> <td><input type="text" v-model="pretraga.naziv" v-on:input="search"></td>
@@ -35,7 +40,7 @@ Vue.component("facilities", {
 	    			<th>Radno vreme do</th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in filtriraniObjekti">
+	    		<tr v-for="p in filtriraniObjekti"  v-on:click="izaberiObjekat(p)" :class="{selected : izabraniObjekat.name == p.name}">
 	    			<td><img :src="p.imageName" width="70" height="70"/></td>
 	    			<td>{{p.name}}</td>
 	    			<td>{{p.typeSportsFacility}}</td>
@@ -45,8 +50,30 @@ Vue.component("facilities", {
 	    			<td>{{p.averageGrade}}</td>
 	    			<td>{{p.startingTimeS}}</td>
 	    			<td>{{p.endingTimeS}}</td>
+	    			<td><button v-on:click="detaljnijiPrikaz">Detaljno</button></td>
 	    		</tr>
 	    	</table>
+	    	</div>	
+	    	
+	    	<div v-show="detaljno">
+	    	<button class="napustiDetaljno" v-on:click="zatvoriDetaljnijiPrikaz">x</button>
+	    	<table width="100%" border="0">
+	    	<tr bgcolor="lightgrey">
+	    	    <th>Naziv</th>
+	    		<th>Adresa</th>
+	    		<th>Prosečna ocena</th>
+	    	</tr>
+	    	<tr>
+	    	<td>{{izabraniObjekat.name}}</td>
+	    	<td>{{izabraniObjekat.locationS}}</td>
+	    	<td>{{izabraniObjekat.averageGrade}}</td>
+	    	</tr>
+	    	</table>
+	    	
+	    	
+	    	</div>
+	    	
+	    	
     	</div>		  
     	`,
     methods:{
@@ -60,9 +87,19 @@ Vue.component("facilities", {
 				}
 			}
 		},
-
+		izaberiObjekat: function(objekat) {
+    		this.izabraniObjekat = objekat;
+    	},
+    	detaljnijiPrikaz: function(){
+			this.detaljno = true;
+			this.globalno = false;
+		},
+		zatvoriDetaljnijiPrikaz: function(){
+			this.detaljno = false;
+			this.globalno = true;
+		},
 	}
-
+	
     ,
     mounted () {
         axios
