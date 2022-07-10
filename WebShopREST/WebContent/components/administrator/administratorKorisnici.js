@@ -16,6 +16,7 @@
  	},
  	template: ` 
  		<div>
+ 			<br><br><br>
 	 		<button  @click=" pretragaVisk = !pretragaVisk ">Pretraga</button>
  			<button   @click=" sortVisk = !sortVisk">Sortiranje</button>
  			<button   @click=" filterVisk = !filterVisk">Filtriranje</button>
@@ -71,6 +72,7 @@
  				<button v-on:click="iskljuciFilter">x</button>
  			</div>
  			<div>
+ 			<br><br>
         		<table width="100%" border="0">
 					<tr bgcolor="lightgrey">
 						<th>Ime</th>

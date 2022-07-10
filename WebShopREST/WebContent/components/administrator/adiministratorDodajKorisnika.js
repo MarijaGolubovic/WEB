@@ -7,7 +7,10 @@
  	},
  	template: ` 
  	 <div>
+ 	 
       <form @submit="dodajNovogKorisnika" method="post">
+      <br><br><br>
+      <div style="background-color:#ffffff; width:25%;">
       <table>
           <tr>
               <th>Ime:</th>
@@ -50,6 +53,7 @@
              <button type="submit">Dodaj korisnika</button>
          </tr>
       </table>	
+      </div>
  </form>
 
     </div>

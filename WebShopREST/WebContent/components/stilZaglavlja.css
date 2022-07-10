@@ -1,0 +1,27 @@
+@charset "ISO-8859-1";
+.zaglavljeLinkovi{
+	height:1.5cm;
+	width:5cm;
+	text-align:center;
+	size:0.3cm;
+	font-size:22px;
+	font-weight: bold;
+}
+a:link {
+  	color: #152a6a;
+  }
+a:active {
+  color: #152a6a;
+}
+a:visited {
+  color: #152a6a;
+}
+.tabelaSaLinkovimaZaglavlje{
+	width:85%; 
+	text-align:center;
+}
+
+.zaglavljePozadina{
+	height:2cm;
+	background-color:lightgrey; 
+}
