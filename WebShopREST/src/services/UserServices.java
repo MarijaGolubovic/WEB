@@ -51,55 +51,7 @@ public class UserServices {
 			
 		}
 	}
-/*	
-	@GET
-	@Path("/")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<User> getUser() {
-		UserDAO dao = (UserDAO) ctx.getAttribute("UserDAO");
-		return dao.findAll();
-	}
-	
-	@GET
-	@Path("/{username}/{password}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public User getUser(@PathParam("username") String username, @PathParam("password") String password) {
-		UserDAO dao = (UserDAO) ctx.getAttribute("UserDAO");
-		return dao.find(username, password);
-	}
-	
-	@GET
-	@Path("/{username}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public User getUserByUsername(@PathParam("username") String username) {
-		UserDAO dao = (UserDAO) ctx.getAttribute("UserDAO");
-		return dao.findByUsername(username);
-	}
-	
-	@POST
-	@Path("/")
-	@Produces(MediaType.APPLICATION_JSON)
-	public User User(User user) {
-		UserDAO dao = (UserDAO) ctx.getAttribute("UserDAO");
-		return dao.save(user);
-	}
-	
-	@PUT
-	@Path("/{username}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public User getUser(@PathParam("username") String username, User user) {
-		UserDAO dao = (UserDAO) ctx.getAttribute("UserDAO");
-		return dao.update(username, user);
-	}
-	
-	@DELETE
-	@Path("/{username}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public void getFacilities(@PathParam("username") String username) {
-		UserDAO dao = (UserDAO) ctx.getAttribute("UserDAO");
-		dao.delete(username);
-	}
-	*/
+
 
 	@POST
 	@Path("/login")

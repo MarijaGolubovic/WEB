@@ -2,6 +2,7 @@ package services;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -19,12 +20,17 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
+
 import beans.SportsFacility;
 import beans.Training;
+import beans.TrainingHistory;
+import beans.TrainingHistory.Status;
 import beans.Training.TrainingType;
 import beans.User;
 import beans.SportsFacility.TypeSportsFacility;
 import dao.SportsFacilityDAO;
+import dao.TrainingHistoryDAO;
 import dao.TreningDAO;
 import dao.UserDAO;
 import dto.TrainingDTO;
@@ -54,6 +60,10 @@ public class MenagerService {
 		if(ctx.getAttribute("TreningDAO")== null) {;
 		ctx.setAttribute("TreningDAO", new TreningDAO((SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO"),(UserDAO) ctx.getAttribute("UserDAO")));
 		}
+		
+		if(ctx.getAttribute("TrainingHistoryDAO")== null) {;
+		ctx.setAttribute("TrainingHistoryDAO", new TrainingHistoryDAO((TreningDAO) ctx.getAttribute("TreningDAO"),(UserDAO) ctx.getAttribute("UserDAO")));
+		}
 	
 	}
 	
@@ -82,6 +92,87 @@ public class MenagerService {
 		
 		return treningDAO.getGroupTrainingsFromFacilities(objekat.getName());
 	}
+	
+	@GET
+	@Path("/treneri")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<User> getTrainers() {
+		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		SportsFacilityDAO dao = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
+		UserDAO userDAO = (UserDAO) ctx.getAttribute("UserDAO");
+		TreningDAO treningDAO = (TreningDAO) ctx.getAttribute("TreningDAO");
+		SportsFacility objekat = dao.findFacilitiy(menadzer.getSportsFacility().getName());
+		Collection<User> treneri = new ArrayList<>();
+		Collection<User> users= userDAO.findAll();
+		ArrayList<Training> treninzi=treningDAO.getAllTraining();
+		for (User a : users) {
+			for(Training t: treninzi) {
+				if(t.getTrainer().getUsername().equals(a.getUsername())&& t.getSportsFacility().getName().equals(objekat.getName())) {
+					treneri.add(a);
+					break;
+				}
+			}
+		}				
+		return treneri;
+	}
+	
+	@GET
+	@Path("/korisnici")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<User> getUsers() {
+		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		SportsFacilityDAO dao = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
+		UserDAO userDAO = (UserDAO) ctx.getAttribute("UserDAO");
+		TreningDAO treningDAO = (TreningDAO) ctx.getAttribute("TreningDAO");
+		SportsFacility objekat = dao.findFacilitiy(menadzer.getSportsFacility().getName());
+		Collection<User> korisnici = new ArrayList<>();
+		Collection<User> users= userDAO.findAll();
+		ArrayList<Training> treninzi=treningDAO.getAllTraining();
+		for (User a : users) {
+			for(Training t: treninzi) {
+				if(t.getTrainer().getUsername().equals(a.getUsername())&& t.getSportsFacility().getName().equals(objekat.getName())) {
+					korisnici.add(a);
+					break;
+				}
+			}
+		}
+		TrainingHistoryDAO treningHDAO = (TrainingHistoryDAO) ctx.getAttribute("TrainingHistoryDAO");
+		ArrayList<TrainingHistory> treninziH=treningHDAO.getAllTraining();
+		for (User a : users) {
+			for(TrainingHistory t: treninziH) {
+				if(t.getCustomer().getUsername().equals(a.getUsername()) && t.getTraining().getSportsFacility().getName().equals(objekat.getName())&& t.getStatus().equals(Status.Prosli)) {
+					korisnici.add(a);
+					break;
+				}
+			}
+		}	
+		return korisnici;
+	}
+	
+	@GET
+	@Path("/kupci")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<User> getCustomers() {
+		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		SportsFacilityDAO dao = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
+		UserDAO userDAO = (UserDAO) ctx.getAttribute("UserDAO");
+		TreningDAO treningDAO = (TreningDAO) ctx.getAttribute("TreningDAO");
+		SportsFacility objekat = dao.findFacilitiy(menadzer.getSportsFacility().getName());
+		TrainingHistoryDAO treningHDAO = (TrainingHistoryDAO) ctx.getAttribute("TrainingHistoryDAO");
+		Collection<User> kupci = new ArrayList<>();
+		Collection<User> users= userDAO.findAll();
+		ArrayList<TrainingHistory> treninzi=treningHDAO.getAllTraining();
+		for (User a : users) {
+			for(TrainingHistory t: treninzi) {
+				if(t.getCustomer().getUsername().equals(a.getUsername()) && t.getTraining().getSportsFacility().getName().equals(objekat.getName())&& t.getStatus().equals(Status.Prosli)) {
+					kupci.add(a);
+					break;
+				}
+			}
+		}				
+		return kupci;
+	}
+	
 	
 	@GET
 	@Path("/personalniTreninziMenadzera")
@@ -216,125 +307,38 @@ public class MenagerService {
 		return Response.status(400).entity("Naziv treninga vec postoji!").build();
 	}
 	
-//	@GET
-//	@Path("/artikli")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public List<Artikal> nadjiSveArtikle() {
-//		ArtikalDAO artikalDAO = (ArtikalDAO)ctx.getAttribute("artikalDAO");
-//		Korisnik menadzer = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
-//		RestoranDAO restoranDAO = (RestoranDAO) ctx.getAttribute("restoranDAO");
-//		Restoran restoran = restoranDAO.vratiRestoranMenadzera(menadzer.getRestoran());
-//		return restoranDAO.nadjiArtikleRestorana(restoran);
-//	}
-//	@GET
-//	@Path("/komentari")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public List<Komentar> nadjiKomentare() {
-//		Korisnik menadzer = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
-//		RestoranDAO restoranDAO = (RestoranDAO) ctx.getAttribute("restoranDAO");
-//		KorisnikDAO korisnikDAO = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
-//		Restoran restoran = restoranDAO.vratiRestoranMenadzera(menadzer.getRestoran());
-//		return korisnikDAO.vratiKomentareKupaca(restoran);
-//	}
-//	@GET
-//	@Path("/porudzbine")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public List<Porudzbina> nadjiPorudzbine() {
-//		Korisnik menadzer = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
-//		RestoranDAO restoranDAO = (RestoranDAO) ctx.getAttribute("restoranDAO");
-//		Restoran restoran = restoranDAO.vratiRestoranMenadzera(menadzer.getRestoran());
-//		return restoranDAO.nadjiPorudzbineRestorana(restoran);
-//	}
-//	@GET
-//	@Path("/porudzbineZaDostavu")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Response nadjiPorudzbineZaDostavu() {
-//		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
-//		KorisnikDAO korisnikDAO = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
-//		List<Porudzbina> porudzbine = korisnikDAO.vratiPorudzbineZaDostavu(korisnik);
-//		return Response
-//				.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
-//				.entity(porudzbine)
-//				.build();
-//	}
-//	@GET
-//	@Path("/nedostavljenePorudzbine")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Response nadjiNedostavljene() {
-//		Korisnik korisnik = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
-//		KorisnikDAO korisnikDAO = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
-//		List<Porudzbina> porudzbine = korisnikDAO.vratNedostavljenePorudzbine(korisnik);
-//		return Response
-//				.status(Response.Status.ACCEPTED).entity("SUCCESS SHOW")
-//				.entity(porudzbine)
-//				.build();
-//	}
-//	@DELETE
-//	@Path("/izbrisiArtikal")
-//	@Produces(MediaType.TEXT_HTML)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public Response izbrisiArtikal(String nazivSaForme){
-//		ArtikalDAO artikalDAO = (ArtikalDAO) ctx.getAttribute("artikalDAO");
-//		RestoranDAO restoranDAO = (RestoranDAO) ctx.getAttribute("restoranDAO");
-//		String naziv = nazivSaForme.split(":")[1].replace("}", "").replace("\"", "");
-//		Artikal artikal  = artikalDAO.nadjiArtikal(naziv);
-//		restoranDAO.izbrisiArtikalRestorana(artikal);
-//		artikalDAO.izbrisiArtikal(naziv);
-//		return Response.status(200).build();
-//	}
-//	@POST
-//	@Path("/sacuvajIzmjene")
-//	@Produces(MediaType.TEXT_PLAIN)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public Response sacuvajIzmjeneArtikla(ArtikalDTO artikalDTO) {
-//		
-//		ArtikalDAO artikalDAO = (ArtikalDAO)ctx.getAttribute("artikalDAO");
-//		RestoranDAO restoranDAO = (RestoranDAO) ctx.getAttribute("restoranDAO");
-//		System.out.println(artikalDTO.naziv);
-//		Artikal artikalZaIzmjenu  = artikalDAO.nadjiArtikal(artikalDTO.naziv);
-//		Artikal izmjenjen = new Artikal(artikalDTO.naziv, artikalDTO.cijena, artikalDTO.tipArtikla, artikalZaIzmjenu.getRestoran(),
-//				artikalDTO.kolicina, artikalDTO.opis, artikalZaIzmjenu.getSlika());
-//		System.out.println(artikalDTO.naziv);
-//		restoranDAO.izmjeniArtikalRestorana(artikalZaIzmjenu, izmjenjen);
-//		artikalDAO.izmjeniArtikal(artikalZaIzmjenu, izmjenjen);
-//		request.getSession().setAttribute("ulogovanKorisnik", izmjenjen);
-//		return Response
-//				.status(Response.Status.ACCEPTED).entity("SUCCESS CHANGE")
-//				.build();
-//	}
-//	@PUT
-//	@Path("/promijeniStatusPorudzbine")
-//	@Produces(MediaType.TEXT_HTML)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public Response promijeniStatusPorudzbine(PorudzbinaDTO porudzbinaDTO) throws ParseException {
-//		KorisnikDAO korisnikDAO = (KorisnikDAO) ctx.getAttribute("korisnikDAO");
-//		if(korisnikDAO.promijeniStatusPorudzbine(porudzbinaDTO)) {
-//			return Response.status(200).build();
-//		}
-//		return Response.status(400).entity("Pogresna kolicina unesena!").build();
-//	}
-//	@PUT
-//	@Path("/otvoriRestoran/{id}")
-//	@Produces(MediaType.TEXT_HTML)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public Response otvoriRestoran(@PathParam("id") int id)throws ParseException{
-//		RestoranDAO restoranDAO = (RestoranDAO) ctx.getAttribute("restoranDAO");
-//		Korisnik admin = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
-//		System.out.println(id);
-//		restoranDAO.otvoriRestoran(id);
-//		return Response.status(200).build();
-//		
-//	}
-//	@PUT
-//	@Path("/zatvoriRestoran/{id}")
-//	@Produces(MediaType.TEXT_HTML)
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public Response zatvoriRestoran(@PathParam("id") int id)throws ParseException{
-//		RestoranDAO restoranDAO = (RestoranDAO) ctx.getAttribute("restoranDAO");
-//		Korisnik admin = (Korisnik) request.getSession().getAttribute("ulogovanKorisnik");
-//		System.out.println(id);
-//		restoranDAO.zatvoriRestoran(id);
-//		return Response.status(200).build();
+	@GET
+	@Path("/personalniZakazaniTreninzi")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<TrainingHistory> getPersonalTraining() {
+		TrainingHistoryDAO treningHDAO = (TrainingHistoryDAO) ctx.getAttribute("TrainingHistoryDAO");
+		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		SportsFacilityDAO sportsFacilityDAO = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
+		SportsFacility sportsFacility = sportsFacilityDAO.findFacilitiy(menadzer.getSportsFacility().getName());		
+		return treningHDAO.getPersonalTrainingsFromFacilities(sportsFacility.getName());
+	}
+	
+	@GET
+	@Path("/grupniZakazaniTreninzi")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<TrainingHistory> getGroupTraining() {
+		TrainingHistoryDAO treningHDAO = (TrainingHistoryDAO) ctx.getAttribute("TrainingHistoryDAO");
+		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		SportsFacilityDAO sportsFacilityDAO = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
+		SportsFacility sportsFacility = sportsFacilityDAO.findFacilitiy(menadzer.getSportsFacility().getName());		
+		return treningHDAO.getGroupTrainingsFromFacilities(sportsFacility.getName());
+	}
+	
+	@GET
+	@Path("/ostaliZakazaniTreninzi")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<TrainingHistory> getOtherTraining() {
+		TrainingHistoryDAO treningHDAO = (TrainingHistoryDAO) ctx.getAttribute("TrainingHistoryDAO");
+		User menadzer = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		SportsFacilityDAO sportsFacilityDAO = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
+		SportsFacility sportsFacility = sportsFacilityDAO.findFacilitiy(menadzer.getSportsFacility().getName());		
+		return treningHDAO.getOtherTrainingsFromFacilities(sportsFacility.getName());
+	}
 		
 	
 }
