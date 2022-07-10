@@ -18,25 +18,26 @@ Vue.component("administrator-komentari", {
 	    			<th></th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in komentari"  v-on:click="izaberiKomentar(p)" :class="{selected : izabraniKorisnik.id == p.id}">
+	    		<tr v-for="p in komentari" >
 	    			<td>{{p.username}}</td>
 					<td>{{p.sportsFacility}}</td>
 					<td>{{p.comment}}</td>
 					<td>{{p.grade}}</td>
-					<td v-if="!p.logickiObrisan"><button>Odbij komentar</button></td>
+					<td v-if="!p.logickiObrisan"><button   v-on:click="izaberiKomentar(p)" :class="{selected : izabraniKomentar.id == p.id}" v-on:click="obrisiKomentar">Odbij komentar</button></td>
 	    		</tr>
 	    	</table>
     	</div>		  
     	`,
     methods:{
-		izaberiKorisnika: function(komentar){
+		izaberiKomentar: function(komentar){
 			this.izabraniKomentar = komentar;
 		},
-		obrisiKorisnika: function(){
+		obrisiKomentar: function(){
 			if(this.izabraniKomentar.id){
 				axios
                     .delete('rest/login/izbrisiKomentar/' + this.izabraniKomentar.id)
                     .then(response => {
+
                         window.location.reload();
                     })
                     .catch(err =>{ 

@@ -36,7 +36,6 @@
               <th>Uloga:</th>
               <td><select name="role" v-model="noviKorisnik.role" required>
                    <option value="MENAGER">Menadzer</option>
-                   <option value="ADMIN">Administrator</option>
                    <option value="CUSTUMER">Kupac</option>
                    <option value="TRAINER">Trener</option>
                </select></td>

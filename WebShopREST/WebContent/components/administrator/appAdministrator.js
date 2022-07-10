@@ -2,6 +2,7 @@ const KorisniciKomponenta = {template: '<administrator-korisnici></administrator
 const DodajObjekatKomponenta = {template: '<administrator-dodavanjeObjekta></administrator-dodavanjeObjekta>'}
 const DodajKorisnikaKomponenta = {template: '<administrator-dodavanjeKorisnika></administrator-dodavanjeKorisnika>'}
 const KomentariKomponenta = {template: '<administrator-komentari></administrator-komentari>'}
+const PromoKodKomponenta = {template: '<administrator-promoKod></administrator-promoKod>'}
 
 const router = new VueRouter({
     mode: 'hash',
@@ -9,7 +10,8 @@ const router = new VueRouter({
         {path : '/korisnici', component: KorisniciKomponenta},
         {path : '/dodajObjekat', component: DodajObjekatKomponenta},
         {path : '/dodajKorisnika', component: DodajKorisnikaKomponenta},
-        {path : '/komentari', component: KomentariKomponenta}
+        {path : '/komentari', component: KomentariKomponenta},
+        {path : '/promoKod', component: PromoKodKomponenta}
     ]
 })
 

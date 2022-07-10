@@ -6,14 +6,14 @@ public class Comment {
 	private String username;
 	private String sportsFacility;
 	private String comment;
-	private int grade;
+	private double grade;
 	private boolean logickiObrisan;
 	
 	
-	public int getGrade() {
+	public double getGrade() {
 		return grade;
 	}
-	public void setGrade(int grade) {
+	public void setGrade(double grade) {
 		this.grade = grade;
 	}
 	
@@ -48,7 +48,7 @@ public class Comment {
 	public void setLogickiObrisan(boolean logickiObrisan) {
 		this.logickiObrisan = logickiObrisan;
 	}
-	public Comment(String id, String username, String sportsFacility, String comment, int grade,
+	public Comment(String id, String username, String sportsFacility, String comment, double grade,
 			boolean logickiObrisan) {
 		super();
 		this.id = id;

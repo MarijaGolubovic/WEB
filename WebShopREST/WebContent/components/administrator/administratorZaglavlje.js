@@ -6,6 +6,7 @@ Vue.component("administrator-zaglavlje",{
                 <li><router-link to="/dodajObjekat" exact>Dodaj objekat</router-link></li>
                 <li><router-link to="/dodajKorisnika" exact>Dodaj korisnika</router-link></li>
                 <li><router-link to="/komentari" exact>Komentari</router-link></li>
+                <li><router-link to="/promoKod" exact>Promo kod</router-link></li>
             </ul>
         </div>
     `
