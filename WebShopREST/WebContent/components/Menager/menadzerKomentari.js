@@ -34,7 +34,7 @@ Vue.component("app-menadzerKomentari", {
     ,
     mounted () {
         axios
-          .get('rest/login/prikaziKomentare')
+          .get('rest/menager/prikaziKomentareMenadzer')
           .then(response => (this.komentari = response.data))
     },filters: {
 		statusKomentara: function(value) {

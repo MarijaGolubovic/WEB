@@ -26,6 +26,7 @@ import beans.Dues;
 import beans.SportsFacility;
 import beans.Training;
 import beans.TrainingHistory;
+import beans.TrainingHistory.Status;
 import beans.User;
 import beans.Dues.DuesType;
 import beans.Training.TrainingType;
@@ -86,6 +87,14 @@ public class KupacService {
 		return treningDAO.getOtherTrainings();
 	}
 	
+	@GET
+	@Path("/sviTreninzi")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Training> getAllTraining() {
+		TreningDAO treningDAO = (TreningDAO) ctx.getAttribute("TreningDAO");	
+		return treningDAO.getAllTraining();
+	}
+	
 
 	
 	@GET
@@ -105,6 +114,28 @@ public class KupacService {
 		User kupac = (User) request.getSession().getAttribute("ulogovanKorisnik");		
 		return treningHDAO.getGroupTrainingsCustemer(kupac.getUsername());
 	}
+	
+	@GET
+	@Path("/objekti")
+	@Produces(MediaType.APPLICATION_JSON)
+	 public Collection<SportsFacility> getFacilities() {
+        User kupac = (User) request.getSession().getAttribute("ulogovanKorisnik");
+        SportsFacilityDAO dao = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
+        TrainingHistoryDAO treningHDAO = (TrainingHistoryDAO) ctx.getAttribute("TrainingHistoryDAO");
+        Collection<SportsFacility> objekti = new ArrayList<>();
+        Collection<SportsFacility> sviObjekti= dao.findAll();
+        ArrayList<TrainingHistory> treninzi=treningHDAO.getAllTraining();
+        for (SportsFacility a : sviObjekti) {
+            for(TrainingHistory t: treninzi) {
+                if(t.getCustomer().getUsername().equals(kupac.getUsername()) && t.getTraining().getSportsFacility().getName().equals(a.getName()) && t.getStatus().equals(Status.Prosli)) {
+                    objekti.add(a);
+                    break;
+                }
+            }
+        }              
+        return objekti;
+	}
+	
 	
 	@GET
 	@Path("/ostaliTreninziKupac")

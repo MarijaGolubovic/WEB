@@ -41,13 +41,14 @@ public class CommentDAO {
 	public CommentDAO(String contextPath) {
 		comments = new ArrayList<Comment>();
 		
-		pathToRepository = "C:\\Users\\TOSHIBA\\Desktop\\WEB-Projekat\\WEB\\WebShopREST\\WebContent\\podaci\\";
+		pathToRepository = "C:\\Users\\HP\\Desktop\\6.semestar\\WEB\\Projekat - FINAL\\WEB\\WebShopREST\\WebContent\\podaci\\";
 		loadComment();
 	}
 	
 	public ArrayList<Comment> findAll() {
 		return comments;
 	}
+	
 	
 	public void delete(Comment comment) throws IOException {
 		for (Comment a : comments) {
