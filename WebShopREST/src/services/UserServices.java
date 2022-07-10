@@ -1,7 +1,11 @@
 package services;
 
+
+import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -19,11 +23,17 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import beans.Comment;
+import beans.PromoKod;
 import beans.SportsFacility;
 import beans.User;
 import beans.User.Role;
+import dao.CommentDAO;
+import dao.PromoKodDAO;
 import dao.SportsFacilityDAO;
 import dao.UserDAO;
+import dto.CommentDTO;
+import dto.NewUserDTO;
 import dto.UserDTO;
 
 @Path("/login")
@@ -48,6 +58,17 @@ public class UserServices {
 		if (ctx.getAttribute("UserDAO") == null) {
 	    	String contextPath = ctx.getRealPath("");
 			ctx.setAttribute("UserDAO", new UserDAO(contextPath));
+			
+		}
+		if (ctx.getAttribute("CommentDAO") == null) {
+	    	String contextPath = ctx.getRealPath("");
+			ctx.setAttribute("CommentDAO", new CommentDAO(contextPath));
+			
+		}
+		
+		if (ctx.getAttribute("PromoKodDAO") == null) {
+	    	String contextPath = ctx.getRealPath("");
+			ctx.setAttribute("PromoKodDAO", new PromoKodDAO(contextPath));
 			
 		}
 	}
@@ -114,6 +135,19 @@ public class UserServices {
 		UserDAO korisnikDAO = (UserDAO) ctx.getAttribute("UserDAO");
 		if(!korisnikDAO.postojiKorisnickoIme(user.username)) {
 			korisnikDAO.save(user);	
+			return Response.status(200).build();
+		}
+	return Response.status(400).entity("Korisnicko ime vec postoji!").build();	
+	}
+	
+	@POST
+	@Path("/dodajNovogKorisnika")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response dodajNovogKorisnika(NewUserDTO user) throws ParseException {
+		UserDAO korisnikDAO = (UserDAO) ctx.getAttribute("UserDAO");
+		if(!korisnikDAO.postojiKorisnickoIme(user.username)) {
+			korisnikDAO.saveNewUser(user);	
 			return Response.status(200).build();
 		}
 	return Response.status(400).entity("Korisnicko ime vec postoji!").build();	
@@ -187,4 +221,65 @@ public class UserServices {
 			return Response.status(400).entity("Korisnicko ime je zauzeto!").build();
 	}
 
+
+	@GET
+	@Path("/prikaziKomentare")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Comment> getComment() {
+		CommentDAO dao = (CommentDAO) ctx.getAttribute("CommentDAO");
+		return dao.findAll();
+	}
+	
+	@DELETE
+	@Path("/izbrisiKomentar/{id}")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response izbrisiKomentar(@PathParam("id") String id) throws ParseException, IOException {
+		CommentDAO korisnikDAO = (CommentDAO) ctx.getAttribute("CommentDAO");
+		ArrayList<Comment> komentari = korisnikDAO.findAll();
+		for (Comment komentar : komentari) {
+			if(komentar.getId().equals(id)) {
+				korisnikDAO.delete(komentar);
+				return Response.status(200).build();
+			}
+		}
+		
+		return Response.status(400).build();
+	}
+	
+	
+	@POST
+	@Path("/dodajKomentar")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response dodajKomentar(CommentDTO komentar) throws ParseException, IOException {
+		CommentDAO commentDAO = (CommentDAO) ctx.getAttribute("CommentDAO");
+		User korisnik = (User) request.getSession().getAttribute("ulogovanKorisnik");
+		String id = Math.random()+korisnik.username;
+		Comment comment=  new Comment(id, korisnik.username, komentar.objekat, komentar.tekstKomentara, komentar.ocjena, false);
+		commentDAO.saveComment(comment);	
+		return Response.status(200).build();
+	}
+	
+	
+	@POST
+	@Path("/dodajPromoKod")
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response dodajPromoKod(PromoKod promoKod) throws ParseException, IOException {
+		PromoKodDAO  promoKodDAO= (PromoKodDAO) ctx.getAttribute("PromoKodDAO");
+		String oznaka= promoKod.oznaka +  promoKod.pocetakVazenja.toString()+promoKod.brojKoristenja;
+		PromoKod promo =  new PromoKod(oznaka, promoKod.pocetakVazenja.toString(), promoKod.krajVazenja.toString(), promoKod.brojKoristenja, promoKod.procenatUmanjenja);
+		promoKodDAO.savePromoKod(promo);	
+		return Response.status(200).build();
+	}
+	
+	@GET
+	@Path("/promoKodoviPrikaz")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<PromoKod> getPromoKod() {
+		PromoKodDAO promoKodDAO = (PromoKodDAO) ctx.getAttribute("PromoKodDAO");
+		return promoKodDAO.findAll();
+	}
+	
 }

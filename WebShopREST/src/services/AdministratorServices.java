@@ -95,4 +95,7 @@ public class AdministratorServices {
 		return korisnikDAO.nadjiSlobodneMenadzere();
 	}
 	
+	
+	
+	
 }

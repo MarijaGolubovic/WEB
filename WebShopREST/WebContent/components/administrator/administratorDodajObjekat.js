@@ -9,7 +9,8 @@
             mapaVis: false,
             slikaVis: false,
 			prikazDodatogObjekta:false,
-			facilities: null
+			facilities: null,
+			izabraniObjekat: {}
         }
  	
  	},
@@ -54,6 +55,13 @@
 								<option value="Ne_radi">Ne_radi</option>
 							</select>
 							</td>
+ 						</tr>
+						<tr>
+							<th>Radno vrijeme:</th>
+							 <td>
+							 	&nbsp od &nbsp <input type="time" v-model="noviObjekat.startingTime" id="startingTime"  required>&nbsp
+							 	do &nbsp <input type="time" v-model="noviObjekat.endingTime" id="endingTime"  required>
+						 	</td>
  						</tr>
 
 
@@ -143,7 +151,7 @@
 	 				</table>	
 				</form>
  			</div>
-			<div id="map"  v-if="mapaVis" style="width:32cm;height:10cm;">  </div>
+			<div id="map"  v-if="mapaVis" style="width:100%;height:10cm;">  </div>
 
 			<div>
 			  <table width="100%" border="0">
@@ -155,6 +163,7 @@
 	    			<th>Status</th>
 	    			<th>Adresa</th>
 	    			<th>Prosečna ocena</th>
+					<th></th>
 	    		</tr>
 	    			
 	    		<tr v-for="p in facilities">
@@ -165,6 +174,8 @@
 	    			<td>{{p.working}}</td>
 	    			<td>{{p.locationS}}</td>
 	    			<td>{{p.averageGrade}}</td>
+					<td><button v-on:click="izaberiobjekat(p);obrisiObjekat();">Obrisi objekat</button></td>
+					
 	    		</tr>
 	    	  </table>
 			</div>
@@ -210,6 +221,7 @@
 							.get('rest/facilities/')
 							.then(response => (this.facilities = response.data))
 					   this.mapaVis=false;
+					   window.location.reload();
 					  
                     })
                     .catch(err =>{ 
@@ -238,6 +250,23 @@
                     	alert("Korisnicko ime vec postoji!");
                 })
 	 	},
+		 izaberiobjekat: function(objekat){
+			this.izabraniObjekat = objekat;
+		},
+		obrisiObjekat: function(){
+			if(this.izabraniObjekat.name){
+				axios
+                    .delete('rest/facilities/izbrisiObjekat/' + this.izabraniObjekat.name)
+                    .then(response => {
+                        window.location.reload();
+                    })
+                    .catch(err =>{ 
+                    	alert("Doslo je do greske prilikom brisanja!");
+                })
+            }else{
+            	alert("Doslo je do greske prilikom brisanja!");
+            }
+		},
 	 	dodajNovogMenadzera: function(){
 	 		this.objekatVis = false;
 	 		this.menadzeriVis = true;
