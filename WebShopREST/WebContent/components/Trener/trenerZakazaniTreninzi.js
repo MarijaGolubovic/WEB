@@ -12,7 +12,7 @@
     	<div>
 	    	<h2 style="color:#152a6a"> Grupni treninzi </h2>	    	
 	        <table width="100%" border="0" class="tabela">
-	    		<tr bgcolor="lightgrey" class="zaglavljeTabele" style="color:lightgrey; background-color:#050a44;">
+	    		<tr class="zaglavljeTabele" style="color:lightgrey; background-color:#050a44;">
 	    			<th>Slika</th>
 	    			<th>Naziv</th>
 	    			<th>Trajanje</th>

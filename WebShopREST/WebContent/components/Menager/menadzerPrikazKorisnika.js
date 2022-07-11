@@ -16,49 +16,82 @@
  	},
  	template: ` 
  		<div>
-	 		<button  @click=" pretragaVisk = !pretragaVisk ">Pretraga</button>
- 			<button   @click=" sortVisk = !sortVisk">Sortiranje</button>
- 			<button   @click=" filterVisk = !filterVisk">Filtriranje</button>
- 			<table   v-show="pretragaVisk">
- 				<tr>
- 					<th>Ime: </th> <td><input type="text" v-model="pretragak.firstName" v-on:input="pretrazi"></td>
- 					<th>Prezime: </th> <td><input type="text" v-model="pretragak.lastName" v-on:input="pretrazi"></td>
- 					<th>Korisnicko ime: </th> <td><input type="text" v-model="pretragak.username" v-on:input="pretrazi"></td>
- 				</tr>
- 			</table>
- 			<div  v-show="sortVisk">
- 				<table>
- 					<tr><th>Ime:</th></tr>
- 					<tr><td><button v-on:click="imeOpadajuce">v</button><button v-on:click="imeRastuce">^</button></td></tr>
- 				</table>
- 				<table>
- 					<tr><th>Prezime:</th></tr>
- 					<tr><td><button v-on:click="prezimeOpadajuce">v</button><button v-on:click="prezimeRastuce">^</button></td></tr>
- 				</table>
- 				<table>
- 					<tr><th>Korisnicko ime:</th></tr>
- 					<tr><td><button v-on:click="korisnickoImeOpadajuce">v</button><button v-on:click="korisnickoImeRastuce">^</button></td></tr>
- 				</table>
- 				<table>
- 					<tr><th>Bodovi:</th></tr>
- 					<tr><td><button v-on:click="bodoviOpadajuce">v</button><button v-on:click="bodoviRastuce">^</button></td></tr>
+ 		<br><br>
+ 		<div class="filtriranjeSortiranjePanel" style="align-items: center;">
+ 			<br>
+ 				<table style="width:30%">
+ 					<tr>
+ 						<td>&nbsp</td>
+ 						<td><button  @click=" pretragaVisk = !pretragaVisk " class="filtriranjeSortiranjeDugme">Pretraga</button></td>
+ 						<td><button   @click=" sortVisk = !sortVisk" class="filtriranjeSortiranjeDugme">Sortiranje</button></td>
+ 						<td><button   @click=" filterVisk = !filterVisk" class="filtriranjeSortiranjeDugme">Filtriranje</button></td>
+ 					</tr>
+ 					<tr>&nbsp</tr>
  				</table>
  			</div>
+ 			<br>
+ 			<div>
+ 			<table   v-show="pretragaVisk" style="width:60%">
+ 				<tr>
+ 					<th>&nbsp</th>
+	 				<th>&nbsp</th>
+ 					<th class="pretragaLabele">Ime: </th> <td><input class="pretragaPolje" type="text" v-model="pretragak.firstName" v-on:input="pretrazi"></td>
+ 					<th class="pretragaLabele">Prezime: </th> <td><input class="pretragaPolje" type="text" v-model="pretragak.lastName" v-on:input="pretrazi"></td>
+ 					<th class="pretragaLabele">Korisnicko ime: </th> <td><input class="pretragaPolje" type="text" v-model="pretragak.username" v-on:input="pretrazi"></td>
+ 				</tr>
+ 			</table>
+ 			</div>
+ 			<div>
+	 			<div  v-show="sortVisk">
+	 				<table style="width:40%">
+	 					<tr>
+	 						<td>
+	 							<table>
+	 								<tr><th class="pretragaLabele">Ime:</th></tr>
+	 								<tr><td><button class="sortiranjeDugme" v-on:click="imeOpadajuce">v</button>&nbsp<button v-on:click="imeRastuce" class="sortiranjeDugme">^</button></td></tr>
+	 							</table>
+	 						</td>
+	 			
+	 						<td>
+	 							<table>
+	 								<tr><th class="pretragaLabele">Prezime:</th></tr>
+	 								<tr><td><button v-on:click="prezimeOpadajuce" class="sortiranjeDugme">v</button>&nbsp<button class="sortiranjeDugme" v-on:click="prezimeRastuce">^</button></td></tr>
+	 							</table>
+	 						</td>
+	 					
+	 						<td>
+	 							<table>
+	 								<tr><th class="pretragaLabele">Korisnicko ime:</th></tr>
+	 								<tr><td><button v-on:click="korisnickoImeOpadajuce" class="sortiranjeDugme">v</button>&nbsp<button class="sortiranjeDugme" v-on:click="korisnickoImeRastuce">^</button></td></tr>
+	 							</table>
+	 						</td>
+	 					
+	 						<td>
+	 							<table>
+	 								<tr><th class="pretragaLabele">Bodovi:</th></tr>
+	 								<tr><td><button v-on:click="bodoviOpadajuce" class="sortiranjeDugme">v</button>&nbsp<button class="sortiranjeDugme" v-on:click="bodoviRastuce">^</button></td></tr>
+	 							</table>
+	 						</td>
+	 				   </tr>	
+	 				</table>
+	 			</div>
+	 		</div>
  			<div  v-show="filterVisk">
  				<table>
- 					<tr><th>Uloga:</th></tr>
+ 					<tr><th class="pretragaLabele">Uloga:</th></tr>
  					<tr><td>
- 						<select name="tip" v-model="izabranaUloga" v-on:change="izmjenjenaUloga">
+ 						<select name="tip" v-model="izabranaUloga" v-on:change="izmjenjenaUloga" class="filtriranjeLista">
 	 								 <option value="CUSTUMER">kupac</option>
 	 								 <option value="TRAINER">trener</option>
 	 					</select>
  					</td>
  					</tr>
  				</table>
+ 				
  				<table class="sortTabk">
- 					<tr><th v-if="izabranaUloga == 'CUSTUMER'">Tip:</th></tr>
+ 					<tr><th v-if="izabranaUloga == 'CUSTUMER'" class="pretragaLabele">Tip:</th></tr>
  					<tr><td  v-if="izabranaUloga == 'CUSTUMER'">
- 						<select name="status" v-model="izabraniTip" v-on:change="izmjenjenTip">
+ 						<select name="status" v-model="izabraniTip" v-on:change="izmjenjenTip" class="filtriranjeLista">
 									 <option value=""> </option>
 	 								 <option value="GOLD">zlatni</option>
 	 								 <option value="SILVER">srebrni</option>
@@ -66,11 +99,12 @@
 	 					</select>
  					</td></tr>
  				</table>
- 				<button v-on:click="iskljuciFilter">x</button>
+ 				<button v-on:click="iskljuciFilter" class="dugmeZatvori">x</button>
  			</div>
+ 			<br><br>
  			<div> 			
-        		<table>
-					<tr>
+        		<table class="tabela" width="100%" border="0">
+					<tr class="zaglavljeTabele" style="background-color:lightgray">
 						<th>Ime</th>
 						<th>Prezime</th>
 						<th>Korisnicko ime</th>
@@ -78,7 +112,7 @@
 						<th>Tip korisnika</th>
 						<th>Bodovi</th>
 					</tr>
-					<tr v-for="k in filtriraniKorisnici"  v-if="!k.logickiObrisan">
+					<tr v-for="k in filtriraniKorisnici"  v-if="!k.logickiObrisan" class="parniRedovi" style="height:0.8cm">
 						<td>{{k.firstName }}</td>
 						<td>{{k.lastName}}</td>
 						<td>{{k.username }}</td>

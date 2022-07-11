@@ -49,26 +49,26 @@
 	 					<tr>
 	 						<td>
 	 							<table>
-				 					<tr><th>Ime:</th></tr>
+				 					<tr><th class="pretragaLabele">Ime:</th></tr>
 				 					<tr><td><button v-on:click="imeOpadajuce" class="sortiranjeDugme">v</button>&nbsp<button v-on:click="imeRastuce" class="sortiranjeDugme">^</button></td></tr>
 				 				</table>	
 	 						</td>
 	 						<td>&nbsp</td>
 	 						<td>
 				 				<table>
-				 					<tr><th>Prezime:</th></tr>
+				 					<tr><th class="pretragaLabele">Prezime:</th></tr>
 				 					<tr><td><button v-on:click="prezimeOpadajuce" class="sortiranjeDugme">v</button>&nbsp<button v-on:click="prezimeRastuce" class="sortiranjeDugme">^</button></td></tr>
 				 				</table>
 	 						</td>
 	 						<td>
 	 							<table>
-				 					<tr><th>Korisnicko ime:</th></tr>
+				 					<tr><th class="pretragaLabele">Korisnicko ime:</th></tr>
 				 					<tr><td><button v-on:click="korisnickoImeOpadajuce" class="sortiranjeDugme">v</button>&nbsp<button class="sortiranjeDugme" v-on:click="korisnickoImeRastuce">^</button></td></tr>
 				 				</table>
 	 						</td>
 	 						<td>
 	 							<table>
-				 					<tr><th>Bodovi:</th></tr>
+				 					<tr><th class="pretragaLabele">Bodovi:</th></tr>
 				 					<tr><td><button v-on:click="bodoviOpadajuce" class="sortiranjeDugme">v</button>&nbsp<button class="sortiranjeDugme" v-on:click="bodoviRastuce">^</button></td></tr>
 				 				</table>
 	 						</td>
