@@ -21,12 +21,17 @@ Vue.component("app-profil",{
                   </tr>
                   <tr>
                       <th class="zaglavljeK"><label class="labela">Korisnicko ime:</label></th>
-                      <td class="zaglavljeK"><input class="profilK"  v-model="korisnik.username" type="text" required></td>
+                      <td class="zaglavljeK"><input disabled class="profilK"  v-model="korisnik.username" type="text" required></td>
                 </tr>
                 <tr>
                       <th class="zaglavljeK"><label class="labela">Lozinka:</label></th>
                       <td class="zaglavljeK"><input class="profilK" type="text"  v-model="korisnik.password" required></td>
                   </tr>
+                   <tr>
+                      <th class="zaglavljeK"><label v-if="korisnik.role == 'CUSTUMER'" class="labela">Broj bodova:</label></th>
+                      <td class="zaglavljeK"><input disabled v-if="korisnik.role == 'CUSTUMER'" class="profilK" type="text"  v-model="korisnik.collectedPoints" ></td>
+                  </tr>
+                  
                   <tr>
                       <th class="zaglavljeK"><label class="labela">Pol:</label></th>
                       <td class="zaglavljeK"><select class="profilKP"  v-model="korisnik.gender" name="pol">

@@ -165,7 +165,7 @@ public class TreningDAO {
         	newTraining.setSportsFacility(sportsFacilityDAO.findFacilitiy(sportsFacility));
         }
         
-        if(!userDAO.findByUsername(trainer).equals(null)) {
+        if(userDAO.findByUsername(trainer)!=null) {
         	newTraining.setTrainer(userDAO.findByUsername(trainer));
         }
       

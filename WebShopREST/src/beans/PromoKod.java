@@ -51,5 +51,9 @@ public class PromoKod {
 		this.procenatUmanjenja = procenatUmanjenja;
 	}
 	
+	public void UseKod() {
+		this.brojKoristenja--;
+	}
+	
 	
 }

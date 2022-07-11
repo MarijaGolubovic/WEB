@@ -4,7 +4,8 @@
 	      clanarine: [],
 	      trenutnaClanarina:{},
 	      izabranaClanarina:{},
-	      dodavanjeClanarine: false
+	      dodavanjeClanarine: false,
+	      pregledClanarine: false,
 
         }
  	
@@ -28,16 +29,46 @@
 	    			<td>{{trenutnaClanarina.paymentDate}}</td>
 	    			<td>{{trenutnaClanarina.dateValid}}</td>
 	    			<td>{{trenutnaClanarina.price}}</td>
-	    			<td>{{trenutnaClanarina.status}}</td>
+	    			<td v-if="trenutnaClanarina.status">Aktivna</td>
+	    			<td v-if="!trenutnaClanarina.status">Nije Aktivna</td>
 	    			<td>{{trenutnaClanarina.numberOfSesions}}</td>
 	    			<td>{{trenutnaClanarina.numberOfAvaliableSesions}}</td>	    			
 	    		</tr>
 	    	</table>
 	    	
 	    	<td><button v-on:click="pokaziDodavanje">Dodaj novu clanarinu</button></td>
+	    	
+	    	
+	    <div v-show="pregledClanarine">
+	    <p> Pregled Clanarine </p>	
+	    <button v-on:click="zatvoriDetaljnijiPrikaz">x</button>
+	    	 	<form @submit="PotvrdiDodavanjeClanarine">
+	    		 <table>
+                  <tr>
+                      <th><label>Tip clanarine:</label></th>
+                      <td><input disabled   v-model="izabranaClanarina.duesType" type="text"></td>
+                  </tr>
+                  <tr>
+                      <th><label>Cena:</label></th>
+                      <td><input disabled v-model="izabranaClanarina.price" type="number" min="1" step="any" ></td>
+                  </tr>
+                   <tr>
+                      <th><label>Ukupan broj termina:</label></th>
+                      <td><input disabled v-model="izabranaClanarina.numberOfSesions" type="number" min="0" step="any" ></td>
+                  </tr>
+                  
+                   <tr>
+                      <th><label>Unesite PROMO KOD:</label></th>
+                      <td><input v-model="izabranaClanarina.promoKod" type="text"></td>
+                  </tr>                  
+                  <tr>
+                  </table>
+                   <button type="submit">Potvrdi</button>
+                </form>
+	    	</div>
+	    	
 
-  <div v-show="dodavanjeClanarine">
-	    	    	
+  <div v-show="dodavanjeClanarine">	    	    	
 	    	<p> Dostupne clanarine </p>
 	       <table width="100%" border="0">
 	    		<tr bgcolor="lightgrey">
@@ -63,22 +94,33 @@
 	izaberiClanarinu: function(clanarina){
 		this.izabranaClanarina=clanarina;
 	},
-	IzborClanarine:function(clanarina) {
-		this.izabranaClanarina=clanarina;
-            axios
+	zatvoriDetaljnijiPrikaz: function(){
+		this.dodavanjeClanarine=true;
+		this.pregledClanarine=false;
+	},
+	PotvrdiDodavanjeClanarine: function(){
+		axios
                 .post('rest/kupac/izborClanarineNove', {
                     "duesType": this.izabranaClanarina.duesType,
                     "price": this.izabranaClanarina.price,   
-                     "numberOfSesions": this.izabranaClanarina.numberOfSesions,              
+                     "numberOfSesions": this.izabranaClanarina.numberOfSesions,    
+                     "promoKod": this.izabranaClanarina.promoKod           
                 })
                 .then(response => {
                     alert("Nova clanarina je dodata!");
                     this.dodavanjeClanarine=false;
+                    this.pregledClanarine=false;
                     this.$router.go(0);
                 })
                 .catch(err => {
                     alert("Clanarina ne moze da se doda!");
                 })
+	},
+	IzborClanarine:function(clanarina) {
+		this.izabranaClanarina=clanarina;
+		this.dodavanjeClanarine=false;
+		this.pregledClanarine=true;
+            
     		
     	},
     }

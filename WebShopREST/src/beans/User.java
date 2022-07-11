@@ -17,11 +17,8 @@ public class User implements Serializable {
 	public String lastName;
 	public Gender gender;
 	public Date birthDate;
-	public TrainingHistory trainingHistory;
 	public Role role;
-	public Dues dues;//clanarina
 	public SportsFacility sportsFacility;
-	public SportsFacility visistedFacolity;
 	public double collectedPoints;
 	public CustumerType customerType;
 	public boolean logickiObrisan;
@@ -70,35 +67,18 @@ public class User implements Serializable {
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
-	public TrainingHistory getTrainingHistory() {
-		return trainingHistory;
-	}
-	public void setTrainingHistory(TrainingHistory trainingHistory) {
-		this.trainingHistory = trainingHistory;
-	}
+
 	public Role getRole() {
 		return role;
 	}
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	public Dues getDues() {
-		return dues;
-	}
-	public void setDues(Dues dues) {
-		this.dues = dues;
-	}
 	public SportsFacility getSportsFacility() {
 		return sportsFacility;
 	}
 	public void setSportsFacility(SportsFacility sportsFacility) {
 		this.sportsFacility = sportsFacility;
-	}
-	public SportsFacility getVisistedFacolity() {
-		return visistedFacolity;
-	}
-	public void setVisistedFacolity(SportsFacility visistedFacolity) {
-		this.visistedFacolity = visistedFacolity;
 	}
 	public double getCollectedPoints() {
 		return collectedPoints;
@@ -112,10 +92,11 @@ public class User implements Serializable {
 	public void setCustomerType(CustumerType customerType) {
 		this.customerType = customerType;
 	}
-	public User(String username, String password, String firstName, String lastName, Gender gender,
-			Date birthDate, TrainingHistory trainingHistory, Role role, Dues dues,
-			SportsFacility sportsFacility, SportsFacility visistedFacolity, double collectedPoints,
-			CustumerType customerType, boolean logickiObrisan) {
+
+
+	public User(String username, String password, String firstName, String lastName, Gender gender, Date birthDate,
+			Role role, SportsFacility sportsFacility, double collectedPoints, CustumerType customerType,
+			boolean logickiObrisan) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -123,11 +104,8 @@ public class User implements Serializable {
 		this.lastName = lastName;
 		this.gender = gender;
 		this.birthDate = birthDate;
-		this.trainingHistory = trainingHistory;
 		this.role = role;
-		this.dues = dues;
 		this.sportsFacility = sportsFacility;
-		this.visistedFacolity = visistedFacolity;
 		this.collectedPoints = collectedPoints;
 		this.customerType = customerType;
 		this.logickiObrisan = logickiObrisan;

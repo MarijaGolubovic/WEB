@@ -49,7 +49,7 @@ public class TrenerService {
 				
 		if (ctx.getAttribute("UserDAO") == null) {
 	    	String contextPath = ctx.getRealPath("");
-			ctx.setAttribute("UserDAO", new UserDAO(contextPath));
+			ctx.setAttribute("UserDAO", new UserDAO(contextPath, (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO")));
 		}
 		
 		if(ctx.getAttribute("TreningDAO")== null) {;

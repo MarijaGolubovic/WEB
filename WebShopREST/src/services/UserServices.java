@@ -27,6 +27,7 @@ import beans.Comment;
 import beans.PromoKod;
 import beans.SportsFacility;
 import beans.User;
+import beans.User.CustumerType;
 import beans.User.Role;
 import dao.CommentDAO;
 import dao.PromoKodDAO;
@@ -55,9 +56,14 @@ public class UserServices {
 	public void init() {
 		// Ovaj objekat se instancira vi�e puta u toku rada aplikacije
 		// Inicijalizacija treba da se obavi samo jednom
+		
+		if(ctx.getAttribute("SportsFacilityDAO")== null) {;
+		String contextPath = ctx.getRealPath("");
+		ctx.setAttribute("SportsFacilityDAO", new SportsFacilityDAO(contextPath));
+	}
 		if (ctx.getAttribute("UserDAO") == null) {
 	    	String contextPath = ctx.getRealPath("");
-			ctx.setAttribute("UserDAO", new UserDAO(contextPath));
+			ctx.setAttribute("UserDAO", new UserDAO(contextPath, (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO")));
 			
 		}
 		if (ctx.getAttribute("CommentDAO") == null) {
@@ -131,10 +137,10 @@ public class UserServices {
 	@Path("/registracija")
 	@Produces(MediaType.TEXT_HTML)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response registracija(UserDTO user) throws ParseException {
+	public Response registracija(UserDTO user) throws ParseException, IOException {
 		UserDAO korisnikDAO = (UserDAO) ctx.getAttribute("UserDAO");
 		if(!korisnikDAO.postojiKorisnickoIme(user.username)) {
-			korisnikDAO.save(user);	
+			korisnikDAO.saveUser(new User (user.username,user.password, user.firstName, user.lastName, user.gender, user.birthDate, Role.CUSTUMER, null, 0, CustumerType.BRONZE, false));	
 			return Response.status(200).build();
 		}
 	return Response.status(400).entity("Korisnicko ime vec postoji!").build();	
@@ -144,10 +150,10 @@ public class UserServices {
 	@Path("/dodajNovogKorisnika")
 	@Produces(MediaType.TEXT_HTML)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response dodajNovogKorisnika(NewUserDTO user) throws ParseException {
+	public Response dodajNovogKorisnika(NewUserDTO user) throws ParseException, IOException {
 		UserDAO korisnikDAO = (UserDAO) ctx.getAttribute("UserDAO");
 		if(!korisnikDAO.postojiKorisnickoIme(user.username)) {
-			korisnikDAO.saveNewUser(user);	
+			korisnikDAO.saveUser(new User (user.username,user.password, user.firstName, user.lastName, user.gender, user.birthDate, user.role, null, 0, CustumerType.BRONZE, false));	
 			return Response.status(200).build();
 		}
 	return Response.status(400).entity("Korisnicko ime vec postoji!").build();	
@@ -175,10 +181,12 @@ public class UserServices {
 	@Path("/izbrisiKorisnika/{korisnickoIme}")
 	@Produces(MediaType.TEXT_HTML)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response izbrisiKorisnika(@PathParam("korisnickoIme") String korisnickoIme) throws ParseException {
+	public Response izbrisiKorisnika(@PathParam("korisnickoIme") String korisnickoIme) throws ParseException, IOException {
 		UserDAO korisnikDAO = (UserDAO) ctx.getAttribute("UserDAO");
 		if(korisnickoIme != null) {
-			korisnikDAO.delete(korisnickoIme);
+			User user = korisnikDAO.findByUsername(korisnickoIme);
+			user.setLogickiObrisan(true);
+			korisnikDAO.saveUserChange(korisnickoIme, user);
 			return Response.status(200).build();
 		}
 		return Response.status(400).build();
@@ -188,10 +196,10 @@ public class UserServices {
 	@Path("/dodajMenadzera")
 	@Produces(MediaType.TEXT_HTML)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response dodajMenadzera(UserDTO korisnik) throws ParseException {
+	public Response dodajMenadzera(UserDTO korisnik) throws ParseException, IOException {
 		UserDAO korisnikDAO = (UserDAO) ctx.getAttribute("UserDAO");
 		if(!korisnikDAO.postojiKorisnickoIme(korisnik.username)) {
-			korisnikDAO.saveMenager(korisnik);	
+			korisnikDAO.saveUser(new User (korisnik.username,korisnik.password, korisnik.firstName, korisnik.lastName, korisnik.gender, korisnik.birthDate, Role.MENAGER, null, 0, null, false));	
 			return Response.status(200).build();
 		}
 		return Response.status(400).entity("Korisnicko ime je zauzeto!").build();
@@ -201,7 +209,7 @@ public class UserServices {
 	@Path("/izmeniProfil")
 	@Produces(MediaType.TEXT_HTML)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response izmeniProfil(UserDTO korisnik) throws ParseException {
+	public Response izmeniProfil(UserDTO korisnik) throws ParseException, IOException {
 		UserDAO korisnikDAO = (UserDAO) ctx.getAttribute("UserDAO");
 		User korisnikU = (User) request.getSession().getAttribute("ulogovanKorisnik");
 		String username= korisnikU.getUsername();
@@ -211,11 +219,11 @@ public class UserServices {
 		korisnikU.setPassword(korisnik.password);
 		korisnikU.setGender(korisnik.gender);
 		if(username.equals(korisnik.username)) {
-			korisnikDAO.update(username, korisnikU);	
+			korisnikDAO.saveUserChange(username, korisnikU);	
 			return Response.status(200).build();
 		} else
 		if(!korisnikDAO.postojiKorisnickoIme(korisnik.username)) {
-			korisnikDAO.update(username, korisnikU);	
+			korisnikDAO.saveUserChange(username, korisnikU);	
 			return Response.status(200).build();
 		}else 
 			return Response.status(400).entity("Korisnicko ime je zauzeto!").build();
