@@ -10,9 +10,9 @@
  	},
 	    template: ` 
     	<div>
-	    	<p> Grupni treninzi </p>	    	
-	        <table width="100%" border="0">
-	    		<tr bgcolor="lightgrey">
+	    	<h2 style="color:#152a6a"> Grupni treninzi </h2>	    	
+	        <table width="100%" border="0" class="tabela">
+	    		<tr bgcolor="lightgrey" class="zaglavljeTabele" style="color:lightgrey; background-color:#050a44;">
 	    			<th>Slika</th>
 	    			<th>Naziv</th>
 	    			<th>Trajanje</th>
@@ -23,7 +23,7 @@
 	    			<th>Status treninga</th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in grupniTreninzi">
+	    		<tr v-for="p in grupniTreninzi" class="parniRedovi" style="height:2.5cm">
 	    			<td><img :src="p.training.image" width="70" height="70"/></td>
 	    			<td>{{p.training.name}}</td>
 	    			<td>{{p.training.duration}}</td>
@@ -36,10 +36,10 @@
 	    	</table>
 
 	    	
-
-	    	<p> Personalni treninzi </p>
-	        <table width="100%" border="0">
-	    		<tr bgcolor="lightgrey">
+			<br><br>
+	    	<h2 style="color:#152a6a"> Personalni treninzi </h2>
+	        <table width="100%" border="0" class="tabela">
+	    		<tr bgcolor="lightgrey" class="zaglavljeTabele">
 	    			<th>Slika</th>
 	    			<th>Naziv</th>
 	    			<th>Trajanje</th>
@@ -50,7 +50,7 @@
 	    			<th>Status treninga</th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in personalniTreninzi" v-on:click="izaberiTrening(p)" :class="{selected : izabraniTrening == p}">
+	    		<tr v-for="p in personalniTreninzi" v-on:click="izaberiTrening(p)" :class="{selected : izabraniTrening == p}" class="parniRedovi" style="height:2.5cm">
 	    			<td><img :src="p.training.image" width="70" height="70"/></td>
 	    			<td>{{p.training.name}}</td>
 	    			<td>{{p.training.duration}}</td>
@@ -59,7 +59,7 @@
 	    			<td>{{p.dataTimeApplicationS}}</td>
 	    			<td>{{p.dataTrainingS}}</td>
 	    			<td>{{p.status}}</td>
-	    			<td><button v-on:click="Otkazi(p)">Otkazi</button></td>
+	    			<td><button v-on:click="Otkazi(p)" class="dugmeObrisi">Otkazi</button></td>
 	    		</tr>
 	    	</table>	
 	    		    	 	

@@ -7,55 +7,64 @@
  	},
  	template: ` 
  	 <div>
- 	 
-      <form @submit="dodajNovogKorisnika" method="post">
-      <br><br><br>
-      <div style="background-color:#ffffff; width:25%;">
-      <table>
-          <tr>
-              <th>Ime:</th>
-              <td><input type="text" v-model="noviKorisnik.firstName" required></td>
-          </tr>	
-          <tr>
-              <th>Prezime:</th>
-              <td><input type="text" v-model="noviKorisnik.lastName" required></td>
-          </tr>		
-          <tr>
-              <th>Korisnicko ime:</th>
-              <td><input type="text" v-model="noviKorisnik.username" required></td>
-          </tr>			
-          <tr>
-              <th>Lozinka:</th>
-              <td><input type="text" v-model="noviKorisnik.password" required></td>
-          </tr>
-          <tr>
-              <th>Pol:</th>
-              <td><select name="pol" v-model="noviKorisnik.gender" required>
-                   <option value="MALE">muski</option>
-                   <option value="FEMALE">zenski</option>
-               </select></td>
-          </tr>
-          <tr>
-              <th>Uloga:</th>
-              <td><select name="role" v-model="noviKorisnik.role" required>
-                   <option value="MENAGER">Menadzer</option>
-                   <option value="CUSTUMER">Kupac</option>
-                   <option value="TRAINER">Trener</option>
-               </select></td>
-          </tr>
-
-
-          <tr>
-              <th>Datum rodjenja:</th>
-              <td><input type="date" v-model="noviKorisnik.birthDate" required></td>
-          </tr>
-          <tr>
-             <button type="submit">Dodaj korisnika</button>
-         </tr>
-      </table>	
-      </div>
- </form>
-
+ 	 <br>
+ 	 <div class="forma">
+	      <form @submit="dodajNovogKorisnika" method="post">
+	      
+	      <div>
+	      <table style="margin-right: auto; margin-left: auto;">
+	          <tr>
+	              <th class="poravnanjeLabeleForma"><label class="labelaStil">Ime:</label></th>
+	              <td><input class="inputPolje" type="text" v-model="noviKorisnik.firstName" required></td>
+	          </tr>	
+	          <tr>&nbsp</tr>
+	          <tr>
+	              <th class="poravnanjeLabeleForma"><label class="labelaStil">Prezime:</label></th>
+	              <td><input class="inputPolje" type="text" v-model="noviKorisnik.lastName" required></td>
+	          </tr>		
+	          <tr>&nbsp</tr>
+	          <tr>
+	              <th class="poravnanjeLabeleForma"><label class="labelaStil">Korisnicko ime:</label></th>
+	              <td><input class="inputPolje" type="text" v-model="noviKorisnik.username" required></td>
+	          </tr>			
+	          <tr>&nbsp</tr>
+	          <tr>
+	              <th class="poravnanjeLabeleForma"><label class="labelaStil">Lozinka:</label></th>
+	              <td><input class="inputPolje" type="text" v-model="noviKorisnik.password" required></td>
+	          </tr>
+	          <tr>&nbsp</tr>
+	          <tr>
+	              <th class="poravnanjeLabeleForma"><label class="labelaStil">Pol:</label></th>
+	              <td><select name="pol" v-model="noviKorisnik.gender" class="padajuciMeni" required>
+	                   <option value="MALE">muski</option>
+	                   <option value="FEMALE">zenski</option>
+	               </select></td>
+	          </tr>
+	          <tr>&nbsp</tr>
+	          <tr>
+	              <th class="poravnanjeLabeleForma"><label class="labelaStil">Uloga:</label></th>
+	              <td><select name="role" v-model="noviKorisnik.role"  class="padajuciMeni"required>
+	                   <option value="MENAGER">Menadzer</option>
+	                   <option value="CUSTUMER">Kupac</option>
+	                   <option value="TRAINER">Trener</option>
+	               </select></td>
+	          </tr>
+	
+				<tr>&nbsp</tr>
+	          <tr>
+	              <th class="poravnanjeLabeleForma"><label class="labelaStil">Datum rodjenja:</label></th>
+	              <td><input class="inputPolje" type="date" v-model="noviKorisnik.birthDate" required></td>
+	          </tr>
+	          <tr>&nbsp</tr>
+	          <tr>&nbsp</tr>
+	          <tr>
+	          	<td>&nbsp</td>
+	            <td> <button type="submit" class="dugmeForma" type="submit " style="width:3.5cm; font-size:15px;">Dodaj korisnika</button></td>
+	         </tr>
+	      </table>	
+	      </div>
+	 </form>
+</div>
     </div>
 	`,
 	 methods: {
