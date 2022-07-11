@@ -16,6 +16,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import beans.TrainingHistory;
+import beans.User;
 import beans.Dues;
 import beans.Training;
 import beans.Dues.DuesType;
@@ -38,7 +39,7 @@ public class DuesDAO {
 	
 	public Dues getDue(String username) {
 		for(int i = 0; i < sveClanarine.size(); i++) {
-				if(sveClanarine.get(i).getCustumer().getUsername().equals(username))
+				if(sveClanarine.get(i).getCustumer().getUsername().equals(username) && sveClanarine.get(i).isStatus())
 					return sveClanarine.get(i);
 		}
 			return null;
@@ -55,7 +56,7 @@ public class DuesDAO {
 
             JSONArray clanarine = (JSONArray) object;
 
-            clanarine.forEach( clanarina -> sveClanarine.add(parseDue( (JSONObject) clanarina, userDAO) ));
+            clanarine.forEach( clanarina -> sveClanarine.add(parseDue( (JSONObject) clanarina, userDAO)));
  
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -66,7 +67,7 @@ public class DuesDAO {
         }
 	}
 	
-	private Dues parseDue(JSONObject clanarina, UserDAO userDAO) 
+	private Dues parseDue(JSONObject clanarina, UserDAO userDAO)  
     {
         JSONObject dueObject = (JSONObject) clanarina.get("clanarina");
         String id = (String) dueObject.get("id");
@@ -78,8 +79,27 @@ public class DuesDAO {
         boolean status = (boolean) dueObject.get("status");
         double numberOfSesions = (double) dueObject.get("numberOfSesions");
         double numberOfAvaliableSesions = (double) dueObject.get("numberOfAvaliableSesions");
-     
-            
+        User cust = userDAO.findByUsername(custumer);
+        if (status && LocalDate.parse(dateValid).isBefore(LocalDate.now())) {
+        	status=false;
+        	Double brojBodova = 0.0;
+        	Double brojIzgubljenihBodova =0.0;
+        	
+        	if(numberOfAvaliableSesions/numberOfSesions>=0.66) {
+        		brojIzgubljenihBodova=price/1000.0*1.33*4;
+        	} else {
+        		brojBodova=price/1000.0*(numberOfSesions-numberOfAvaliableSesions);
+        	}
+        	brojBodova=brojBodova+brojIzgubljenihBodova;
+        	cust.setCollectedPoints(brojBodova);
+        	try {
+				userDAO.saveUserChange(cust.getUsername(), cust);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}       	
+        }
+        
         Dues newDue = new Dues(id,DuesType.valueOf(duesType),Date.valueOf(paymentDate),Date.valueOf(dateValid),price,userDAO.findByUsername(custumer),status,numberOfSesions,numberOfAvaliableSesions);
         
             

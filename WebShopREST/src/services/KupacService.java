@@ -27,10 +27,13 @@ import beans.SportsFacility;
 import beans.Training;
 import beans.TrainingHistory;
 import beans.TrainingHistory.Status;
+import beans.User.CustumerType;
 import beans.User;
 import beans.Dues.DuesType;
+import beans.PromoKod;
 import beans.Training.TrainingType;
 import dao.DuesDAO;
+import dao.PromoKodDAO;
 import dao.SportsFacilityDAO;
 import dao.TrainingHistoryDAO;
 import dao.TreningDAO;
@@ -55,7 +58,7 @@ public class KupacService {
 				
 		if (ctx.getAttribute("UserDAO") == null) {
 	    	String contextPath = ctx.getRealPath("");
-			ctx.setAttribute("UserDAO", new UserDAO(contextPath));
+			ctx.setAttribute("UserDAO", new UserDAO(contextPath, (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO")));
 		}
 		
 		if(ctx.getAttribute("TreningDAO")== null) {;
@@ -68,6 +71,12 @@ public class KupacService {
 		
 		if(ctx.getAttribute("DuesDAO")== null) {;
 		ctx.setAttribute("DuesDAO", new DuesDAO((UserDAO) ctx.getAttribute("UserDAO")));
+		}
+		
+		if (ctx.getAttribute("PromoKodDAO") == null) {
+	    	String contextPath = ctx.getRealPath("");
+			ctx.setAttribute("PromoKodDAO", new PromoKodDAO(contextPath));
+			
 		}
 	}
 	
@@ -171,9 +180,13 @@ public class KupacService {
 	@GET
 	@Path("/trenutnaClanarina")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Dues getDue() {
+	public Dues getDue() throws IOException {
 		DuesDAO dueDAO = (DuesDAO) ctx.getAttribute("DuesDAO");		
 		User kupac = (User) request.getSession().getAttribute("ulogovanKorisnik");	
+		ArrayList<Dues> clanarine =dueDAO.getAllDues();
+		for (Dues d: clanarine) {
+			dueDAO.saveDuesChanges(d, d);
+		}
 		Dues duo = dueDAO.getDue(kupac.getUsername());
 		return duo;
 	}
@@ -194,11 +207,15 @@ public class KupacService {
 		if (ld.atTime(18,0).isBefore(LocalDateTime.now())) {
 			return Response.status(400).entity("Ne mozete zakazati trening u proslosti!").build();
 		}
-		else if(duo.getNumberOfAvaliableSesions()>0 && duo.getDateValid().toLocalDate().isAfter(LocalDate.parse(trening.dataTraining))) {
+		else if(duo!=null) {
+			if (duo.getNumberOfAvaliableSesions()>0 && duo.getDateValid().toLocalDate().isAfter(LocalDateTime.parse(trening.dataTraining).toLocalDate())) {
 			duo.posetiObjekat();
 			dueDAO.saveNumberSesion(duo);
 			treningHDAO.saveTraining(treningZaDodavanje);			
-			return Response.status(200).build();
+			return Response.status(200).build();}
+			else {
+				return Response.status(400).entity("Nemate odgovarajucu clanarinu!").build();
+			}
 		} else {
 		return Response.status(400).entity("Nemate odgovarajucu clanarinu!").build();}
 	}
@@ -218,11 +235,15 @@ public class KupacService {
 		if (LocalDateTime.parse(trening.dataTraining).isBefore(LocalDateTime.now())) {
 			return Response.status(400).entity("Ne mozete zakazati trening u proslosti!").build();
 		}
-		else if(duo.getNumberOfAvaliableSesions()>0 && duo.getDateValid().toLocalDate().isAfter(LocalDateTime.parse(trening.dataTraining).toLocalDate())) {
+		else if(duo!=null) {
+			if (duo.getNumberOfAvaliableSesions()>0 && duo.getDateValid().toLocalDate().isAfter(LocalDateTime.parse(trening.dataTraining).toLocalDate())) {
 			duo.posetiObjekat();
 			dueDAO.saveNumberSesion(duo);
 			treningHDAO.saveTraining(treningZaDodavanje);			
-			return Response.status(200).build();
+			return Response.status(200).build();}
+			else {
+				return Response.status(400).entity("Nemate odgovarajucu clanarinu!").build();
+			}
 		} else {
 		return Response.status(400).entity("Nemate odgovarajucu clanarinu!").build();}
 	}
@@ -242,11 +263,15 @@ public class KupacService {
 		if (LocalDateTime.parse(trening.dataTraining).isBefore(LocalDateTime.now())) {
 			return Response.status(400).entity("Ne mozete zakazati trening u proslosti!").build();
 		}
-		else if(duo.getNumberOfAvaliableSesions()>0 && duo.getDateValid().toLocalDate().isAfter(LocalDateTime.parse(trening.dataTraining).toLocalDate())) {
+		else if(duo!=null) {
+			if (duo.getNumberOfAvaliableSesions()>0 && duo.getDateValid().toLocalDate().isAfter(LocalDateTime.parse(trening.dataTraining).toLocalDate())) {
 			duo.posetiObjekat();
 			dueDAO.saveNumberSesion(duo);
 			treningHDAO.saveTraining(treningZaDodavanje);			
-			return Response.status(200).build();
+			return Response.status(200).build();}
+			else {
+				return Response.status(400).entity("Nemate odgovarajucu clanarinu!").build();
+			}
 		} else {
 		return Response.status(400).entity("Nemate odgovarajucu clanarinu!").build();}
 	}
@@ -259,8 +284,10 @@ public class KupacService {
 		DuesDAO dueDAO = (DuesDAO) ctx.getAttribute("DuesDAO");		
 		User kupac = (User) request.getSession().getAttribute("ulogovanKorisnik");	
 		Dues duo = dueDAO.getDue(kupac.getUsername());
+		PromoKodDAO  promoKodDAO= (PromoKodDAO) ctx.getAttribute("PromoKodDAO");
 		LocalDate date=LocalDate.now();
 		LocalDate dateValid=date;
+		LocalDateTime dateDT=LocalDateTime.now();
 		if (duesDTO.duesType.equals(DuesType.Godisnja))
 				dateValid=date.plusDays(365);
 		if (duesDTO.duesType.equals(DuesType.Mesecna))
@@ -269,10 +296,29 @@ public class KupacService {
 			dateValid=date.plusDays(7);
 		Date dateSQL=Date.valueOf(date);
 		Date dateValidSQL=Date.valueOf(dateValid);
+		Dues duoNew=new Dues(kupac.getUsername()+dateDT.toString(),duesDTO.duesType,dateSQL,dateValidSQL,duesDTO.price,kupac, true,duesDTO.numberOfSesions,duesDTO.numberOfSesions);
+		PromoKod promo =promoKodDAO.getPromo(duesDTO.promoKod); 
+		
+		if(promo!=null && LocalDate.parse(promo.getPocetakVazenja()).isBefore(LocalDate.now()) && LocalDate.parse(promo.getKrajVazenja()).isAfter(LocalDate.now()) && promo.getBrojKoristenja()>0) {
+			duoNew.setPrice(duesDTO.price*(1-promo.getProcenatUmanjenja()/100));
+			promo.UseKod();
+			promoKodDAO.savePromoKodChange(promo);
+		}
+		
+		if (kupac.getCustomerType().equals(CustumerType.SILVER)) {
+			duoNew.setPrice(duesDTO.price*0.97);
+		}
+		
+		if (kupac.getCustomerType().equals(CustumerType.GOLD)) {
+			duoNew.setPrice(duesDTO.price*0.95);
+		}
+		
 		if(duo==null) {			
-			dueDAO.saveDue(new Dues(kupac.getUsername()+date.toString(),duesDTO.duesType,dateSQL,dateValidSQL,duesDTO.price,kupac, true,duesDTO.numberOfSesions,duesDTO.numberOfSesions));
+			dueDAO.saveDue(duoNew);
 		} else {
-			dueDAO.saveDuesChanges(duo,new Dues(kupac.getUsername()+date.toString(),duesDTO.duesType,dateSQL,dateValidSQL,duesDTO.price,kupac, true,duesDTO.numberOfSesions,duesDTO.numberOfSesions) );			
+			dueDAO.saveDue(duoNew);
+			duo.setStatus(false);
+			dueDAO.saveDuesChanges(duo,duo);			
 		}
 		return Response.status(200).build();
 	}

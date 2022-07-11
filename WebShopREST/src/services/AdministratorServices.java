@@ -1,6 +1,7 @@
 package services;
 
 import java.awt.PageAttributes.MediaType;
+import java.io.IOException;
 import java.sql.Time;
 import java.text.ParseException;
 import java.time.LocalTime;
@@ -24,6 +25,7 @@ import beans.Location;
 import beans.SportsFacility;
 import beans.User;
 import beans.SportsFacility.Content;
+import dao.PromoKodDAO;
 import dao.SportsFacilityDAO;
 import dao.UserDAO;
 import dto.SportsFacilityDTO;
@@ -47,6 +49,8 @@ public class AdministratorServices {
 		if(ctx.getAttribute("SportsFacilityDAO")== null) {;
 			ctx.setAttribute("SportsFacilityDAO", new SportsFacilityDAO());
 		}
+		
+
 	}
 	
 	@GET
@@ -65,7 +69,7 @@ public class AdministratorServices {
 	
 	@POST
 	@Path("/dodajObjekat")
-	public Response dodajObjekat(SportsFacilityDTO objekatDTO) throws ParseException {
+	public Response dodajObjekat(SportsFacilityDTO objekatDTO) throws ParseException, IOException {
 		SportsFacilityDAO objekatDAO = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
 		double sirina = Double.parseDouble(objekatDTO.longlat.split(",")[0].trim());
 		double duzina = Double.parseDouble(objekatDTO.longlat.split(",")[1].trim());
@@ -79,7 +83,7 @@ public class AdministratorServices {
 		for (User user : users) {
 			if(objekatDTO.menadzer.equals(user.username)) {
 				user.sportsFacility=objekat;
-				korisnikDAO.save(user);
+				korisnikDAO.saveUserChange(user.username, user);
 				break;
 			}
 		}

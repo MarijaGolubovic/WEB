@@ -13,6 +13,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import beans.Comment;
+import beans.Dues;
 import beans.PromoKod;
 
 public class PromoKodDAO {
@@ -32,6 +33,14 @@ public class PromoKodDAO {
 	
 	public ArrayList<PromoKod> findAll() {
 		return promoKodovi;
+	}
+	
+	public PromoKod getPromo(String kod) {
+		for(int i = 0; i < promoKodovi.size(); i++) {
+				if(promoKodovi.get(i).getOznaka().equals(kod))
+					return promoKodovi.get(i);
+		}
+			return null;
 	}
 	
 	
@@ -95,6 +104,38 @@ public class PromoKodDAO {
         } catch (IOException e) {
             e.printStackTrace();
         }
+	}
+        
+    	public void savePromoKodChange(PromoKod promoKod) throws IOException {
+    		for(PromoKod a : promoKodovi) {
+    			if(a.getOznaka().equals(promoKod.getOznaka()))  {
+    				a.setBrojKoristenja(promoKod.getBrojKoristenja());	
+   				
+    			}
+    		}
+    		
+    		JSONArray kodovi = new JSONArray();
+    		for (PromoKod a : promoKodovi) {
+    			JSONObject promoKodObject = new JSONObject();
+    			
+    			promoKodObject.put("oznaka", a.getOznaka());
+    			promoKodObject.put("pocetakVazenja", a.getPocetakVazenja());
+    			promoKodObject.put("krajVazenja", a.getKrajVazenja());
+    			promoKodObject.put("brojKoristenja", a.getBrojKoristenja());
+    			promoKodObject.put("procenatUmanjenja", a.getProcenatUmanjenja());
+    			
+    			JSONObject dueObject2 = new JSONObject(); 
+    			dueObject2.put("promoKod", promoKodObject);
+    			
+    			kodovi.add(dueObject2);
+    		}
+             
+            try (FileWriter file = new FileWriter(pathToRepository + "promoKod.json")) {
+                file.write(kodovi.toJSONString()); 
+                file.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 	}
 
 	
