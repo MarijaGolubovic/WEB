@@ -6,11 +6,10 @@ Vue.component("administrator-komentari", {
 	    }
 	},
 	    template: ` 
-    	<div>
-    	 	
-    		
-    		<table width="100%" border="0">
-	    		<tr bgcolor="lightgrey">
+    	<div>	
+    	<br><br>
+    		<table width="100%" border="0" class="tabela">
+	    		<tr bgcolor="lightgrey" class="zaglavljeTabele">
 	    			<th>Korisnik</th>
 	    			<th>Objekat</th>
 	    			<th>Tekst komentara</th>
@@ -18,12 +17,12 @@ Vue.component("administrator-komentari", {
 	    			<th></th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in komentari" >
+	    		<tr v-for="p in komentari" class="parniRedovi" style="height:0.8cm">
 	    			<td>{{p.username}}</td>
 					<td>{{p.sportsFacility}}</td>
 					<td>{{p.comment}}</td>
 					<td>{{p.grade}}</td>
-					<td v-if="p.logickiObrisan==false"><button   v-on:click="izaberiKomentar(p);obrisiKomentar();" :class="{selected : izabraniKomentar.id == p.id}">Odobri komentar</button></td>
+					<td v-if="p.logickiObrisan==false"><div class="centriranjeDugmeta"><button button class="dugmeObrisi"  v-on:click="izaberiKomentar(p);obrisiKomentar();" :class="{selected : izabraniKomentar.id == p.id}">Odobri komentar</button></div></td>
 	    		</tr>
 	    	</table>
     	</div>		  

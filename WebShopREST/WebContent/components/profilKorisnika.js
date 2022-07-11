@@ -8,34 +8,43 @@ Vue.component("app-profil",{
     },
     template: `
     <div>
-    	<div>
+    	<br>
+    	<div  class="forma">
         <form @submit="sacuvajIzmene" method="post">
-            <table class="tabelaK">
+            <table  style="margin-right: auto; margin-left: auto;">
+            <br>
                   <tr class="redTabele">
-                      <th class="zaglavljeK"><label class="labela">Ime:</label></th>
-                      <td class="zaglavljeK"><input class="profilK"  v-model="korisnik.firstName" type="text" name="ime" required></td>
+                      <th class="poravnanjeLabeleForma"><label class="labelaStil">Ime:</label></th>
+                      <td><input class="inputPolje"  v-model="korisnik.firstName" type="text" name="ime" required></td>
                   </tr>
+                  <tr>&nbsp</tr>
                   <tr>
-                      <th class="zaglavljeK"><label class="labela">Prezime:</label></th>
-                      <td class="zaglavljeK"><input class="profilK"  v-model="korisnik.lastName" type="text" required></td>
+                      <th class="poravnanjeLabeleForma"><label class="labelaStil"">Prezime:</label></th>
+                      <td><input class="inputPolje"  v-model="korisnik.lastName" type="text" required></td>
                   </tr>
+                  <tr>&nbsp</tr>
                   <tr>
-                      <th class="zaglavljeK"><label class="labela">Korisnicko ime:</label></th>
-                      <td class="zaglavljeK"><input class="profilK"  v-model="korisnik.username" type="text" required></td>
+                      <th class="poravnanjeLabeleForma"><label class="labelaStil"">Korisnicko ime:</label></th>
+                      <td><input class="inputPolje" v-model="korisnik.username" type="text" required></td>
                 </tr>
+                <tr>&nbsp</tr>
                 <tr>
-                      <th class="zaglavljeK"><label class="labela">Lozinka:</label></th>
-                      <td class="zaglavljeK"><input class="profilK" type="text"  v-model="korisnik.password" required></td>
+                      <th class="poravnanjeLabeleForma"><label class="labelaStil"">Lozinka:</label></th>
+                      <td><input type="text" class="inputPolje" v-model="korisnik.password" required></td>
                   </tr>
+                  <tr>&nbsp</tr>
                   <tr>
-                      <th class="zaglavljeK"><label class="labela">Pol:</label></th>
-                      <td class="zaglavljeK"><select class="profilKP"  v-model="korisnik.gender" name="pol">
+                      <th class="poravnanjeLabeleForma"><label class="labelaStil">Pol:</label></th>
+                      <td><select class="padajuciMeni"  v-model="korisnik.gender" name="pol">
                       <option value="MALE">muski</option>
                       <option value="FEMALE">zenski</option>
                       </select></td>
                   </tr>
+                  <tr>&nbsp</tr>
+                  <tr>&nbsp</tr>
+                  <tr> <button class="dugmeForma" type="submit " style="width:3.5cm; font-size:15px;">Sacuvaj izmene</button><tr>
                   </table>
-                <button class="sacuvajIzmjeneDugme" type="submit">Sacuvaj izmene</button>
+               
           </form>
           </div>
     </div>		  

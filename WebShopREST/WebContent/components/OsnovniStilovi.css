@@ -1,0 +1,75 @@
+@charset "ISO-8859-1";
+.forma{
+    background-color: white;
+    width: 40%;
+    border-radius: 3%;
+    border-style: solid;
+    border-width: 0px;
+    
+}
+
+.labelaStil{
+    font-size: 18px;
+    color:  #152a6a;
+    
+}
+.inputPolje{
+    border-style: solid;
+    
+    width: 5cm;
+    height: 1cm;
+    border-radius: 5%;
+    font-size: 15px;
+    border-width: 0px;
+    background-color: #edede8;
+}
+.poravnanjeLabeleForma{
+    text-align: left;
+}
+
+.dugmeForma{
+    height: 1cm;
+    width: 3cm;
+    font-size: 18px;
+    background-color: #edede8;
+    border-radius: 15px;
+    border-width:0px;
+    color:#152a6a;
+
+}
+.zaglavljeTabele{
+	height:1cm;
+	color:#152a6a;
+	font-size:18px;
+}
+
+
+.parniRedovi:nth-child(odd) {
+	background: #f5f5f0;
+	}	
+
+.tabela{
+	color:#050a44;
+	font-size:16px;
+}
+.dugmeObrisi{ 
+	color:#152a6a;
+	background-color:lightgray;
+	border-width:1px;
+	border-radius:2px;
+	text-size:15px;
+	border-color: #9d9da0;
+	
+}
+.centriranjeDugmeta{
+	text-align: center;
+}
+
+.padajuciMeni{
+	background-color: #edede8;
+	width: 5cm;
+    height: 1cm;
+    border-width:0px;
+    border-radius:5%;
+    font-size: 15px;
+}

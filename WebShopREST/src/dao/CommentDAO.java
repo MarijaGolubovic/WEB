@@ -41,7 +41,7 @@ public class CommentDAO {
 	public CommentDAO(String contextPath) {
 		comments = new ArrayList<Comment>();
 		
-		pathToRepository = "C:\\Users\\HP\\Desktop\\6.semestar\\WEB\\Projekat - FINAL\\WEB\\WebShopREST\\WebContent\\podaci\\";
+		pathToRepository = "C:\\Users\\TOSHIBA\\Desktop\\WEB-Projekat\\WEB\\WebShopREST\\WebContent\\podaci\\";
 		loadComment();
 	}
 	

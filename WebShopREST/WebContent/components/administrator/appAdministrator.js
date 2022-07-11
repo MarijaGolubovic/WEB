@@ -8,7 +8,7 @@ const ProfilAdmin = {template: '<app-profil></app-profil>'}
 const router = new VueRouter({
     mode: 'hash',
     routes:[
-        {path : '/korisnici', component: KorisniciKomponenta},
+        {path : '/', component: KorisniciKomponenta},
         {path : '/dodajObjekat', component: DodajObjekatKomponenta},
         {path : '/dodajKorisnika', component: DodajKorisnikaKomponenta},
         {path : '/komentari', component: KomentariKomponenta},

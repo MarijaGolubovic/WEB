@@ -8,38 +8,51 @@ Vue.component("administrator-promoKod", {
  	},
  	template: ` 
  	 <div>
-      <form @submit="dodajPromoKod" method="post">
-      <table>
-          <tr>
-              <th>Oznaka:</th>
-              <td><input type="text" v-model="promoKod.oznaka" required></td>
-          </tr>	
-          <tr>
-              <th>Pocetak vazenja:</th>
-              <td><input type="date" v-model="promoKod.pocetakVazenja" placeholder="dd-mm-yyyy" required></td>
-          </tr>		
-          <tr>
-              <th>Kraj vazenja:</th>
-              <td><input type="date" v-model="promoKod.krajVazenja" placeholder="dd-mm-yyyy" required></td>
-          </tr>			
-          <tr>
-              <th>Broj koristenja:</th>
-              <td><input type="number" v-model="promoKod.brojKoristenja" min="1"  max="100" required></td>
-          </tr>
-          <tr>
-              <th>Procenat umanjenja:</th>
-              <td><input type="number" v-model="promoKod.procenatUmanjenja" min="1"  max="50" required></td>
-          </tr>
-          
-          <tr>
-             <button type="submit">Dodaj promo kod</button>
-         </tr>
-      </table>	
- </form>
-
+ 	 <br>
+	 	 <div>
+	 	 <div class="forma">
+		      <form @submit="dodajPromoKod" method="post">
+		      <table style="margin-right: auto; margin-left: auto;">
+		      <tr>&nbsp</tr>
+		          <tr>
+		              <th class="poravnanjeLabeleForma"><label class="labelaStil">Oznaka:</label></th>
+		              <td><input class="inputPolje" type="text" v-model="promoKod.oznaka" required></td>
+		          </tr>	
+		          <tr>&nbsp</tr>
+		          <tr>
+		              <th class="poravnanjeLabeleForma"><label class="labelaStil">Pocetak vazenja:</label></th>
+		              <td><input class="inputPolje" type="date" v-model="promoKod.pocetakVazenja" placeholder="dd-mm-yyyy" required></td>
+		          </tr>		
+		          <tr>&nbsp</tr>
+		          <tr>
+		              <th class="poravnanjeLabeleForma"><label class="labelaStil">Kraj vazenja:</label></th>
+		              <td><input class="inputPolje" type="date" v-model="promoKod.krajVazenja" placeholder="dd-mm-yyyy" required></td>
+		          </tr>	
+		          <tr>&nbsp</tr>		
+		          <tr>
+		              <th class="poravnanjeLabeleForma"><label class="labelaStil">Broj koristenja:</label></th>
+		              <td><input class="inputPolje" type="number" v-model="promoKod.brojKoristenja" min="1"  max="100" required></td>
+		          </tr>
+		          <tr>&nbsp</tr>
+		          <tr>
+		              <th class="poravnanjeLabeleForma"><label class="labelaStil">Procenat umanjenja:</label></th>
+		              <td><input class="inputPolje" type="number" v-model="promoKod.procenatUmanjenja" min="1"  max="50" required></td>
+		          </tr>
+		          	<tr>&nbsp</tr>
+		          	<tr>&nbsp</tr>
+		          <tr>
+		             <button class="dugmeForma" style=" font-size:15px; width:4cm" type="submit">Dodaj promo kod</button>
+		         </tr>
+		         <tr>&nbsp</tr>
+		         <tr>&nbsp</tr>
+		      </table>	
+		 </form>
+	</div>
  <div>
-        <table width="100%" border="0">
-	    		<tr bgcolor="lightgrey">
+ <br><br>
+ <div>
+        <table width="100%" border="0" class="tabela">
+	    		<tr bgcolor="lightgrey" class="zaglavljeTabele">
 	    			<th>Oznaka</th>
 	    			<th>Pocetak vazenja</th>
 	    			<th>Kraj vazenja</th>
@@ -47,7 +60,7 @@ Vue.component("administrator-promoKod", {
                     <th>Procenat umanjenja</th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in promoKodovi">
+	    		<tr v-for="p in promoKodovi" class="parniRedovi" style="height:0.8cm">
 	    			<td>{{p.oznaka}}</td>
                     <td>{{p.pocetakVazenja|formatVremena}}</td>
                     <td>{{p.krajVazenja|formatVremena}}</td>
@@ -55,6 +68,8 @@ Vue.component("administrator-promoKod", {
                     <td>{{p.procenatUmanjenja|formatProcenta}}</td>
 	    		</tr>
 	    </table>
+</div>
+	    </div>
     </div>		    
  
 
