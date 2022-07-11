@@ -1,6 +1,6 @@
 Flex;Teretana;Personalni_trening,Grupni_trening;Radi;Sutjeska,2,Novi Sad,Srbija,21000,19.845656927058315, 45.2470946869507;9.2;07:00:00;23:00:00;components/slike/logoFlex.png
-X SPORT GYM;Teretana;Personalni_trening,Grupni_trening;Radi;Ćirpanova,8,Novi Sad,Srbija,21000,120,120;8.7;08:00:00;22:30:00;components/slike/logoXSport.png
-Otvoreni bazen Sajmište;Bazen;Personalni_trening,Grupni_trening;Radi;Hajduk Veljkova,11/A,Novi Sad,Srbija,21000,120,120;9.2;09:00:00;17:00:00;components/slike/logoSajmiste.png 
-Plesni klub Fiesta;Plesni_studio;Personalni_trening,Grupni_trening;Radi;Geri Karolja,5,Novi Sad,Srbija,21000,120,120;9.5;09:00:00;17:00:00;components/slike/logoFiesta.png
-Sportski centar HATTRICK;Sportski_centar;Personalni_trening,Grupni_trening;Radi;Bulevar Cara Lazara,BB,Novi Sad,Srbija,21000,120,120;9.4;09:00:00;17:00:00;components/slike/logoHattrick.png 
-Fitness Zone;Teretana;Personalni_trening,Grupni_trening;Radi;Sutjeska,2,Novi Sad,Srbija,21000,120,120;9.0;08:00:00;22:00:00;components/slike/logoFitnessZone.png
+X SPORT GYM;Teretana;Personalni_trening,Grupni_trening;Radi;Ćirpanova,8,Novi Sad,Srbija,21000,19.834627011566653,45.252950343447694;8.7;08:00:00;22:30:00;components/slike/logoXSport.png
+Otvoreni bazen Sajmište;Bazen;Personalni_trening,Grupni_trening;Radi;Hajduk Veljkova,11/A,Novi Sad,Srbija,21000,19.82552245251198, 45.25334714869955;9.2;09:00:00;17:00:00;components/slike/logoSajmiste.png 
+Plesni klub Fiesta;Plesni_studio;Personalni_trening,Grupni_trening;Radi;Geri Karolja,5,Novi Sad,Srbija,21000, 19.817107625162993, 45.245255441457;9.5;09:00:00;17:00:00;components/slike/logoFiesta.png
+Sportski centar HATTRICK;Sportski_centar;Personalni_trening,Grupni_trening;Radi;Bulevar Cara Lazara,BB,Novi Sad,Srbija,21000, 19.82858695585573, 45.240107297820195;9.4;09:00:00;17:00:00;components/slike/logoHattrick.png 
+Fitness Zone;Teretana;Personalni_trening,Grupni_trening;Radi;Sutjeska,2,Novi Sad,Srbija,21000,19.845656927058315, 45.2470946869507;9.0;08:00:00;22:00:00;components/slike/logoFitnessZone.png

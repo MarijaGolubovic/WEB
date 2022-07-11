@@ -161,7 +161,7 @@ public class TreningDAO {
       
         
         Training newTraining = new Training(name, TrainingType.valueOf(trainingType),null, duration, null, description, image, price);
-        if (!(sportsFacilityDAO.findFacilitiy(sportsFacility)).equals(null)) {
+        if (sportsFacilityDAO.findFacilitiy(sportsFacility)!=null) {
         	newTraining.setSportsFacility(sportsFacilityDAO.findFacilitiy(sportsFacility));
         }
         

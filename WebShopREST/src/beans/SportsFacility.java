@@ -1,6 +1,7 @@
 package beans;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SportsFacility {
@@ -142,6 +143,23 @@ public class SportsFacility {
 	}
 	public void setLocationS(String locationS) {
 		this.locationS = locationS;
+	}
+	public SportsFacility(String name, TypeSportsFacility typeSportsFacility, String contentsS, Status working,
+			Location location, double averageGrade, LocalTime startingTime, LocalTime endingTime, String imageName) {
+		super();
+		this.name = name;
+		this.typeSportsFacility = typeSportsFacility;
+		this.contentsS = contentsS;
+		this.working = working;
+		this.location = location;
+		this.averageGrade = averageGrade;
+		this.startingTime = startingTime;
+		this.endingTime = endingTime;
+		this.imageName = imageName;
+		this.contents=new ArrayList<>();
+		setLocationS(location.getAddress().getStreet()+" "+location.getAddress().getNumber()+", " +location.getAddress().getCity());
+		startingTimeS=startingTime.toString();
+		endingTimeS=endingTime.toString();
 	}
 	
 	

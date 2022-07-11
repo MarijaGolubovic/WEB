@@ -208,7 +208,7 @@ public class KupacService {
 			return Response.status(400).entity("Ne mozete zakazati trening u proslosti!").build();
 		}
 		else if(duo!=null) {
-			if (duo.getNumberOfAvaliableSesions()>0 && duo.getDateValid().toLocalDate().isAfter(LocalDateTime.parse(trening.dataTraining).toLocalDate())) {
+			if (duo.getNumberOfAvaliableSesions()>0 && duo.getDateValid().toLocalDate().isAfter(LocalDate.parse(trening.dataTraining))) {
 			duo.posetiObjekat();
 			dueDAO.saveNumberSesion(duo);
 			treningHDAO.saveTraining(treningZaDodavanje);			
@@ -316,9 +316,7 @@ public class KupacService {
 		if(duo==null) {			
 			dueDAO.saveDue(duoNew);
 		} else {
-			dueDAO.saveDue(duoNew);
-			duo.setStatus(false);
-			dueDAO.saveDuesChanges(duo,duo);			
+			dueDAO.saveDuesChanges(duo,duoNew);			
 		}
 		return Response.status(200).build();
 	}

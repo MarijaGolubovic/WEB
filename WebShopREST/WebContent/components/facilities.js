@@ -14,14 +14,24 @@ Vue.component("facilities", {
             izabraniObjekat:{},
             mapaVis: false,
             komentari: null,
-            treninzi:[]
+            treninzi:[],
+            pretragaVisk: false,
+            sortVisk: false,
+            filterVisk: false,
+            privremenaLista:[],
+            izabranTip: {},
+            izabraniStatus: {}
         }
  	
  	},
 	    template: ` 
     	<div>
     		<div v-show="globalno">
-    	 	<table>	 				
+    		
+    		<button  @click=" pretragaVisk = !pretragaVisk ">Pretraga</button>
+ 			<button   @click=" sortVisk = !sortVisk">Sortiranje</button>
+ 			<button   @click=" filterVisk = !filterVisk">Filtriranje</button>
+    	 	<table v-show="pretragaVisk">	 				
  				<tr>
  					<th>Naziv: </th> <td><input type="text" v-model="pretraga.naziv" v-on:input="search"></td>
  					<th>Tip: </th> <td><input type="text" v-model="pretraga.tip" v-on:input="search"></td>
@@ -29,6 +39,50 @@ Vue.component("facilities", {
  					<th>Ocena: </th> <td><input type="text" v-model="pretraga.ocena" v-on:input="search"></td>
  				</tr>
  				</table>
+ 				
+ 				<div  v-show="sortVisk">
+ 				<table>
+ 					<tr><th>Naziv:</th></tr>
+ 					<tr><td><button v-on:click="imeOpadajuce">v</button><button v-on:click="imeRastuce">^</button></td></tr>
+ 				</table>
+ 				<table>
+ 					<tr><th>Lokacija:</th></tr>
+ 					<tr><td><button v-on:click="lokacijaOpadajuce">v</button><button v-on:click="lokacijaRastuce">^</button></td></tr>
+ 				</table>
+ 				<table>
+ 					<tr><th>Ocena ime:</th></tr>
+ 					<tr><td><button v-on:click="ocenaOpadajuce">v</button><button v-on:click="ocenaRastuce">^</button></td></tr>
+ 				</table>
+ 				</div>
+ 				<div  v-show="filterVisk">
+ 				<table>
+ 					<tr><th>Tip:</th></tr>
+ 					<tr><td>
+ 						<select name="tip" v-on:change="izmjenjenTip" v-model="izabranTip">
+	 								 <option value="Teretana">Teretana</option>
+	 								 <option value="Bazen">Bazen</option>
+	 								  <option value="Plesni_studio">Plesni studio</option>
+	 								   <option value="Sportski_centar">Sportski centar</option>
+	 					</select>
+ 					</td>
+ 					</tr>
+ 				</table>
+ 				
+ 				 <table>
+ 					<tr><th>Status:</th></tr>
+ 					<tr><td>
+ 						<select name="tip" v-model="izabraniStatus" v-on:change="izmjenjenStatus">
+	 								 <option value="Radi">Radi</option>
+	 								 <option value="Ne_radi">Ne radi</option>
+	 					</select>
+ 					</td>
+ 					</tr>
+ 				</table>
+ 				<button v-on:click="iskljuciFilter">x</button>
+ 			</div>
+ 				
+ 				
+ 			
     		<h3>Prikaz sportskih objekata</h3>
     		<table width="100%" border="0">
 	    		<tr bgcolor="lightgrey">
@@ -104,6 +158,7 @@ Vue.component("facilities", {
 	    		</tr>
 	    	</table>
 	    	
+	    	<h3>Treninzi</h3>
 	    	<table width="100%" border="0">
 	    		<tr bgcolor="lightgrey">
 	    			<th>Slika</th>
@@ -202,6 +257,100 @@ Vue.component("facilities", {
             })
 
 		},
+		iskljuciFilter: function(){
+			this.filtriraniObjekti = [];
+			for(r of this.privremenaLista){
+				this.filtriraniObjekti.push(r);
+			}
+		},
+		izmjenjenTip: function(){
+			this.filtriraniObjekti = [];
+			for(r of this.privremenaLista){
+				if(r.typeSportsFacility.toString().match(this.izabranTip) && r.working.toString().match(this.izabraniStatus)){
+						this.filtriraniObjekti.push(r);
+				}
+			}
+		},
+		izmjenjenStatus :function(){
+			this.filtriraniObjekti = [];
+			for(r of this.privremenaLista){
+				if(r.typeSportsFacility.toString().match(this.izabranTip) && r.working.toString().match(this.izabraniStatus)){
+						this.filtriraniObjekti.push(r);
+				}
+			}
+		},
+		imeOpadajuce: function(){
+			function compare(a, b) {
+     		 	if (a.name < b.name)
+        			return -1;
+      			if (a.name > b.name)
+        			return 1;
+      			return 0;
+      		}
+
+		   return this.filtriraniObjekti.sort(compare);
+		},
+		
+	lokacijaOpadajuce: function(){
+			function compare(a, b) {
+     		 	if (a.locationS < b.locationS)
+        			return 1;
+      			if (a.locationS > b.locationS)
+        			return -1;
+      			return 0;
+      		}
+
+		   return this.filtriraniObjekti.sort(compare);
+		},
+		
+	lokacijaRastuce: function(){
+			function compare(a, b) {
+     		 	if (a.locationS < b.locationS)
+        			return -1;
+      			if (a.locationS > b.locationS)
+        			return 1;
+      			return 0;
+      		}
+
+		   return this.filtriraniObjekti.sort(compare);
+		},
+		
+	ocenaOpadajuce: function(){
+			function compare(a, b) {
+     		 	if (a.averageGrade < b.averageGrade)
+        			return 1;
+      			if (a.averageGrade > b.averageGrade)
+        			return -1;
+      			return 0;
+      		}
+
+		   return this.filtriraniObjekti.sort(compare);
+		},
+		
+	ocenaRastuce: function(){
+			function compare(a, b) {
+     		 	if (a.averageGrade < b.averageGrade)
+        			return -1;
+      			if (a.averageGrade > b.averageGrade)
+        			return 1;
+      			return 0;
+      		}
+
+		   return this.filtriraniObjekti.sort(compare);
+		},
+		
+	imeRastuce: function(){
+			function compare(a, b) {
+     		 	if (a.name < b.name)
+        			return 1;
+      			if (a.name > b.name)
+        			return -1;
+      			return 0;
+      		}
+
+		   return this.filtriraniObjekti.sort(compare);
+		},
+		
 	}
 	
     ,
@@ -211,6 +360,7 @@ Vue.component("facilities", {
           .then(response => (this.facilities = response.data,
            		 response.data.forEach(el => {
                     this.filtriraniObjekti.push(el);
+                    this.privremenaLista.push(el);
                 }))),
         axios
           .get('rest/login/prikaziKomentare')

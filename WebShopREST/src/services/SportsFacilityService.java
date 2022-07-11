@@ -1,5 +1,6 @@
 package services;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,21 +73,7 @@ public class SportsFacilityService {
 		return dao.findFacilitiy(name);
 	}
 	
-	@POST
-	@Path("/")
-	@Produces(MediaType.APPLICATION_JSON)
-	public SportsFacility getFacilities(SportsFacility sportsFacility) {
-		SportsFacilityDAO dao = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
-		return dao.save(sportsFacility);
-	}
 	
-	@PUT
-	@Path("/{name}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public SportsFacility getFacilities(@PathParam("name") String name, SportsFacility sportsFacility) {
-		SportsFacilityDAO dao = (SportsFacilityDAO) ctx.getAttribute("SportsFacilityDAO");
-		return dao.update(name, sportsFacility);
-	}
 	
 	@DELETE
 	@Path("/{name}")
