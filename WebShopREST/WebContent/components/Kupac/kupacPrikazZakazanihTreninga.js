@@ -9,9 +9,10 @@
  	},
 	    template: ` 
     	<div>
-	    	<p> Grupni treninzi </p>	    	
-	        <table width="100%" border="0">
-	    		<tr bgcolor="lightgrey">
+    		<br>
+	    	<h2 style="color:#152a6a"> Grupni treninzi </h2>	    	
+	        <table width="100%" border="0" class="tabela">
+	    		<tr class="zaglavljeTabele" style="color:lightgrey; background-color:#050a44;">
 	    			<th>Slika</th>
 	    			<th>Naziv</th>
 	    			<th>Trajanje</th>
@@ -22,7 +23,7 @@
 	    			<th>Status treninga</th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in grupniTreninzi">
+	    		<tr v-for="p in grupniTreninzi" class="parniRedovi" style="height:2.5cm">
 	    			<td><img :src="p.training.image" width="70" height="70"/></td>
 	    			<td>{{p.training.name}}</td>
 	    			<td>{{p.training.duration}}</td>
@@ -35,10 +36,10 @@
 	    	</table>
 
 	    	
-
-	    	<p> Personalni treninzi </p>
-	        <table width="100%" border="0">
-	    		<tr bgcolor="lightgrey">
+			<br><br>
+	    	<h2 style="color:#152a6a"> Personalni treninzi </h2>
+	        <table width="100%" border="0" class="tabela">
+	    		<tr bgcolor="lightgrey" class="zaglavljeTabele">
 	    			<th>Slika</th>
 	    			<th>Naziv</th>
 	    			<th>Trajanje</th>
@@ -49,7 +50,7 @@
 	    			<th>Status treninga</th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in personalniTreninzi">
+	    		<tr v-for="p in personalniTreninzi" class="parniRedovi" style="height:2.5cm">
 	    			<td><img :src="p.training.image" width="70" height="70"/></td>
 	    			<td>{{p.training.name}}</td>
 	    			<td>{{p.training.duration}}</td>
@@ -60,10 +61,10 @@
 	    			<td>{{p.status}}</td>
 	    		</tr>
 	    	</table>	
-	    	
-	    	<p> Individualne posete </p>
-	        <table width="100%" border="0">
-	    		<tr bgcolor="lightgrey">
+	    	<br><br>
+	    	<h2 style="color:#152a6a"> Individualne posete </h2>
+	        <table width="100%" border="0" class="tabela">
+	    		<tr class="zaglavljeTabele" style="color:lightgrey; background-color:#050a44;">
 	    			<th>Slika</th>
 	    			<th>Naziv</th>
 	    			<th>Trajanje</th>
@@ -74,7 +75,7 @@
 	    			<th>Status treninga</th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in ostaloTreninzi">
+	    		<tr v-for="p in ostaloTreninzi" class="parniRedovi" style="height:2.5cm">
 	    			<td><img :src="p.training.image" width="70" height="70"/></td>
 	    			<td>{{p.training.name}}</td>
 	    			<td>{{p.training.duration}}</td>

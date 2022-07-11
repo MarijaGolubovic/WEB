@@ -18,29 +18,36 @@
     	<div>
     	
     	  <div v-show="grupniZakazivanje">
+    	  <br><br>
+    	  <div class="forma">
 	    	 	<form @submit="PotvrdiZakazivanjeGrupni">
 	    		 <table>
                   <tr>
-                      <th><label>Datum:</label></th>
-                      <td><input  v-model="izabraniGrupni.dataTraining" type="date" required></td>
-                      <td>{{izabraniGrupni.name}}</td>
+                      <th><label class="labelaStil">Datum:</label></th>
+                      <td><input class="inputPolje"  v-model="izabraniGrupni.dataTraining" type="date" required></td>
+                      <td>&nbsp</td>
+                      <td class="inputPolje">{{izabraniGrupni.name}}</td>
                   </tr>                    
                   </table>
-                   <button type="submit">Zakaži</button>
+                  <br><br>
+                   <button type="submit" class="dugmeForma">Zakaži</button>
                 </form>
+                </div>
 	    	</div>
-	    	<p> Grupni treninzi </p>	    	
-	        <table width="100%" border="0">
-	    		<tr bgcolor="lightgrey">
+	    	<br><br>
+	    	<h2 style="color:#152a6a"> Grupni treninzi </h2>	    	
+	        <table width="100%" border="0" class="tabela">
+	    		<tr class="zaglavljeTabele" style="color:lightgrey; background-color:#050a44;">
 	    			<th>Slika</th>
 	    			<th>Naziv</th>
 	    			<th>Trajanje</th>
 	    			<th>Cena</th>
 	    			<th>Trener</th>
 	    			<th>Opis</th>
+	    			<th>&nbsp</th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in grupniTreninzi" v-on:click="izaberiGrupni(p)" :class="{selected : izabraniGrupni.name == p.name}">
+	    		<tr v-for="p in grupniTreninzi" v-on:click="izaberiGrupni(p)" :class="{selected : izabraniGrupni.name == p.name}" class="parniRedovi" style="height:2.5cm">
 	    			<td><img :src="p.image" width="70" height="70"/></td>
 	    			<td>{{p.name}}</td>
 	    			<td>{{p.duration}}</td>
@@ -52,30 +59,35 @@
 	    	</table>
 
   <div v-show="personalniZakazivanje">
+  <br>
+  <div class="forma">
 	    	 	<form @submit="PotvrdiZakazivanjePersonalni">
 	    		 <table>
                   <tr>
-                      <th><label>Datum:</label></th>
-                      <td><input  v-model="izabraniPersonalni.dataTraining" type="datetime-local" required step="1800"></td>
-                      <td>{{izabraniPersonalni.name}}</td>
+                      <th><label class="labelaStil">Datum:</label></th>
+                      <td><input class="inputPolje"  v-model="izabraniPersonalni.dataTraining" type="datetime-local" required step="1800"></td>
+                      <td class="inputPolje">{{izabraniPersonalni.name}}</td>
                   </tr>                    
                   </table>
-                   <button type="submit">Zakaži</button>
+                  <br><br>
+                   <button type="submit" class="dugmeForma">Zakaži</button>
                 </form>
+                </div>
 	    	</div>
-	    	
-	    	<p> Personalni treninzi </p>
-	       <table width="100%" border="0">
-	    		<tr bgcolor="lightgrey">
+	    	<br><br>
+	    	<h2 style="color:#152a6a"> Personalni treninzi </h2>
+	       <table width="100%" border="0" class="tabela">
+	    		<tr bgcolor="lightgrey" class="zaglavljeTabele">
 	    			<th>Slika</th>
 	    			<th>Naziv</th>
 	    			<th>Trajanje</th>
 	    			<th>Cena</th>
 	    			<th>Trener</th>
 	    			<th>Opis</th>
+	    			<th>&nbsp</th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in personalniTreninzi" v-on:click="izaberiPersonalni(p)" :class="{selected : izabraniPersonalni.name == p.name}">
+	    		<tr v-for="p in personalniTreninzi" v-on:click="izaberiPersonalni(p)" :class="{selected : izabraniPersonalni.name == p.name}" class="parniRedovi" style="height:2.5cm">
 	    			<td><img :src="p.image" width="70" height="70"/></td>
 	    			<td>{{p.name}}</td>
 	    			<td>{{p.duration}}</td>
@@ -87,37 +99,41 @@
 	    	</table> 	
 	    	
 	    	 <div v-show="ostaloZakazivanje">
+	    	 <div class="forma">
 	    	 	<form @submit="PotvrdiZakazivanjeOstalo">
 	    		 <table>
                   <tr>
-                      <th><label>Datum:</label></th>
-                      <td><input  v-model="izabraniOstalo.dataTraining" type="datetime-local" required step="1800"></td>
-                      <td>{{izabraniOstalo.name}}</td>
+                      <th><label class="labelaStil">Datum:</label></th>
+                      <td><input class="inputPolje" v-model="izabraniOstalo.dataTraining" type="datetime-local" required step="1800"></td>
+                      <td class="inputPolje">{{izabraniOstalo.name}}</td>
                   </tr>                    
                   </table>
-                   <button type="submit">Zakaži</button>
+                  <br><br>
+                   <div class="centriranjeDugmeta"><button type="submit" class="dugmeForma">Zakaži</button>
                 </form>
+                </div>
 	    	</div>
-	    	
-	    	<p> Individualne posete </p>
-	       <table width="100%" border="0">
-	    		<tr bgcolor="lightgrey">
+	    	<br><br>
+	    	<h2 style="color:#152a6a"> Individualne posete </h2>
+	       <table width="100%" border="0" class="tabela">
+	    		<tr class="zaglavljeTabele" style="color:lightgrey; background-color:#050a44;">
 	    			<th>Slika</th>
 	    			<th>Naziv</th>
 	    			<th>Trajanje</th>
 	    			<th>Cena</th>
 	    			<th>Trener</th>
 	    			<th>Opis</th>
+	    			<th>&nbsp</th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in ostaloTreninzi" v-on:click="izaberiOstalo(p)" :class="{selected : izabraniOstalo.name == p.name}">
+	    		<tr v-for="p in ostaloTreninzi" v-on:click="izaberiOstalo(p)" :class="{selected : izabraniOstalo.name == p.name}" class="parniRedovi" style="height:2.5cm">
 	    			<td><img :src="p.image" width="70" height="70"/></td>
 	    			<td>{{p.name}}</td>
 	    			<td>{{p.duration}}</td>
 	    			<td>{{p.price}}</td>
 	    			<td>{{p.trainer.firstName}} {{p.trainer.lastName}}</td>
 	    			<td>{{p.description}}</td>
-	    			<td><button v-on:click="zakaziOstalo">Zakazi trening</button></td>
+	    			<td><button class="dugmeObrisi" v-on:click="zakaziOstalo" >Zakazi trening</button></td>
 	    		</tr>
 	    	</table> 	
     	</div>		  

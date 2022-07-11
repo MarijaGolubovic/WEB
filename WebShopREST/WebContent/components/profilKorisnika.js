@@ -34,9 +34,10 @@ Vue.component("app-profil",{
                   </tr>
                   <tr>&nbsp</tr>
                    <tr>
-                      <th class="zaglavljeK"><label v-if="korisnik.role == 'CUSTUMER'" class="labela">Broj bodova:</label></th>
-                      <td class="zaglavljeK"><input disabled v-if="korisnik.role == 'CUSTUMER'" class="profilK" type="text"  v-model="korisnik.collectedPoints" ></td>
+                      <th class="poravnanjeLabeleForma"><label class="labelaStil" v-if="korisnik.role == 'CUSTUMER'">Broj bodova:</label></th>
+                      <td><input class="inputPolje" disabled v-if="korisnik.role == 'CUSTUMER'" type="text"  v-model="korisnik.collectedPoints" ></td>
                   </tr>
+                  <tr>&nbsp</tr>
                   <tr>
                       <th class="poravnanjeLabeleForma"><label class="labelaStil">Pol:</label></th>
                       <td><select class="padajuciMeni"  v-model="korisnik.gender" name="pol">

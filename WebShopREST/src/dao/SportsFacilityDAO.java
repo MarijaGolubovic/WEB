@@ -41,7 +41,7 @@ public class SportsFacilityDAO {
 	
 	public SportsFacilityDAO(String contextPath) {
 		sviobjekti = new ArrayList<SportsFacility>();
-		pathToRepository = "C:\\Users\\HP\\Desktop\\6.semestar\\WEB\\Projekat - FINAL\\WEB\\WebShopREST\\WebContent\\podaci\\";
+		pathToRepository = "C:\\Users\\TOSHIBA\\Desktop\\WEB-Projekat\\WEB\\WebShopREST\\WebContent\\podaci\\";
 		//loadProducts(contextPath);
 		loadFacilities();
 	}

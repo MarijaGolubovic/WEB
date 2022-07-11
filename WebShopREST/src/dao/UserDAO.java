@@ -62,7 +62,7 @@ public class UserDAO {
 	public UserDAO(String contextPath, SportsFacilityDAO sportsFacilityDAO) {
 		sviKorisnici=new ArrayList<User>();
 		this.contextPath=contextPath;
-		pathToRepository = "C:\\Users\\HP\\Desktop\\6.semestar\\WEB\\Projekat - FINAL\\WEB\\WebShopREST\\WebContent\\podaci";
+		pathToRepository = "C:\\Users\\TOSHIBA\\Desktop\\WEB-Projekat\\WEB\\WebShopREST\\WebContent\\podaci\\";
 		//loadUsers(contextPath);
 		loadUsersJ(contextPath,sportsFacilityDAO);
 	}
