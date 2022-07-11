@@ -16,20 +16,22 @@
  	},
  	template: ` 
  		<div>
- 			<div>
+ 		<br>
+ 			<div class="forma">
  				<form @submit="dodajObjekat" method="post">
         			<img id="slikaID" src="" alt="Slika objekta" width="200" height="100" v-show="this.slikaVis">
- 					<table>
+ 					<table style="margin-right: auto; margin-left: auto;">
  						<tr>
-	 						<th>Naziv:</th>
+	 						<th class="poravnanjeLabeleForma"><label class="labelaStil">Naziv:</label></th>
 		 					<td>
-								<input type="text" v-model="noviObjekat.naziv" required>
+								<input class="inputPolje" type="text" v-model="noviObjekat.naziv" required>
 							</td>
 	 					</tr>	
+	 					<tr>&nbsp</tr>
 	 					<tr>
-	 						<th>Tip:</th>
+	 						<th class="poravnanjeLabeleForma"><label class="labelaStil">Tip:</label></th>
 	 						<td>
-							 <select name="tipObjekta" v-model="noviObjekat.tipObjekta" required>
+							 <select class="padajuciMeni" name="tipObjekta" v-model="noviObjekat.tipObjekta" required>
 								<option value="Teretana">Teretana </option>
 								<option value="Bazen">Bazen</option>
 								<option value="Plesni_studio">Plesni studio </option>
@@ -37,38 +39,41 @@
 							</select>
 							</td>
  						</tr>
+ 						<tr>&nbsp</tr>
 						<tr>
-						 <th>Sadrzaj:</th>
+						 <th class="poravnanjeLabeleForma"><label class="labelaStil">Sadrzaj:</label></th>
 						 <td>
-						  <select name="sadrzajObjekta" v-model="noviObjekat.sadrzaj" required>
+						  <select class="padajuciMeni" name="sadrzajObjekta" v-model="noviObjekat.sadrzaj" required>
 							<option value="Personalni_trening">Personalni trening</option>
 							<option value="Grupni_trening">Grupni trening</option>
 							<option value="Sauna">Sauna</option>
 						  </select>
 						</td>
 						</tr>
+						<tr>&nbsp</tr>
 						<tr>
-	 					<th>Status:</th>
+	 					<th class="poravnanjeLabeleForma"><label class="labelaStil">Status:</label></th>
 	 						<td>
-							 <select name="statusObjekta" v-model="noviObjekat.working" required>
+							 <select class="padajuciMeni" name="statusObjekta" v-model="noviObjekat.working" required>
 								<option value="Radi">Radi</option>
 								<option value="Ne_radi">Ne_radi</option>
 							</select>
 							</td>
  						</tr>
+ 						<tr>&nbsp</tr>
 						<tr>
-							<th>Radno vrijeme:</th>
+							<th class="poravnanjeLabeleForma"><label class="labelaStil"> Radno vrijeme:</label></th>
 							 <td>
-							 	&nbsp od &nbsp <input type="time" v-model="noviObjekat.startingTime" id="startingTime"  required>&nbsp
-							 	do &nbsp <input type="time" v-model="noviObjekat.endingTime" id="endingTime"  required>
+							 	 &nbsp <input class="inputPolje" type="time" v-model="noviObjekat.startingTime" id="startingTime"  required>&nbsp
+							 	 <input  class="inputPolje" type="time" v-model="noviObjekat.endingTime" id="endingTime"  required>
 						 	</td>
  						</tr>
 
-
+						<tr>&nbsp</tr>
  						<tr>
-	 						<th>Menadzer:</th>
+	 						<th class="poravnanjeLabeleForma"><label class="labelaStil">Menadzer:</label></th>
 	 						<td>
-	 							<select name="menadzer" v-model="noviObjekat.menadzer" required>
+	 							<select class="padajuciMeni" name="menadzer" v-model="noviObjekat.menadzer" required>
 	 								 <option v-for="m in slobodniMenadzeri" :value=m.username>
 	 								 	{{m.firstName}} {{m.lastName}}
 	 								 </option>
@@ -76,86 +81,102 @@
 	 							<input type="button" v-on:click="dodajNovogMenadzera"  value="+"/>
 	 						</td>
 	 					</tr>
+	 					<tr>&nbsp</tr>
  						<tr>
-	 						<th>Lokacija:</th>
+	 						<th class="poravnanjeLabeleForma"><label class="labelaStil">Lokacija:</label></th>
 		 					<td>
-								<input type="text" id="lokacijaID">
+								<input class="inputPolje" type="text" id="lokacijaID">
 								<button v-on:click="dodajLokaciju"><img alt="dodaj lokaciju slika" src="components/slike/location.png" style="width:0.7cm;height:0.7cm;"></button>
 							</td>
 		 					
-	 					</tr>			
+	 					</tr>	
+	 					<tr>&nbsp</tr>		
 	 					<tr>
-                        	<th> Grad: </th>
-                        	<td> <input type="text" id="gradID" required> </td>
+                        	<th class="poravnanjeLabeleForma"><label class="labelaStil"> Grad:</label> </th>
+                        	<td> <input class="inputPolje" type="text" id="gradID" required> </td>
                     	</tr>
+                    	<tr>&nbsp</tr>
                     	<tr>
-                        	<th> Ulica: </th>
-                        	<td> <input type="text" id="ulicaID" required> </td>
+                        	<th class="poravnanjeLabeleForma"><label class="labelaStil"> Ulica:</label> </th>
+                        	<td> <input class="inputPolje" type="text" id="ulicaID" required> </td>
                     	</tr>
+                    	<tr>&nbsp</tr>
                     	<tr>
-                        	<th class="labelaDR"> Broj:</th>
-                        	<td> <input type="text" id="brojID"  required> </td>
+                        	<th class="poravnanjeLabeleForma"><label class="labelaStil"> Broj:</label></th>
+                        	<td> <input class="inputPolje" type="text" id="brojID"  required> </td>
                     	</tr>
+                    	<tr>&nbsp</tr>
                     	<tr>
-                        	<th> Postanski broj:</th>
-                        	<td> <input type="text" id="postanskiBrojID"  required> </td>
+                        	<th class="poravnanjeLabeleForma"><label class="labelaStil"> Postanski broj:</label></th>
+                        	<td> <input class="inputPolje" type="text" id="postanskiBrojID"  required> </td>
                     	</tr>
-						
+							<tr>&nbsp</tr>
 	 					<tr>
-	 						<th>Logo:</th>
+	 						<th class="poravnanjeLabeleForma"><label class="labelaStil">Logo:</label></th>
 	 						<td>
-	 						 	<input type="file" onchange="encodeImageFileAsURL(this)" v-on:click="dodajSliku" required>
+	 						 	<input class="inputPolje" type="file" onchange="encodeImageFileAsURL(this)" v-on:click="dodajSliku" required>
 	 						</td>
 	 					</tr>
+	 					<tr>&nbsp</tr>
 	 					<tr>
-                	    <button type="submit">Dodaj objekat</button>
+	 					<td>&nbsp</td>
+                	    	<td><button type="submit" class="dugmeForma" type="submit " style="width:3.5cm; font-size:15px;">Dodaj objekat</button></td>
                 	    </tr>
+                	    <tr>&nbsp</tr>
 	 				</table>	
 	 				 
 				</form>
  			</div>
+ 			
  			<div v-show="this.menadzeriVis">
- 			<button  v-on:click="zatvoriDodavanjeMenadzera">x</button>
+ 			<button  v-on:click="zatvoriDodavanjeMenadzera" class="dugmeZatvori">x</button>
+ 			<br>
+ 			<div class="forma">
  				<form @submit="dodajMenadzera" method="post">
- 					<table>
+ 					<table style="margin-right: auto; margin-left: auto;">
  						<tr>
-	 						<th>Ime:</th>
-		 					<td><input type="text" v-model="noviKorisnik.firstName" required></td>
+	 						<th class="poravnanjeLabeleForma"><label class="labelaStil">Ime:</label></th>
+		 					<td><input class="inputPolje" type="text" v-model="noviKorisnik.firstName" required></td>
 	 					</tr>	
 	 					<tr>
-	 						<th>Prezime:</th>
-	 						<td><input type="text" v-model="noviKorisnik.lastName" required></td>
+	 						<th class="poravnanjeLabeleForma"><label class="labelaStil">Prezime:</label></th>
+	 						<td><input class="inputPolje" type="text" v-model="noviKorisnik.lastName" required></td>
  						</tr>		
  						<tr>
-	 						<th>Korisnicko ime:</th>
-		 					<td><input type="text" v-model="noviKorisnik.username" required></td>
+	 						<th class="poravnanjeLabeleForma"><label class="labelaStil">Korisnicko ime:</label></th>
+		 					<td><input class="inputPolje" type="text" v-model="noviKorisnik.username" required></td>
 	 					</tr>			
 	 					<tr>
-	 						<th>Lozinka:</th>
-	 						<td><input type="text" v-model="noviKorisnik.password" required></td>
+	 						<th class="poravnanjeLabeleForma"><label class="labelaStil">Lozinka:</label></th>
+	 						<td><input  class="inputPolje" type="text" v-model="noviKorisnik.password" required></td>
 	 					</tr>
 	 					<tr>
-	 						<th>Pol:</th>
-	 						<td><select name="pol" v-model="noviKorisnik.gender" required>
+	 						<th class="poravnanjeLabeleForma"><label class="labelaStil">Pol:<label></th>
+	 						<td><select class="padajuciMeni" name="pol" v-model="noviKorisnik.gender" required>
                       			<option value="MALE">muski</option>
                       			<option value="FEMALE">zenski</option>
                       		</select></td>
 	 					</tr>
 	 					<tr>
-	 						<th>Datum rodjenja:</th>
-	 						<td><input type="date" v-model="noviKorisnik.birthDate" required></td>
+	 						<th class="poravnanjeLabeleForma"><label class="labelaStil">Datum rodjenja:</label></th>
+	 						<td><input class="inputPolje" type="date" v-model="noviKorisnik.birthDate" required></td>
 	 					</tr>
 	 					<tr>
-                	    	<button type="submit">Dodaj korisnika</button>
+	 					<td>&nbsp</td>
+	 					<td>
+                	    	<button type="submit" class="dugmeForma" type="submit " style="width:3.5cm; font-size:15px;">Dodaj korisnika</button>
+                	    </td>
                 	    </tr>
 	 				</table>	
 				</form>
+				</div>
  			</div>
 			<div id="map"  v-if="mapaVis" style="width:100%;height:10cm;">  </div>
 
 			<div>
-			  <table width="100%" border="0">
-	    		<tr bgcolor="lightgrey">
+			<br>
+			  <table width="100%" border="0" class="tabela">
+	    		<tr bgcolor="lightgrey" class="zaglavljeTabele">
 	    			<th>Logo</th>
 	    			<th>Naziv</th>
 	    			<th>Tip objekta</th>
@@ -166,7 +187,7 @@
 					<th></th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in facilities">
+	    		<tr v-for="p in facilities"  class="parniRedovi" style="height:2.5cm">
 	    			<td><img :src="p.imageName" width="70" height="70"/></td>
 	    			<td>{{p.name}}</td>
 	    			<td>{{p.typeSportsFacility}}</td>
@@ -174,7 +195,7 @@
 	    			<td>{{p.working}}</td>
 	    			<td>{{p.locationS}}</td>
 	    			<td>{{p.averageGrade}}</td>
-					<td><button v-on:click="izaberiobjekat(p);obrisiObjekat();">Obrisi objekat</button></td>
+					<td><div class="centriranjeDugmeta"><button class="dugmeObrisi" v-on:click="izaberiobjekat(p);obrisiObjekat();">Obrisi objekat</button></div></td>
 					
 	    		</tr>
 	    	  </table>

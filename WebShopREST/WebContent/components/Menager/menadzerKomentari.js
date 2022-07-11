@@ -6,25 +6,26 @@ Vue.component("app-menadzerKomentari", {
 	},
 	    template: ` 
     	<div>
-    	 	
-    		
-    		<table width="100%" border="0">
-	    		<tr bgcolor="lightgrey">
-	    			<th>Korisnik</th>
-	    			<th>Objekat</th>
-	    			<th>Tekst komentara</th>
-	    			<th>Ocjena</th>
-	    			<th>Aktivan</th>
-	    		</tr>
-	    			
-	    		<tr v-for="p in komentari" >
-	    			<td>{{p.username}}</td>
-					<td>{{p.sportsFacility}}</td>
-					<td>{{p.comment}}</td>
-					<td>{{p.grade}}</td>
-					<td>{{p.logickiObrisan|statusKomentara}}</td>
-	    		</tr>
-	    	</table>
+    	<br><br>
+    	 	<div>
+	    		<table width="100%" border="0" class="tabela">
+		    		<tr bgcolor="lightgrey" class="zaglavljeTabele" >
+		    			<th>Korisnik</th>
+		    			<th>Objekat</th>
+		    			<th>Tekst komentara</th>
+		    			<th>Ocjena</th>
+		    			<th>Aktivan</th>
+		    		</tr>
+		    			
+		    		<tr v-for="p in komentari" class="parniRedovi" style="height:0.8cm">
+		    			<td>{{p.username}}</td>
+						<td>{{p.sportsFacility}}</td>
+						<td>{{p.comment}}</td>
+						<td style="text-align:center;">{{p.grade}}</td>
+						<td style="text-align:center;">{{p.logickiObrisan|statusKomentara}}</td>
+		    		</tr>
+		    	</table>
+		    </div>
     	</div>		  
     	`,
     methods:{

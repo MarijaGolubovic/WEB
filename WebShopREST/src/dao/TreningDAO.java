@@ -28,7 +28,7 @@ public class TreningDAO {
 	public TreningDAO(SportsFacilityDAO sportsFacilityDAO, UserDAO userDAO) {
 		sviTreninzi = new ArrayList<Training>();
 		izmenjenTrening = new Training();
-		pathToRepository = "C:\\Users\\HP\\Desktop\\6.semestar\\WEB\\Projekat - FINAL\\WEB\\WebShopREST\\WebContent\\podaci\\";
+		pathToRepository = "C:\\Users\\HP\\Desktop\\6.semestar\\WEB\\Projekat - FINAL\\WEB\\WebShopREST\\WebContent\\podaci";
 		loadTrainings(sportsFacilityDAO, userDAO);
 	}
 	

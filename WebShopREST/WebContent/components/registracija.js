@@ -8,57 +8,49 @@
  	
  	},
  	template: ` 
- 	 <div id="korisnik" style="border-style: solid; width:10.6cm; height:12.5cm; color:#3E9A2A;  background-color:#A5FA92;border-radius: 10px">
+ 	 <div >
+      <br><br><br>
         <form @submit="registruj" method="post">
-        <div class="inputReg">
-            <table style="position:relative; left:1cm; top:0.5cm">
+        <div class="forma">
+            <table style="margin-right: auto; margin-left: auto;">
+                <tr>&nbsp</tr>
                   <tr>
-                      <th style="text-align: left"><label style="color:#055106; font-size:18px">Ime:</label></th>
-                      <td><input class="registracija"  v-model="noviKorisnik.firstName" type="text" name="ime" 
-                      style="height:1cm;border-radius: 5px; border-color:green"
+                      <th class="poravnanjeLabeleForma"><label class="labelaStil">Ime:</label></th>
+                      <td><input v-model="noviKorisnik.firstName" type="text" name="ime"  class="inputPolje"
                       required></td>
                   </tr>
                   <br>
                   <tr>
-                      <th style="text-align: left"><label style="color:#055106; font-size:18px">Prezime:</label></th>
-                      <td><input v-model="noviKorisnik.lastName" type="text" 
-                      style="height:1cm;border-radius: 5px; border-color:green"
-                      required></td>
+                      <th class="poravnanjeLabeleForma"><label class="labelaStil">Prezime:</label></th>
+                      <td><input v-model="noviKorisnik.lastName" type="text" class="inputPolje" required></td>
                   </tr>
                   <br>
                   <tr>
-                      <th style="text-align: left"><label style="color:#055106; font-size:18px">Korisnicko ime:</label></th>
-                      <td><input v-model="noviKorisnik.username" type="text" 
-                      style="height:1cm;border-radius: 5px; border-color:green"
-                      required></td>
+                      <th class="poravnanjeLabeleForma"><label class="labelaStil">Korisnicko ime:</label></th>
+                      <td><input v-model="noviKorisnik.username" type="text" class="inputPolje" required></td>
                 </tr>
                 <br>
                 <tr>
-                      <th style="text-align: left"><label style="color:#055106; font-size:18px">Lozinka:</label></th>
-                      <td><input type="password"  v-model="noviKorisnik.password"
-                      style="height:1cm;border-radius: 5px; border-color:green"
-                       required></td>
+                      <th class="poravnanjeLabeleForma"><label class="labelaStil">Lozinka:</label></th>
+                      <td><input type="password"  v-model="noviKorisnik.password" class="inputPolje" required></td>
                   </tr>
                   <br>
                   <tr>
-                      <th style="text-align: left"><label style="color:#055106; font-size:18px">Pol:</label></th>
-                      <td><select class="registracija"  v-model="noviKorisnik.gender" 
-                      style="height:1cm;border-radius: 5px; width:4.7cm; border-color:green"
-                      required>
+                      <th class="poravnanjeLabeleForma"><label class="labelaStil">Pol:</label></th>
+                      <td><select v-model="noviKorisnik.gender" class="inputPolje" required>
                       <option value="MALE">Muski</option>
                       <option value="FEMALE">Zenski</option>
                       </select></td>
                   </tr>
                   <br>
                   <tr>
-                      <th style="text-align: left"><label style="color:#055106; font-size:18px">Datum rodjenja:</label></th>
-                      <td><input v-model="noviKorisnik.birthDate" type="date" required
-                      style="height:1cm;border-radius: 5px; width:4.7cm; border-color:green"
-                      /></td>
+                      <th class="poravnanjeLabeleForma"><label class="labelaStil">Datum rodjenja:</label></th>
+                      <td><input v-model="noviKorisnik.birthDate" type="date" class="inputPolje" required/></td>
                   </tr>
                   <br>
                   <br>
-                  <tr><button type="submit" style="position:relative; left:2.5cm; height:1cm;width:3cm;border-radius: 15px;color:#055106; font-size:18px">Registruj se</button></tr>
+                  <tr style="align: center;"><button type="submit" class="dugmeForma">Registruj se</button></tr>
+                  <tr>&nbsp</tr>
                   </table>
                   </div>
           </form>

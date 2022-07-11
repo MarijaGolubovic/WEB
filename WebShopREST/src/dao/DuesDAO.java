@@ -29,8 +29,8 @@ public class DuesDAO {
 	public DuesDAO(UserDAO userDAO) {
 		sveClanarine = new ArrayList<Dues>();
 		//izmenjenTrening = new TrainingHistory();
-		pathToRepository = "C:\\Users\\HP\\Desktop\\6.semestar\\WEB\\Projekat - FINAL\\WEB\\WebShopREST\\WebContent\\podaci\\";
-		loadDues(userDAO);		
+		pathToRepository = "C:\\Users\\HP\\Desktop\\6.semestar\\WEB\\Projekat - FINAL\\WEB\\WebShopREST\\WebContent\\podaci";
+		loadDues(userDAO);
 	}
 	
 	public ArrayList<Dues> getAllDues() {

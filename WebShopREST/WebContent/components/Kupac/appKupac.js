@@ -8,7 +8,7 @@ const router = new VueRouter ({
 	mode: 'hash',
 	routes:[
 		{path: '/zakazivanje', component: KupacZakazivanje },
-		{path: '/zakazani', component: KupacZakazani },
+		{path: '/', component: KupacZakazani },
 		{path: '/clanarine', component: KupacClanarine },
 		{path: '/komentari', component: KupacKomentari},
 		{path: '/profil', component: KupacProfil }
