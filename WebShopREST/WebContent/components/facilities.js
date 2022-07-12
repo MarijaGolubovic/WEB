@@ -27,38 +27,61 @@ Vue.component("facilities", {
 	    template: ` 
     	<div>
     		<div v-show="globalno">
-    		
-    		<button  @click=" pretragaVisk = !pretragaVisk ">Pretraga</button>
- 			<button   @click=" sortVisk = !sortVisk">Sortiranje</button>
- 			<button   @click=" filterVisk = !filterVisk">Filtriranje</button>
+    		<br>
+    		<div class="filtriranjeSortiranjePanel" style="align-top: auto;">
+    		<table width="30%">
+    			<tr>
+    				<td>&nbsp</td>
+    				<td><button class="filtriranjeSortiranjeDugme"  @click=" pretragaVisk = !pretragaVisk ">Pretraga</button></td>
+    				<td><button  class="filtriranjeSortiranjeDugme"  @click=" sortVisk = !sortVisk">Sortiranje</button></td>
+    				<td><button class="filtriranjeSortiranjeDugme"  @click=" filterVisk = !filterVisk">Filtriranje</button></td>
+    			</tr>
+    		</table>
+ 			</div>
+ 			
+ 			<div>
     	 	<table v-show="pretragaVisk">	 				
  				<tr>
- 					<th>Naziv: </th> <td><input type="text" v-model="pretraga.naziv" v-on:input="search"></td>
- 					<th>Tip: </th> <td><input type="text" v-model="pretraga.tip" v-on:input="search"></td>
- 					<th>Lokacija: </th> <td><input type="text" v-model="pretraga.lokacija" v-on:input="search"></td>
- 					<th>Ocena: </th> <td><input type="text" v-model="pretraga.ocena" v-on:input="search"></td>
+ 				<th>&nbsp</th>
+ 				<th>&nbsp</th>
+ 				<th>&nbsp</th>
+ 					<th class="pretragaLabele">Naziv: </th> <td><input class="pretragaPolje" type="text" v-model="pretraga.naziv" v-on:input="search"></td>
+ 					<th class="pretragaLabele">Tip: </th> <td><input class="pretragaPolje" type="text" v-model="pretraga.tip" v-on:input="search"></td>
+ 					<th class="pretragaLabele">Lokacija: </th> <td><input class="pretragaPolje" type="text" v-model="pretraga.lokacija" v-on:input="search"></td>
+ 					<th class="pretragaLabele">Ocena: </th> <td><input class="pretragaPolje" type="text" v-model="pretraga.ocena" v-on:input="search"></td>
  				</tr>
  				</table>
+ 			</div>
+ 			
  				
  				<div  v-show="sortVisk">
- 				<table>
- 					<tr><th>Naziv:</th></tr>
- 					<tr><td><button v-on:click="imeOpadajuce">v</button><button v-on:click="imeRastuce">^</button></td></tr>
- 				</table>
- 				<table>
- 					<tr><th>Lokacija:</th></tr>
- 					<tr><td><button v-on:click="lokacijaOpadajuce">v</button><button v-on:click="lokacijaRastuce">^</button></td></tr>
- 				</table>
- 				<table>
- 					<tr><th>Ocena ime:</th></tr>
- 					<tr><td><button v-on:click="ocenaOpadajuce">v</button><button v-on:click="ocenaRastuce">^</button></td></tr>
- 				</table>
+ 					<table style="width:40%">
+ 						<td>
+ 							<table>
+			 					<tr><th class="pretragaLabele">Naziv:</th></tr>
+			 					<tr><td><button class="sortiranjeDugme" v-on:click="imeOpadajuce">v</button>&nbsp<button class="sortiranjeDugme" v-on:click="imeRastuce">^</button></td></tr>
+ 							</table>
+ 						</td>
+ 						<td>
+ 							<table>
+			 					<tr><th class="pretragaLabele">Lokacija:</th></tr>
+			 					<tr><td><button class="sortiranjeDugme" v-on:click="lokacijaOpadajuce">v</button>&nbsp<button class="sortiranjeDugme" v-on:click="lokacijaRastuce">^</button></td></tr>
+			 				</table>
+ 						</td>
+ 						<td>
+			 				<table>
+			 					<tr><th class="pretragaLabele">Ocena ime:</th></tr>
+			 					<tr><td><button class="sortiranjeDugme" v-on:click="ocenaOpadajuce">v</button>&nbsp<button class="sortiranjeDugme"  v-on:click="ocenaRastuce">^</button></td></tr>
+			 				</table>
+ 						</td> 						
+ 					</table>
  				</div>
+ 				<div>
  				<div  v-show="filterVisk">
  				<table>
- 					<tr><th>Tip:</th></tr>
+ 					<tr><th class="pretragaLabele">Tip:</th></tr>
  					<tr><td>
- 						<select name="tip" v-on:change="izmjenjenTip" v-model="izabranTip">
+ 						<select class="filtriranjeLista" name="tip" v-on:change="izmjenjenTip" v-model="izabranTip" >
 	 								 <option value="Teretana">Teretana</option>
 	 								 <option value="Bazen">Bazen</option>
 	 								  <option value="Plesni_studio">Plesni studio</option>
@@ -69,23 +92,23 @@ Vue.component("facilities", {
  				</table>
  				
  				 <table>
- 					<tr><th>Status:</th></tr>
+ 					<tr><th class="pretragaLabele">Status:</th></tr>
  					<tr><td>
- 						<select name="tip" v-model="izabraniStatus" v-on:change="izmjenjenStatus">
+ 						<select class="filtriranjeLista" name="tip" v-model="izabraniStatus" v-on:change="izmjenjenStatus">
 	 								 <option value="Radi">Radi</option>
 	 								 <option value="Ne_radi">Ne radi</option>
 	 					</select>
  					</td>
  					</tr>
  				</table>
- 				<button v-on:click="iskljuciFilter">x</button>
+ 				<button v-on:click="iskljuciFilter" class="dugmeZatvori">x</button>
  			</div>
+ 				</div>
  				
- 				
- 			
-    		<h3>Prikaz sportskih objekata</h3>
-    		<table width="100%" border="0">
-	    		<tr bgcolor="lightgrey">
+ 			<br><br>
+    		<h1 style="color:#152a6a">Prikaz sportskih objekata</h1>
+    		<table width="100%" border="0" class="tabela">
+	    		<tr bgcolor="lightgrey" class="zaglavljeTabele">
 	    			<th>Logo</th>
 	    			<th>Naziv</th>
 	    			<th>Tip objekta</th>
@@ -95,9 +118,10 @@ Vue.component("facilities", {
 	    			<th>Prosečna ocena</th>
 	    			<th>Radno vreme od</th>
 	    			<th>Radno vreme do</th>
+	    			<th>&nbsp</th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in filtriraniObjekti"  v-on:click="izaberiObjekat(p)" :class="{selected : izabraniObjekat.name == p.name}">
+	    		<tr v-for="p in filtriraniObjekti"  v-on:click="izaberiObjekat(p)" :class="{selected : izabraniObjekat.name == p.name}" class="parniRedovi" style="height:2.5cm">
 	    			<td><img :src="p.imageName" width="70" height="70"/></td>
 	    			<td>{{p.name}}</td>
 	    			<td>{{p.typeSportsFacility}}</td>
@@ -107,15 +131,15 @@ Vue.component("facilities", {
 	    			<td>{{p.averageGrade}}</td>
 	    			<td>{{p.startingTimeS}}</td>
 	    			<td>{{p.endingTimeS}}</td>
-	    			<td><button v-on:click="detaljnijiPrikaz">Detaljno</button></td>
+	    			<td><button v-on:click="detaljnijiPrikaz" class="dugmeObrisi">Detaljno</button></td>
 	    		</tr>
 	    	</table>
 	    	</div>	
-	    	
+	    	<br><br>
 	    	<div v-show="detaljno">
-	    	<button class="napustiDetaljno" v-on:click="zatvoriDetaljnijiPrikaz">x</button>
-	    	<table width="100%" border="0">
-	    	<tr bgcolor="lightgrey">
+	    	<button class="napustiDetaljno" v-on:click="zatvoriDetaljnijiPrikaz" class="dugmeZatvori">x</button>
+	    	<table width="100%" border="0" class="tabela">
+	    	<tr class="zaglavljeTabele" style="color:lightgrey; background-color:#050a44;">
 	    			<th>Logo</th>
 	    			<th>Naziv</th>
 	    			<th>Tip objekta</th>
@@ -126,7 +150,7 @@ Vue.component("facilities", {
 	    			<th>Radno vreme od</th>
 	    			<th>Radno vreme do</th>
 	    	</tr>
-	    	<tr>
+	    	<tr class="parniRedovi" style="height:0.8cm">
 	    			<td><img :src="izabraniObjekat.imageName" width="70" height="70"/></td>
 	    			<td>{{izabraniObjekat.name}}</td>
 	    			<td>{{izabraniObjekat.typeSportsFacility}}</td>
@@ -141,26 +165,26 @@ Vue.component("facilities", {
 	    	</table>
 	    	 		<div id="map1" class="map1" v-if="mapaVis" style="width:10cm;height:10cm;">  </div>
 	    	 		
-	    	<h3>Komentari</h3>
-	    	<table width="100%" border="0">
-	    		<tr bgcolor="lightgrey">
+	    	<h3 style="color:#152a6a;">Komentari</h3>
+	    	<table width="100%" border="0" class="tabela">
+	    		<tr bgcolor="lightgrey" class="zaglavljeTabele">
 	    			<th>Korisnik</th>
 	    			<th>Objekat</th>
 	    			<th>Tekst komentara</th>
 	    			<th>Ocjena</th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in komentari" v-if="p.sportsFacility == izabraniObjekat.name && p.logickiObrisan">
+	    		<tr v-for="p in komentari" v-if="p.sportsFacility == izabraniObjekat.name && p.logickiObrisan" class="parniRedovi" style="height:0.8cm">
 	    			<td>{{p.username}}</td>
 					<td>{{p.sportsFacility}}</td>
 					<td>{{p.comment}}</td>
 					<td>{{p.grade}}</td>
 	    		</tr>
 	    	</table>
-	    	
-	    	<h3>Treninzi</h3>
-	    	<table width="100%" border="0">
-	    		<tr bgcolor="lightgrey">
+	    	<br><br>
+	    	<h3 style="color:#050a44;">Treninzi</h3>
+	    	<table width="100%" border="0" class="tabela">
+	    		<tr  class="zaglavljeTabele" style="color:lightgrey; background-color:#050a44;">
 	    			<th>Slika</th>
 	    			<th>Naziv</th>
 	    			<th>Trajanje</th>
@@ -170,7 +194,7 @@ Vue.component("facilities", {
 	    			<th>Tip</th>
 	    		</tr>
 	    			
-	    		<tr v-for="p in treninzi" v-if="p.sportsFacility.name == izabraniObjekat.name">
+	    		<tr v-for="p in treninzi" v-if="p.sportsFacility.name == izabraniObjekat.name" style="height:0.8cm" class="parniRedovi">
 	    			<td><img :src="p.image" width="70" height="70"/></td>
 	    			<td>{{p.name}}</td>
 	    			<td>{{p.duration}}</td>
