@@ -1,0 +1,80 @@
+@charset "ISO-8859-1";
+.zaglavljeLinkovi{
+	height:1.5cm;
+	width:5cm;
+	text-align:center;
+	size:0.3cm;
+	font-size:22px;
+	font-weight: bold;
+	text-decoration: none
+}
+a:link {
+  	color: #152a6a;
+  	text-decoration: none;
+  }
+a:active {
+  color: #152a6a;
+  text-decoration: none;
+}
+a:visited {
+  color: #152a6a;
+  text-decoration: none;
+}
+.tabelaSaLinkovimaZaglavlje{
+	width:85%; 
+	text-align:center;
+	text-decoration: none
+}
+
+.zaglavljePozadina{
+	height:2cm;
+	background-color:lightgrey; 
+}
+
+.filtriranjeSortiranjePanel{
+	height:1.5cm;
+	background-color:#152a6a; 
+}
+
+.filtriranjeSortiranjeDugme{
+	height:0.7cm;
+	width:2.5cm;
+	border-radius:5px;
+	font-size: 15px;
+	border-width:0px;
+	color:#152a6a;
+}
+.pretragaLabele{
+	color:#152a6a;
+	font-size:18px;
+}
+.pretragaPolje{
+	height:0.7cm;
+	border-radius:2px;
+	border-width:1px;
+	width:4cm;
+	border-color:lightgrey;
+	
+}
+.sortiranjeDugme{
+	width:0.5cm;
+	border-color:lightgrey;
+	border-radius:2px;
+	border-width:0px;
+}
+
+.filtriranjeLista{
+	height:0.7cm;
+	border-radius:2px;
+	border-width:0px;
+	width:4cm;
+	font-size:16px;
+}
+
+.dugmeZatvori{
+	background-color:#ff0101;
+	font-size:15px;
+	font-width:bold;
+	border-radius:2px;
+	border-width:0px;
+}

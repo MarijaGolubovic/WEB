@@ -1,0 +1,7 @@
+markomarkovic;123;Marko;Markovic;MALE;07.06.2000.;MENAGER;-1;GOLD;Flex;false
+nenadnenadovic;123;Nenad;Nenadovic;MALE;07.06.2000.;CUSTUMER;102;BRONZE;null;false
+milicamilic;123;Milica;Milic;FEMALE;07.06.2000.;ADMIN;-1;GOLD;null;false
+anaanic;123;Ana;Anic;FEMALE;07.06.2000.;TRAINER;-1;SILVER;null;false
+aleksaaleksic;123;Aleksa;Aleksic;MALE;17.06.2000.;CUSTUMER;210;GOLD;null;false
+jelenajelic;123;Jelena;Jelic;FEMALE;27.08.1999.;ADMIN;-1;GOLD;null;false
+nikolanikolic;123;Nikola;Nikolic;MALE;15.2.1998.;MENAGER;-1;GOLD;null;false
